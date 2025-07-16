@@ -1,0 +1,62 @@
+---
+title: Building an agent
+description: Agents are intelligent components research and answer questions about companies and people
+---
+
+## Understanding agents
+
+Agents are AI-powered nodes that can be configured to run custom logic, search the web, and provide answers to your most important GTM questions. Unlike tools and plays, agents focus on research and intelligence gathering rather than direct actions.
+
+**Questions** are the core of agent configuration. You define what questions the agent should answer, and the agent will research and respond based on available data sources.
+
+---
+
+## Creating an agent
+
+### Step 1: Define your questions
+Start by defining the questions your agent should answer. These can be simple yes/no questions, numerical responses, or complex multi-part queries. Examples include:
+- "Has this company raised funding in the last 12 months?"
+- "What is the company's current employee count?"
+- "Who are the key decision makers at this company?"
+
+### Step 2: Configure tools
+Agents can pull information from multiple sources including:
+- Public web data
+- Company databases
+- CRM systems
+- News and social media
+- Financial databases
+
+### Step 3: Set response types
+Define how you want the agent to respond:
+- **Boolean:** True/false answers
+- **Number:** Numerical responses
+- **Text:** Detailed explanations
+- **Multiple choice:** Select from predefined options
+
+---
+
+## Agent configuration
+
+### Question types
+Agents support different types of questions based on your needs:
+
+**Qualification questions:** Determine if a company or person meets your criteria
+**Research questions:** Gather detailed information about companies or individuals
+**Monitoring questions:** Track changes over time
+**Custom questions:** Any specific business logic you need
+
+### Response handling
+Configure how the agent should handle responses:
+- **Confidence thresholds:** Only return answers above a certain confidence level
+- **Fallback responses:** What to do when the agent can't find an answer
+- **Data validation:** Ensure responses meet your quality standards
+
+---
+
+## Deploying agents
+
+Once configured and tested, publish your agent to make it available for use in plays and workflows. Published agents can be called by other components in your automation.
+
+### Integration
+Agents can be integrated into plays and tools to provide intelligent decision-making capabilities. They can trigger actions based on their research findings.

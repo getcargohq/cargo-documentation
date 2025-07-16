@@ -1,0 +1,139 @@
+---
+title: Launching a Tool
+description: Tools in Cargo can be launched through multiple methods depending on your use case
+---
+
+## 1. Launch tab (Single or bulk runs)
+
+The most direct way to launch a tool is through the launch tab in the Cargo interface.
+
+### Single run
+- Navigate to your tool in the Cargo workspace
+- Click on the "Launch" tab
+- Select "Single" mode
+- Enter the required input parameters
+- Click "Run tool" to execute immediately
+
+### Bulk run
+- Navigate to your tool in the Cargo workspace
+- Click on the "Launch" tab
+- Select "Bulk" mode
+- Upload a file with multiple input records
+- Click "Continue" to process the batch
+
+**Use cases:** Testing tools, one-off executions, processing small datasets
+
+## 2. Through a play
+
+Tools can be integrated into plays as nodes within automated workflows.
+
+### How it works:
+- Add your tool as an action in a play
+- Configure the tool's inputs using data from previous actions
+- The tool will execute automatically when the play runs
+- Results can be passed to subsequent actions in the workflow
+
+**Use cases:** Automated workflows, multi-step processes, conditional logic
+
+## 3. Through an agent
+
+Agents can trigger tools as part of their research and qualification processes.
+
+### How it works:
+- Configure an agent to use specific tools
+- The agent will automatically launch tools when needed
+- Tool results feed into the agent's decision-making process
+- Agents can chain multiple tools together
+
+**Use cases:** Automated research, intelligent data gathering, AI-powered workflows
+
+## 4. Through an MCP server
+
+Tools can be launched programmatically through MCP (Model Context Protocol) servers.
+
+### How it works:
+- Set up an MCP server connection
+- Use the MCP protocol to send tool execution requests
+- Tools run on the server and return results
+- Integrates with external systems and workflows
+
+**Use cases:** External integrations, custom applications, server-side automation
+
+## 5. Through API calls
+
+Tools can be executed directly via REST API calls for programmatic access.
+
+### Single tool execution
+```bash
+POST https://api.getcargo.io/v1/tools/{tool-id}/execute
+```
+
+**Request body:**
+```json
+{
+  "key": "value"
+}
+```
+
+**Response:**
+```json
+{
+  "status": "success",
+  "createdAt": "timestamp",
+  "finishedAt": "timestamp",
+  "input": {
+    "key": "value"
+  },
+  "output": {
+    "key": "value"
+  }
+}
+```
+
+### Batch tool execution
+```bash
+POST https://api.getcargo.io/v1/tools/{tool-id}/batches
+```
+
+**Request body:**
+```json
+{
+  "webhookUrl": "https://webhook.url",
+  "data": [
+    {
+      "key": "value"
+    }
+  ]
+}
+```
+
+**Response:**
+```json
+{
+  "batch": {
+    "uuid": "__BATCH_UUID__",
+    "status": "running"
+  }
+}
+```
+
+### Authentication
+Include your API token in the request header:
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Basic __TOKEN__"
+}
+```
+
+**Use cases:** Custom integrations, automated systems, third-party applications
+
+## Choosing the right method
+
+- **Launch tab:** For manual testing and small-scale operations
+- **Plays:** For automated workflows and complex business logic
+- **Agents:** For AI-powered research and intelligent automation
+- **MCP server:** For external system integrations
+- **API calls:** For programmatic access and custom applications
+
+Each method offers different levels of automation, integration capabilities, and complexity. Choose based on your specific use case and technical requirements.

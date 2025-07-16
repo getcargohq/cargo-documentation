@@ -1,0 +1,62 @@
+---
+title: Building a play
+description: Plays are similar to tools in structure but differ in how they're executed
+---
+
+While tools are manually triggered or called by other components, plays are automatically triggered by changes in your data models.
+
+**Triggers** are the starting point of your play. They define when the play should execute and what data should be provided to it. Plays listen for specific changes in your data models and automatically start processing when those changes occur.
+
+---
+
+## Enabling
+
+Once you're satisfied with your play design, you can publish it. Publishing creates a new version of the play that will be used by all future runs.
+
+When you press the publish button, the play is enabled by default. You can untoggle the enabled button to disable the play. Once disabled, the play won't automatically enroll any data, but you can still manually enroll runs through a disabled play.
+
+Disabled plays remain available for manual enrolment of records from a data model but won't respond to automatic triggers. This allows you to test or debug plays without affecting live data processing.
+
+---
+
+## Play triggers
+
+Plays are triggered by changes in your data models. When records are added, updated, or modified in a model, the associated play automatically processes those records.
+
+### Automatic enrolments
+To configure a play trigger, you need to connect it to a data model. The play will then monitor that model for changes and automatically enroll new or modified records into the workflow. 
+
+### Manual enrolments
+You can test your play by importing records from your data model. Navigate to the Runs view and use the Import button to select specific records for testing. This allows you to validate your workflow with real data before enabling automatic processing.
+
+---
+
+## Model syncs
+
+Once enabled, plays can process records in batches. You can configure how often the play checks for new data and how many records to process at once using the sync settings.
+
+For instance, the play may process in real-time for HTTP webhooks, or run only on a predefined weekly schedule (twice a day, only on working days).
+
+Sync settings allow you to control:
+- **Processing frequency:** How often the play checks for new data
+- **Batch size:** How many records to process at once
+- **Schedule:** When the play should run (real-time, hourly, daily, etc.)
+- **Filtering:** Which records should trigger the play
+
+---
+
+## Re-running failed runs
+
+Multiple errors can cause runs to fail to execute correctly and need to be re-run post-corrections to the execution logic. Cargo provides a feature to re-run these failing nodes directly from the records view.
+
+Failed runs can be re-run from scratch or only from the moment they failed, ensuring that successful steps are not duplicated.
+
+---
+
+## Monitoring workflow health
+
+Play health needs to be closely monitored to avoid disruptions in key processes. Cargo's editor provides features to continuously monitor play health status.
+
+If a defined threshold is hit, you can configure Slack notifications to alert you of issues.
+
+Each play type offers different capabilities for automation, integration, and complexity. Choose based on your specific use case and technical requirements.
