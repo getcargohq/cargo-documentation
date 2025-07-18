@@ -1,0 +1,92 @@
+---
+title: Allocating leads
+description: Learn how to set up and use Cargo's revenue organization features for lead allocation
+---
+
+## Core components
+
+### Members - The foundation
+
+Create a connector that supports allocation. This automatically synchronizes members from connected tools to populate the members list.
+
+Since member profiles must be synchronized from connected tools, they cannot be created directly within Cargo. The system uses email addresses as common identifiers to unify members across different tools. This allows for cross-platform functionality, such as sending a Slack notification to a sales rep based on their deal assignment in Salesforce.
+
+Cargo allows you to extend member profiles with custom metadata. This metadata can help customize workflows related to lead assignments. For instance, if the metadata contains information about a sales member's language preferences, Cargo can use it to personalize workflow execution. Another example would be including a Calendly link in a member's metadata to automatically send it to assigned leads.
+
+---
+
+### Territories - Grouping members
+
+Territories group members into teams representing different sales organizations. After synchronizing members, you can define territories and capacities. This structure helps manage and organize members based on specific organizational needs.
+
+A territory is a group of members that can reflect any structure within your organization, such as geographical regions or industry focus groups. Each territory can also have a fallback member who will be used for allocation when other members are unavailable.
+
+---
+
+### Capacity - Managing workload
+
+Capacity defines maximum lead allocation per member. Each configuration specifies allocation count and timeframe, helping distribute work fairly according to business logic.
+
+For instance, you can set a capacity of 3 records per day if that matches your average sales cadence.
+
+All capacities are calculated independently. A member can be available for allocation under one capacity configuration while being marked as fully booked under another.
+
+If defining a static capacity is not sufficient, Cargo can link allocations from a selected model to dynamically compute capacity for each member based on their actual workload in a given sales tool.
+
+---
+
+### Allocation node - The execution engine
+
+The allocation node assigns leads and manages workload distribution. Allocation happens in round-robin mode, spreading assignments equally among available sales members.
+
+Build your first workflow to perform lead allocation. The main requirement is providing a reliable record ID, which allows Cargo to track each lead allocation.
+
+The allocation record ID is a crucial data point that enables Cargo to track allocated records. Choose an ID that is both unique and stable, ensuring that each lead maintains a single, consistent identifier even if processed multiple times (e.g., through retry logic).
+
+This consistency is essential for maintaining accurate tracking and preventing duplicate assignments.
+
+The allocation node can be configured flexibly to adapt to specific needs. It can match revenue organization members based on their email address, territory (if defined), static list of members, or connector matching.
+
+The allocation node will perform actual allocations even when running in preview mode.
+
+---
+
+## Advanced features
+
+### Capacity model mapping - Dynamic capacity calculation
+
+Basic capacity calculation may not reflect allocations from external tools. Use capacity model mapping to calculate actual member capacity based on information in a Cargo data model.
+
+This is called capacity model mapping and is one of the advanced settings of the capacity object.
+
+Data models used to map this advanced setting must be transactional objects, such as a CRM deals object, since this should be organized at allocation level (i.e. one record = one deal = one allocation).
+
+It is obligatory to add a filter identifying the deal owner (i.e. the member assigned to the deal) using a model column that denotes the deal owner and via a Cargo expression that will be used to filter the relevant member using an expression such as `{{member.ids.<Insert connector name here>}}`.
+
+Cargo allows you to add further filters to ensure only relevant information is considered when calculating capacity (such as a company segment).
+
+---
+
+## Monitoring & management
+
+### Allocation history - Tracking and auditing
+
+Each sales organization element (member, territory, and capacity) has a dedicated screen where all historical allocations are recorded. Each entry in the allocation history links to the specific workflow run that triggered that allocation.
+
+This allows you to track how allocations are performed at each level and helps with verification and troubleshooting.
+
+---
+
+## Allocation fallback
+
+Ensure no lead is missed for reliable sales automation. This helps the sales team provide timely responses to all leads. Cargo provides several ways to manage allocation fallbacks:
+
+Each territory can have one configured fallback member. The allocation node can be configured in failure mode when not using a territory's fallback member. When using a territory allocation strategy, an additional parameter `isFallbackMember` is added to indicate whether the fallback logic was used, which means all members of the territory have exhausted their capacity. This can be useful for sending notifications.
+
+---
+
+## Allocation history
+
+Each sales organization element (member, territory, and capacity) has a dedicated screen where all historical allocations are recorded. Each entry in the allocation history links to the specific workflow run that triggered that allocation.
+
+This allows you to track how allocations are performed at each level and helps with verification and troubleshooting.

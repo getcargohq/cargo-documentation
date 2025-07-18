@@ -19,6 +19,7 @@
               "get-started/build-a-tool",
               "get-started/build-an-agent",
               "get-started/build-a-play",
+              "get-started/build-a-data-model",
               "get-started/allocate-leads",
               "get-started/purchase-credits"
             ]
@@ -38,20 +39,28 @@
               {
                 "group": "Plays",
                 "pages": [
-                  "reference/plays/building-a-play"
+                  "reference/plays/building-a-play",
+                  "reference/plays/syncing-a-play"
                 ]
               },
               {
                 "group": "Agents",
                 "pages": [
-                  "reference/agents/building-an-agent",
-                  "reference/agents/embedding-an-agent"
+                  "reference/agents/building-an-agent"
                 ]
               },
-              "reference/data",
-              "reference/allocation",
-              "reference/integrations",
-              "reference/api"
+              {
+                "group": "Data",
+                "pages": [
+                  "reference/data/using-data-models"
+                ]
+              },
+              {
+                "group": "Allocation",
+                "pages": [
+                  "reference/allocation/allocating-leads"
+                ]
+              }
             ]
           }
         ]
