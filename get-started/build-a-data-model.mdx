@@ -40,10 +40,13 @@ Models support several advanced features, such as:
 
 **Set enrolment conditions:** Track records to prevent plays from processing the same data multiple times.
 
-**Model relationships:** Allow models to connect to each other using common identifiers, providing a unified view.
+**Model relationships:** Useful for creating a comprehensive view of your data. By connecting different models using common identifiers, you can create merged views of your customer data from different sources.
 
-**Custom columns:** Use dynamic functions to create new fields that transform and enrich the data, adding calculated values or tags that enhance it.
+**Custom columns:** Lets you add calculated fields or tags to existing rows in a model.
+- Custom columns: These columns are free-form columns that you can upsert data into from within a play.
+- Computed columns: Calculate values based on other columns in the model.
+- Metrics columns: Store aggregated data, such as sums, averages, or counts, based on the values in other columns in other models
 
-**Setting up system of record:** Allow using existing warehouse instance as a system of record kept up to date by Cargo.
+**Setting up system of record:** Allow using your own warehouse instance as a system of record accessible by Cargo.
 
-This framework ensures that Cargo users can effectively manage their data, offering a dynamic set of options for feeding data into plays.
+

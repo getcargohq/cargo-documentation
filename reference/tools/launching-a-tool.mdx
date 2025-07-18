@@ -7,133 +7,23 @@ description: Tools in Cargo can be launched through multiple methods depending o
 
 The most direct way to launch a tool is through the launch tab in the Cargo interface.
 
-### Single run
-- Navigate to your tool in the Cargo workspace
-- Click on the "Launch" tab
-- Select "Single" mode
-- Enter the required input parameters
-- Click "Run tool" to execute immediately
+**Single run:** To execute a tool once with specific parameters, navigate to your tool in the Cargo workspace and click on the "Launch" tab. Select "Single" mode, enter the required input parameters, and click "Run tool" to execute immediately.
 
-### Bulk run
-- Navigate to your tool in the Cargo workspace
-- Click on the "Launch" tab
-- Select "Bulk" mode
-- Upload a file with multiple input records
-- Click "Continue" to process the batch
-
-**Use cases:** Testing tools, one-off executions, processing small datasets
+**Bulk run:** For processing multiple records at once, navigate to your tool and select the "Launch" tab. Choose "Bulk" mode, upload a file containing multiple input records, and click "Continue" to process the entire batch.
 
 ## 2. Through a play
 
-Tools can be integrated into plays as nodes within automated workflows.
-
-### How it works:
-- Add your tool as an action in a play
-- Configure the tool's inputs using data from previous actions
-- The tool will execute automatically when the play runs
-- Results can be passed to subsequent actions in the workflow
-
-**Use cases:** Automated workflows, multi-step processes, conditional logic
+Add your tool as an action in a play and configure its inputs using data from previous actions. The tool will execute automatically when the play runs, and its results can be passed to subsequent actions in the workflow.
 
 ## 3. Through an agent
 
-Agents can trigger tools as part of their research and qualification processes.
-
-### How it works:
-- Configure an agent to use specific tools
-- The agent will automatically launch tools when needed
-- Tool results feed into the agent's decision-making process
-- Agents can chain multiple tools together
-
-**Use cases:** Automated research, intelligent data gathering, AI-powered workflows
+Configure an agent to use specific tools, and it will automatically launch them when needed. Tool results feed into the agent's decision-making process, and agents can chain multiple tools together for complex workflows.
 
 ## 4. Through an MCP server
 
-Tools can be launched programmatically through MCP (Model Context Protocol) servers.
-
-### How it works:
-- Set up an MCP server connection
-- Use the MCP protocol to send tool execution requests
-- Tools run on the server and return results
-- Integrates with external systems and workflows
-
-**Use cases:** External integrations, custom applications, server-side automation
+Set up an MCP server connection and use the MCP protocol to send tool execution requests. Tools run on the server and return results, integrating seamlessly with external systems and workflows.
 
 ## 5. Through API calls
 
-Tools can be executed directly via REST API calls for programmatic access.
+Tools can be executed directly via REST API calls for programmatic access. This method allows you to integrate tools into custom applications, automated systems, and third-party workflows.
 
-### Single tool execution
-```bash
-POST https://api.getcargo.io/v1/tools/{tool-id}/execute
-```
-
-**Request body:**
-```json
-{
-  "key": "value"
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success",
-  "createdAt": "timestamp",
-  "finishedAt": "timestamp",
-  "input": {
-    "key": "value"
-  },
-  "output": {
-    "key": "value"
-  }
-}
-```
-
-### Batch tool execution
-```bash
-POST https://api.getcargo.io/v1/tools/{tool-id}/batches
-```
-
-**Request body:**
-```json
-{
-  "webhookUrl": "https://webhook.url",
-  "data": [
-    {
-      "key": "value"
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "batch": {
-    "uuid": "__BATCH_UUID__",
-    "status": "running"
-  }
-}
-```
-
-### Authentication
-Include your API token in the request header:
-```json
-{
-  "Content-Type": "application/json",
-  "Authorization": "Basic __TOKEN__"
-}
-```
-
-**Use cases:** Custom integrations, automated systems, third-party applications
-
-## Choosing the right method
-
-- **Launch tab:** For manual testing and small-scale operations
-- **Plays:** For automated workflows and complex business logic
-- **Agents:** For AI-powered research and intelligent automation
-- **MCP server:** For external system integrations
-- **API calls:** For programmatic access and custom applications
-
-Each method offers different levels of automation, integration capabilities, and complexity. Choose based on your specific use case and technical requirements.

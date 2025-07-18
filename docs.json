@@ -52,7 +52,15 @@
               {
                 "group": "Data",
                 "pages": [
-                  "reference/data/using-data-models"
+                  "reference/data/read-create-update-records",
+                  {
+                    "group": "System of record",
+                    "pages": [
+                      "reference/data/system-of-record",
+                      "reference/data/setup-cargo-snowflake",
+                      "reference/data/setup-cargo-bigquery"
+                    ]
+                  }
                 ]
               },
               {

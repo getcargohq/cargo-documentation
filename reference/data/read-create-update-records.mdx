@@ -1,0 +1,60 @@
+---
+title: Read, create, update records
+description: Learn how to work with data models and records from your plays
+---
+
+## Reading records
+
+### Filters and segments
+---insert gif here---
+
+Filters create focused subsets of data within models. For example, filter prospects who attended a webinar. Filter logic can be saved as reusable segments.
+
+Plays respond to real-time changes in model data. When changes match filter criteria, plays import records and create runs. Plays resync periodically (except webhook models which resync automatically as a new record is added).
+
+### Model search node
+
+---insert image here---
+
+Search and retrieve model or dataset records. This node allows you to query data from any model in your workspace and use the results in your play.
+
+---
+
+## Creating records
+
+### Model record node
+---insert gif here---
+
+Add record to a compatible data model. Some data models, such as HTTP, allow creating new records from within Cargo's plays. It can be useful to store new data and trigger other plays.
+
+Data models coming from external services such as CRM don't support writing records using this node. In order to create new objects, use dedicated write nodes for the service in question (e.g., HubSpot write node).
+
+Ensure all parameters are carefully passed with correct data types. If a new column is created using this node, the first value will determine the data type, which cannot be changed later.
+
+### Compatible data models
+---insert gif here---
+
+Some data models support record creation while others don't. HTTP-based models typically allow creating new records, while CRM models require using dedicated write nodes for external services.
+
+---
+
+## Updating records
+
+### Model custom column node
+
+---insert gif here---
+
+Update custom columns on a selected data model. This node allows writing data to custom columns created on a particular data model. It allows extending the data model that is synchronized from an external system with additional data points. For instance, you may want to add extra metadata about particular records or flag them.
+
+The ID required by this node needs to be the primary identifier of the data model. When the play is using the same data model, the record ID can be set to `nodes.start._id`. In case no primary ID is available in the play, consider using the model search node.
+
+### Memory node
+
+---insert image here---
+
+Store or access structured data using a key/value store approach.
+
+The node requires a scope (workspace or play level) and a unique key identifier. Available actions include getting, setting, getting or setting, incrementing, decrementing, and removing values from storage.
+
+---
+
