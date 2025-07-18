@@ -1,0 +1,142 @@
+---
+title: Actions
+---
+
+# Actions
+
+Cargo provides a comprehensive set of nodes to help you automate your Go-To-Market workflows. These nodes are organized into several main categories, each serving specific purposes in your automation strategies.
+
+## Understanding nodes and actions
+
+In Cargo, **nodes** are the fundamental building blocks of workflows. They represent individual steps or operations that can be connected together to create complex automation processes.
+
+**Actions** are the kinds of tasks a node can perform when it executesa subcategory of nodes that define what a node does. For example, a CRM node might perform "read", "write", or "search" actions depending on how it's configured.
+
+---
+
+## Node categories overview
+
+Cargo's tool editor offers over 120 different nodes that are grouped into these main categories:
+
+### Logic nodes
+General workflow logic nodes such as "If", "Branch" or "Group Node". These nodes are building blocks for creating complex workflows mimicking oft-used programming constructs like loops, conditions, and branches.
+
+### Sales nodes
+Dedicated nodes to work with the revenue organization and lead prioritization features such as allocate and scoring. These nodes are used to replicate complex logic that is often used in large sales organizations.
+
+### Storage nodes
+Nodes that allow interaction with data models present in the user's Cargo workspace, for storing and retrieving data from within the workflow.
+
+### Integration nodes
+Nodes for actions are provided by each connector which is natively integrated into Cargo. For instance, a CRM connector may offer a number of actions such as write, list, and merge that are available as separate nodes.
+
+---
+
+## Action types
+
+Actions are the core operational nodes that perform specific tasks, often leveraging integrations with external platforms.
+
+### Associate
+Link two different records together in a third-party platform. Creates relationships between objects, such as associating a contact with a company in your CRM, or linking a lead to an opportunity.
+
+### Enrich
+Fetch additional details and information about companies, profiles, and other data points from external sources. Enhances existing data by pulling in supplementary information like company size, industry, funding details, and contact information.
+
+### Instruct
+Generate text content using Large Language Models (LLMs). Creates personalized messages, summarizes content, answers questions, or generates text-based output based on input data.
+
+### Read
+Retrieve specific records or data from integrated platforms and services. Fetches existing information from connected systems, such as CRM records, contact details, or company information.
+
+### Search
+Find records or information within integrated platforms based on specified filters and criteria. Performs targeted searches across connected systems to locate specific records, contacts, or companies that match search parameters.
+
+### Verify
+Check the validity and accuracy of data points like email addresses, phone numbers, and other contact information. Validates the authenticity and deliverability of contact data.
+
+### Write
+Create new records or update existing ones in integrated platforms and services. Adds new contacts, companies, opportunities, or other records to connected systems, or modifies existing data.
+
+---
+
+## Storage
+
+Storage nodes allow interaction with data models present in your Cargo workspace, enabling you to store and retrieve data directly within your workflows.
+
+### Memory
+A key/value data store that provides temporary storage within your workflow execution. Stores and retrieves data that needs to persist during a single workflow run, but doesn't need to be permanently stored in your data models.
+
+### Model custom column
+Set custom columns and their values on existing records in your data models. Adds or updates custom fields on data records to store additional information, track workflow progress, or add metadata.
+
+### Model record
+Add new records to your selected data models. Creates new entries in your Cargo data models to store information gathered from workflows, external sources, or generated during automation processes.
+
+### Model search
+Retrieve records from your data models based on specific search criteria and filters. Queries existing data to find records that match certain conditions for use in workflows.
+
+### Model vector search
+Perform semantic searches within your data models using vector-based queries. Finds records based on meaning and context rather than exact matches, making it easier to discover relevant information.
+
+---
+
+## Sales
+
+Sales nodes are dedicated to optimizing revenue operations and lead prioritization, replicating complex logic often used in large sales organizations.
+
+### Allocate
+Choose and assign members of your sales team based on predefined rules and criteria. Implements allocation logic to automatically route leads, opportunities, or accounts to the most appropriate sales representatives.
+
+### Scoring
+Create and calculate scores for records based on various criteria and business rules. Evaluates leads, contacts, or companies against defined scoring models to determine potential value or priority.
+
+---
+
+## Logic
+
+Logic nodes provide general workflow control, abstracting conditional and iterative logic into simplified interfaces. They are building blocks for creating complex workflows, mimicking common programming constructs like loops, conditions, and branches.
+
+### Balance
+Distribute records between different routes equally based on specified proportions. Splits workflow execution across multiple paths, ensuring even distribution of work or traffic.
+
+### Branch
+Create conditional branching logic based on input expressions and conditions. Evaluates a condition and routes workflow execution down one of two possible paths (Yes/No) based on the result.
+
+### Delay
+Pause workflow execution for a specified period before continuing to the next node. Adds controlled timing to workflows for waiting for external processes, respecting rate limits, or creating time-based automation sequences.
+
+### Filter
+Evaluate an input expression and only proceed to the next node if the condition is true. Acts as a gatekeeper in workflows, stopping execution when conditions aren't met.
+
+### Group
+Handle arrays of items by creating sub-workflows that execute for each individual item. Processes multiple records or data points by running the same workflow logic for each item in an array.
+
+### Script
+Write and execute custom JavaScript code within your workflow. Provides flexibility for implementing custom logic, calculations, data transformations, or other programming operations.
+
+### Split
+Randomly split workflow execution into one of two branches based on a defined proportion. Creates probabilistic routing in workflows for testing different approaches or creating sample groups.
+
+### Switch
+Route records conditionally based on comparison operations and multiple possible outcomes. Provides complex branching logic with multiple possible paths based on different conditions.
+
+### Variables
+Create and store variables that can be used throughout your workflow execution. Defines custom variables, stores calculated values, or maintains state across different parts of your workflow.
+
+---
+
+## Tools
+
+Tool nodes allow you to leverage both pre-built and custom tools within your workflows, extending Cargo's capabilities.
+
+### Company
+Retrieve comprehensive information about companies from various data sources and enrichment services. Provides access to company intelligence, including firmographics, funding information, technology stack, and growth indicators.
+
+### Person
+Retrieve detailed information about individuals, including contact details, professional information, and social profiles. Provides access to personal data like email addresses, phone numbers, job titles, and company affiliations.
+
+### Utils
+Use supporting tools for data formatting, validation, transformation, and other utility functions. Provides access to helper functions and utilities that assist with common data processing tasks.
+
+### Custom
+Integrate and execute your own custom-built tools and functions. Extends Cargo's capabilities by incorporating specialized tools, scripts, or integrations not available in the standard toolkit.

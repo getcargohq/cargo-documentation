@@ -1,0 +1,144 @@
+---
+title: Set up Cargo on BigQuery
+description: Configure BigQuery as your system of record in Cargo
+---
+
+# Setting up Cargo on BigQuery
+
+In this guide, we will walk you through setting up BigQuery as your store of records in Cargo. This setup ensures Cargo has the necessary permissions in BigQuery to read and write data efficiently.
+
+---
+
+## Permissions
+
+### What Cargo can do
+
+- Read data from datasets and tables, even if they are spread across multiple projects
+- Write data into new datasets and tables
+
+### What Cargo will never do
+
+- Overwrite existing datasets and tables (Cargo always creates its own datasets and tables when needed)
+
+---
+
+## Step 1: Create a dedicated dataset
+
+Create a dedicated dataset for Cargo where all data managed by Cargo will be stored.
+
+### Create a dataset called "cargo_dataset"
+
+You can create this through the BigQuery console or using the following command:
+
+```bash
+bq mk --dataset your-project-id:cargo_dataset
+```
+
+---
+
+## Step 2: Create a service account for Cargo
+
+Grant the necessary permissions for Cargo to run commands as an authenticated service account on the dataset you just created.
+
+### Create a service account
+
+```bash
+gcloud iam service-accounts create cargo-service-account \
+    --display-name="Cargo Service Account"
+```
+
+### Grant BigQuery permissions to the service account
+
+```bash
+gcloud projects add-iam-policy-binding your-project-id \
+    --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+    --role="roles/bigquery.dataEditor"
+
+gcloud projects add-iam-policy-binding your-project-id \
+    --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+    --role="roles/bigquery.jobUser"
+```
+
+### Create and download a key file
+
+```bash
+gcloud iam service-accounts keys create cargo-key.json \
+    --iam-account=cargo-service-account@your-project-id.iam.gserviceaccount.com
+```
+
+---
+
+## Step 3: Grant additional permissions
+
+If you need Cargo to access data outside the dedicated dataset, grant additional permissions:
+
+### Grant read access to other datasets
+
+```bash
+bq add-iam-policy-binding \
+    --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+    --role="roles/bigquery.dataViewer" \
+    your-project-id:other_dataset
+```
+
+---
+
+## Step 4: Verify permissions
+
+Make sure the Cargo service account has access to the following permissions:
+- `bigquery.datasets.create`
+- `bigquery.tables.create`
+- `bigquery.tables.getData`
+- `bigquery.tables.updateData`
+- `bigquery.jobs.create`
+
+### Check service account permissions
+
+```bash
+gcloud projects get-iam-policy your-project-id \
+    --flatten="bindings[].members" \
+    --format='table(bindings.role)' \
+    --filter="bindings.members:cargo-service-account@your-project-id.iam.gserviceaccount.com"
+```
+
+---
+
+## Step 5: Setup system of records
+
+Now that we have all required elements, navigate to workspace settings and select "System of records".
+
+Fill in the settings form with the data we gathered in previous steps:
+
+- Provide your Google Cloud project ID
+- Fill in the dataset name created in step 1
+- Upload the service account key file created in step 2
+- Select your desired scope (can be either project or dataset scope)
+- Click `Setup`
+
+---
+
+## Step 6: Test the connection
+
+After setup, you can test the connection by creating a simple data model that reads from your BigQuery tables.
+
+### Example: Create a data model from BigQuery
+
+1. Go to your workspace in Cargo
+2. Navigate to Data Models
+3. Click "Create Data Model"
+4. Select "BigQuery" as the data source
+5. Enter your project ID and dataset name
+6. Test the connection to ensure everything is working properly
+
+---
+
+## Setup completed
+
+You are now ready to use Cargo with BigQuery!
+
+### Next steps
+
+- Create your first data model using BigQuery tables
+- Set up data connectors to import data from other sources
+- Configure model relationships to connect different datasets
+- Set up filters and segments for targeted plays 

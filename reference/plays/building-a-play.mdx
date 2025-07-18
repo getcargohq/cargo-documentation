@@ -1,0 +1,75 @@
+---
+title: Building a play
+description: Plays are similar to tools in structure but differ in how they're executed
+---
+
+While tools are manually triggered or called by other components, plays are automatically triggered by changes in your data models.
+
+**Triggers** are the starting point of your play. They define when the play should execute and what data should be provided to it. Plays listen for specific changes in your data models and automatically start processing when those changes occur.
+
+---
+
+## Enabling
+
+Once you're satisfied with your play design, you can publish it. Publishing creates a new version of the play that will be used by all future runs.
+
+When you press the publish button, the play is enabled by default. You can untoggle the enabled button to disable the play. Once disabled, the play won't automatically enroll any data, but you can still manually enroll runs through a disabled play.
+
+Disabled plays remain available for manual enrolment of records from a data model but won't respond to automatic triggers. This allows you to test or debug plays without affecting live data processing.
+
+---
+
+## Play triggers
+
+Plays are triggered by changes in your data models. When records are added, updated, or modified in a model, the associated play automatically processes those records.
+
+### Automatic enrolments
+---add image here---
+To configure a play trigger, you need to connect it to a data model. The play will then monitor that model for changes and automatically enroll new or modified records into the workflow. 
+
+### Manual enrolments
+---add gif here---
+You can test your play by importing records from your data model. Navigate to the records view and use the import button to select specific records for testing. This allows you to validate your workflow with real data before enabling automatic processing.
+
+---
+
+## Model syncs
+
+Once enabled, plays can process records in batches. You can configure sync settings to control how and when your play processes data.
+
+For detailed information about configuring sync settings and trigger conditions, see [Sync a play](/reference/plays/sync-a-play).
+
+---
+
+## Re-running failed runs
+---add gif here---
+
+Multiple errors can cause runs to fail to execute correctly and need to be re-run post-corrections to the execution logic. Cargo provides a feature to re-run these failing nodes directly from the records view.
+
+Failed runs can be re-run from scratch or only from the moment they failed, ensuring that successful steps are not duplicated.
+
+---
+
+## Handling failures with fallbacks
+
+Plays can encounter errors during execution, and Cargo provides fallback mechanisms to handle these failures gracefully.
+
+### Setting up fallbacks
+---add gif here---
+
+To configure a fallback for a node:
+
+1. Right-click on the node you want to add a fallback to
+2. Select "failure" from the context menu
+3. Choose the fallback option under the fail mode
+
+This will create a new link handle on the right side of the node. Any nodes connected from this fallback handle will only execute if the original node fails.
+
+---
+
+## Monitoring workflow health
+---add gif here---
+
+Play health needs to be closely monitored to avoid disruptions in key processes. Cargo's editor provides features to continuously monitor play health status.
+
+If a defined threshold is hit, you can configure Slack notifications to alert you of issues.

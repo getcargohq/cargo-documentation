@@ -1,0 +1,91 @@
+---
+title: Allocating leads
+description: Learn how to set up and use Cargo's revenue organization features for lead allocation
+---
+
+## Core concepts
+
+### Members
+
+---insert image here---
+
+When you connect a tool that contains an object containing members of your sales organization, Cargo automatically imports these team members and keeps them updated. 
+
+This creates a unified view of your team across your workspace. Moreover, you can enhance member profiles with custom metadata (such as their spoken languages, mailboxes, etc.) to personalize how leads are assigned.
+
+---
+
+### Territories
+
+---insert GIF here---
+
+After synchronizing members, you can group members into teams representing different sales organizations.
+
+A territory is a group of members that can reflect any structure within your organization, such as geographical regions or industry focus groups. Each territory can also have a fallback member who will be used for allocation when other members are unavailable.
+
+---
+
+### Capacity
+
+---insert GIF here---
+
+Capacity defines a maximum lead allocation limit per member. Each configuration specifies allocation count and timeframe, helping distribute work fairly according to business logic.
+
+For instance, you can set a capacity of 3 records per day if that matches your average sales cadence.
+
+All capacities are calculated independently. A member can be available for allocation under one capacity configuration while being marked as fully booked under another.
+
+---
+
+### Allocation node
+
+---insert GIF here---
+
+The allocation node assigns leads and manages workload distribution. Allocation happens by default in a 'round-robin' mode, spreading assignments equally among available sales members.
+
+The only pre-requisite for this node to function is a reliable record ID, which allows Cargo to track each lead allocation internally.
+
+The allocation node can be configured flexibly, for instance, based on their email address, territory (if defined), static list of members, or connector matching.
+
+---
+
+## Advanced features
+
+### Capacity model mapping - Dynamic capacity calculation
+
+---insert video here---
+
+When a basic capacity calculation is not sufficient to meet your desired business logic. Use a capacity model mapping to calculate actual member capacity based on information in a Cargo data model.
+
+Data models used to map this advanced setting must be transactional objects, such as a CRM deals object, since this should be organized at allocation level (i.e. one record = one deal = one allocation).
+
+It is obligatory to add a filter identifying the deal owner (i.e. the member assigned to the deal) using a model column that denotes the deal owner and via a Cargo expression that will be used to filter the relevant member using an expression such as `{{member.ids.<Insert connector name here>}}`.
+
+---
+
+## Monitoring & management
+
+### Allocation history - Tracking and auditing
+
+---insert image here---
+
+Each sales organization element (member, territory, and capacity) has a dedicated screen where all historical allocations are recorded. Each entry in the allocation history links to the specific play run that triggered that allocation.
+
+This allows you to track how allocations are performed at each level and helps with verification and troubleshooting.
+
+---
+
+## Allocation fallback
+
+This helps the sales team provide timely responses to all leads. Cargo provides several ways to manage allocation fallbacks:
+
+- Each territory can have one configured fallback member, which will receive all new allocations once all members of the territory have exhausted their capacity.
+- The allocation node can be configured in failure mode to retry to continue to attempt allocating the lead to the member.
+
+---
+
+## Allocation history
+
+Each sales organization element (member, territory, and capacity) has a dedicated screen where all historical allocations are recorded. Each entry in the allocation history links to the specific play run that triggered that allocation.
+
+This allows you to track how allocations are performed at each level and helps with verification and troubleshooting.

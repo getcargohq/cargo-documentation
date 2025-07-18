@@ -1,0 +1,52 @@
+---
+title: Build a data model
+description: Learn about data models and how they power Cargo plays
+---
+
+## What are data models?
+
+Cargo plays are powered by underlying data models, which are structured tables containing organized data. Data from these models can be imported into a workflow to generate runs.
+
+To ensure efficient data management, Cargo leverages a data warehouse infrastructure to host these models. This warehouse collects, manages, and stores data for each workspace, ensuring accuracy, consistency, and accessibility across all data models within that workspace.
+
+Cargo enables users to create data models from a variety of external and internal sources, including API endpoints, webhook events, and SQL queries on warehouse tables. This integration allows users to merge multiple data sources into a unified, cohesive model.
+
+By supporting data model creation from both external sources and existing models within Cargo, the platform provides a flexible way to consolidate diverse datasets under a common schema.
+
+---
+
+## Data connectors
+
+Among all of the integrations available in Cargo, those available as storage connectors allow the user to bring external data to a data model using a data loader. This capability enables you to unify data from various sources, such as data warehouses, CRMs, marketing automation platforms, etc. into a single, unified model.
+
+
+There are three types of data loaders available in Cargo:
+
+**Native integrations:** These loaders allows you to connect to a supported external API endpoint to fetch data and import it into a data model.
+
+**Webhook data loader:** This loader allows you to listen for events from an external source and import the data into a data model.
+
+**SQL data loader:** This loader allows you to run SQL queries on tables in the data warehouse and import the results into a data model.
+
+---
+
+## Advanced features
+
+Models support several advanced features, such as:
+
+**Creating segments:** Apply filters to data models to form segments, allowing for targeted plays based on specific criteria.
+
+**Change-based triggers:** Enable plays to respond in real-time to updates, additions, or deletions in the data, ensuring action based on the most pertinent signals.
+
+**Set enrolment conditions:** Track records to prevent plays from processing the same data multiple times.
+
+**Model relationships:** Useful for creating a comprehensive view of your data. By connecting different models using common identifiers, you can create merged views of your customer data from different sources.
+
+**Custom columns:** Lets you add calculated fields or tags to existing rows in a model.
+- Custom columns: These columns are free-form columns that you can upsert data into from within a play.
+- Computed columns: Calculate values based on other columns in the model.
+- Metrics columns: Store aggregated data, such as sums, averages, or counts, based on the values in other columns in other models
+
+**Setting up system of record:** Allow using your own warehouse instance as a system of record accessible by Cargo.
+
+
