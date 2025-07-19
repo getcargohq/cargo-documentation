@@ -21,75 +21,30 @@ Sync settings allow you to control:
 
 When dealing with repeated records, workflows can be set to handle different scenarios:
 
-### Resync schedule
+**Resync schedule:** Configure how often the segment resyncs with the data model feeding the workflow to look for changes.
 
-Configure how often the segment resyncs with the data model feeding the workflow to look for changes.
+**Always Enroll:** Starts the workflow every time a change is noticed, regardless of prior workflow runs. Useful for acting on every change quickly.
 
-### Always Enroll
+**Enroll if Not Executing:** Starts the workflow only if the record isn't currently being processed. Helps avoid duplication from high-frequency enrollments.
 
-Starts the workflow every time a change is noticed, regardless of prior workflow runs. Useful for acting on every change quickly.
+**No Re-Enrollment:** Ensures that once a record has gone through the workflow, it won't trigger again. Ideal for processing each record only once and avoiding further actions on subsequent changes.
 
-### Enroll if Not Executing
+**New Record Additions:** Triggers the workflow when new records are added. Essential for immediate actions on new information, like adding new customers.
 
-Starts the workflow only if the record isn't currently being processed. Helps avoid duplication from high-frequency enrollments.
+**Record Deletions:** Starts workflows when records are removed. Useful for data cleanup and triggering follow-up actions.
 
-### No Re-Enrollment
+**Record Updates:** Triggers workflows when specific details in a record are changed, ensuring actions are based on the latest data. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
 
-Ensures that once a record has gone through the workflow, it won't trigger again. Ideal for processing each record only once and avoiding further actions on subsequent changes.
-
-### New Record Additions
-
-Triggers the workflow when new records are added. Essential for immediate actions on new information, like adding new customers.
-
-### Record Deletions
-
-Starts workflows when records are removed. Useful for data cleanup and triggering follow-up actions.
-
-### Record Updates
-
-Triggers workflows when specific details in a record are changed, ensuring actions are based on the latest data. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
-
-### No Record Updates
-
-Triggers workflows when no result in a record is changed. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
+**No Record Updates:** Triggers workflows when no result in a record is changed. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
 
 ---
 
-## Sync configuration
+## Sync schedules
 
-### Processing frequency
+Cargo plays can sync per three schedule types.
 
-Choose how often your play should check for new data:
+**Interval:** Run your play at regular time intervals (every minute, hour, day, etc.) for consistent data processing.
 
-- **Real-time:** Process changes immediately (for webhook-based models)
-- **Every minute:** High-frequency processing for time-sensitive operations
-- **Every hour:** Regular processing for most business workflows
-- **Daily:** Batch processing for non-urgent operations
-- **Weekly:** Periodic processing for maintenance tasks
-- **Custom schedule:** Define your own cron expression for specific timing
+**Cron jobs:** Use cron expressions to define complex schedules with precise timing control for specific business requirements.
 
-### Batch size
-
-Control how many records are processed in each sync cycle:
-
-- **Small batches (1-10):** For real-time processing and immediate actions
-- **Medium batches (10-100):** For most business workflows
-- **Large batches (100+):** For bulk operations and data processing
-
-### Schedule configuration
-
-Set up specific timing for your sync operations:
-
-- **Business hours only:** Process only during working hours
-- **Weekdays only:** Skip weekend processing
-- **Specific times:** Run at particular times of day
-- **Multiple times per day:** Process several times daily
-
-### Filtering options
-
-Define which records should trigger your play:
-
-- **All records:** Process every change in the data model
-- **Filtered records:** Only process records that match specific criteria
-- **Segmented records:** Process only records in specific segments
-- **Custom conditions:** Use complex logic to determine which records to process 
+**dbt models:** Trigger plays automatically when dbt models are refreshed, ensuring your workflows run with the latest transformed data. 
