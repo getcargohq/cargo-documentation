@@ -1,9 +1,9 @@
 ---
-title: Launching a Tool
+title: Launching a tool
 description: Tools in Cargo can be launched through multiple methods depending on your use case
 ---
 
-## 1. Launch tab (Single or bulk runs)
+## Launch tab
 
 The most direct way to launch a tool is through the launch tab in the Cargo interface.
 
@@ -11,19 +11,19 @@ The most direct way to launch a tool is through the launch tab in the Cargo inte
 
 **Bulk run:** For processing multiple records at once, navigate to your tool and select the "Launch" tab. Choose "Bulk" mode, upload a file containing multiple input records, and click "Continue" to process the entire batch.
 
-## 2. Through a play
+## Through a play
 
 Add your tool as an action in a play and configure its inputs using data from previous actions. The tool will execute automatically when the play runs, and its results can be passed to subsequent actions in the workflow.
 
-## 3. Through an agent
+## Through an agent
 
 Configure an agent to use specific tools, and it will automatically launch them when needed. Tool results feed into the agent's decision-making process, and agents can chain multiple tools together for complex workflows.
 
-## 4. Through an MCP server
+## Through an MCP server
 
 Set up an MCP server connection and use the MCP protocol to send tool execution requests. Tools run on the server and return results, integrating seamlessly with external systems and workflows.
 
-## 5. Through API calls
+## Through API calls
 
 Tools can be executed directly via REST API calls for programmatic access. This method allows you to integrate tools into custom applications, automated systems, and third-party workflows.
 
