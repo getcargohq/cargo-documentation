@@ -32,8 +32,15 @@
                 "group": "Tools",
                 "pages": [
                   "reference/tools/building-a-tool",
+                  "reference/tools/actions",
                   "reference/tools/launching-a-tool",
-                  "reference/tools/actions"
+                  "reference/tools/monitoring-a-tool"
+                ]
+              },
+              {
+                "group": "Agents",
+                "pages": [
+                  "reference/agents/building-an-agent"
                 ]
               },
               {
@@ -44,15 +51,11 @@
                 ]
               },
               {
-                "group": "Agents",
-                "pages": [
-                  "reference/agents/building-an-agent"
-                ]
-              },
-              {
                 "group": "Data",
                 "pages": [
-                  "reference/data/read-create-update-records",
+                  "reference/data/enrol-data-in-plays",
+                  "reference/data/create-segments",
+                  "reference/data/sql-models",
                   {
                     "group": "System of record",
                     "pages": [

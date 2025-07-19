@@ -1,0 +1,45 @@
+---
+title: SQL models
+description: Learn how to work with SQL models for data operations and queries
+---
+
+SQL models provide powerful ways to interact with your data warehouse, enabling you to write data back to models, perform custom queries, and maintain data consistency across your systems.
+
+## Writing data to models
+
+Custom and HTTP models permit direct writing from workflows using a **model record node**.
+
+Use the model record node to add new records to compatible data models. This node allows you to create records programmatically within workflows, maintaining a single source of truth for your business data.
+
+**Configuration:** 
+- Select the relevant data model
+- Choose the insert action
+- Pass the data object that will populate the record columns in a valid JSON (tip: passing an entire variables node will work)
+
+## Writing data to warehouse
+
+The **SQL write** node enables direct database operations inside a connected warehouse.
+
+- **Insert:** Always creates a new row
+- **Upsert:** Creates a new row if no matching row exists, otherwise updates it
+- **Update:** Updates matching rows without creating new entries
+- **Delete:** Removes matching rows
+
+**Configuration steps:**
+1. Enter database name and select schema/table
+2. Choose the action to perform
+3. Define matching criteria for non-INSERT operations
+4. Specify data mapping for each column
+
+## Custom SQL queries
+
+Create powerful SQL-based data models that combine data from multiple sources.
+
+Add an SQL connector to enable direct database access. The connector supports both BigQuery and Snowflake with consistent patterns for table structure: `[SCOPE].datasets_[CONNECTOR].models_[MODEL]`
+
+### Creating SQL models
+
+- **Step 1:** Add SQL model and configure database connection
+- **Step 2:** Write SQL queries for your specific database (BigQuery or Snowflake)
+- **Step 3:** Configure mapping for unique identifier, title, and timestamp columns
+- **Step 4:** Preview and save the query

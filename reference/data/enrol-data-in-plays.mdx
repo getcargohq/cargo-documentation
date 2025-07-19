@@ -1,26 +1,15 @@
 ---
-title: Read, create, update records
+title: Leverage data in plays
 description: Learn how to work with data models and records from your plays
 ---
 
-## Reading records
-
-### Filters and segments
----insert gif here---
-
-Filters create focused subsets of data within models. For example, filter prospects who attended a webinar. Filter logic can be saved as reusable segments.
-
-Plays respond to real-time changes in model data. When changes match filter criteria, plays import records and create runs. Plays resync periodically (except webhook models which resync automatically as a new record is added).
+Some data models support record creation while others don't. HTTP-based models typically allow creating new records,
 
 ### Model search node
 
 ---insert image here---
 
 Search and retrieve model or dataset records. This node allows you to query data from any model in your workspace and use the results in your play.
-
----
-
-## Creating records
 
 ### Model record node
 ---insert gif here---
@@ -29,16 +18,7 @@ Add record to a compatible data model. Some data models, such as HTTP, allow cre
 
 Data models coming from external services such as CRM don't support writing records using this node. In order to create new objects, use dedicated write nodes for the service in question (e.g., HubSpot write node).
 
-Ensure all parameters are carefully passed with correct data types. If a new column is created using this node, the first value will determine the data type, which cannot be changed later.
-
-### Compatible data models
----insert gif here---
-
-Some data models support record creation while others don't. HTTP-based models typically allow creating new records, while CRM models require using dedicated write nodes for external services.
-
----
-
-## Updating records
+When a new row is created using this node, the first value will determine the data type, which cannot be changed later.
 
 ### Model custom column node
 

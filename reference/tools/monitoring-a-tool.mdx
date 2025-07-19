@@ -1,0 +1,33 @@
+---
+title: Monitoring a tool
+description: Learn how to monitor tool performance, view records, and manage failed runs
+---
+
+Once your tool is running, you can monitor its performance, view execution history, and manage any issues that arise.
+
+## Records
+
+Access your tool's execution history through the records view. In the top bar of the tool editor, click on records to see the full history of the tool's runs.
+
+The records view shows:
+- **Running executions:** Currently active tool runs
+- **Completed runs:** Successfully finished executions
+- **Failed runs:** Executions that encountered errors
+- **Node-level details:** Progress and status of each node within the tool
+
+To give the user the most flexibility with understanding the tool's execution history. Filter by batch to view all records from a specific batch execution, by version or by status (running, completed, or failed executions). 
+
+You can also filter on the outcomes of specific nodes in the execution flow.
+
+## Retrying fails
+
+---insert GIF here---
+
+When a tool execution fails, you can retry the operation by navigating to the failed record in the records view, clicking on the failed execution to view error details, using the "Retry" option to re-execute the tool with the same inputs, and monitoring the retry attempt in the records view.
+
+
+## Metrics
+
+Access comprehensive performance metrics for your tool by clicking on "Metrics" in the tool editor.
+
+The metrics view provides success rates showing the percentage of successful vs failed executions for each node grouped by batches,versions or date of execution.
