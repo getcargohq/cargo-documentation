@@ -7,7 +7,31 @@ Once enabled, plays can process records in batches. You can configure how often 
 
 For instance, the play may process in real-time for HTTP webhooks, or run only on a predefined weekly schedule (twice a day, only on working days).
 
----add image here (cron job)---
+![Building A Play 1 Pn](/images/building-a-play-1.png)
+
+**Manual enrolments**
+
+You can test your play by **importing records from your data model**.
+
+Navigate to the records view and enrol using the import button. Often, this allows you to validate your workflow with real data before enabling automatic processing.
+
+**Automatic enrolments**
+
+To configure a play trigger, you need to **connect it to a data model**. The play will then **monitor that model for changes** and **automatically enroll** new or modified records into the workflow.
+
+When records are **added**, **updated**, or **modified** in a model, the associated play automatically processes those records.
+
+Once enabled, plays can process records in batches. You can configure sync settings to control how and when your play processes data.
+
+### Sync schedules
+
+Cargo plays can sync per three schedule types.
+
+**Interval:** Run your play at regular time intervals (every minute, hour, day, etc.) for consistent data processing.
+
+**Cron jobs:** Use cron expressions to define complex schedules with precise timing control for specific business requirements.
+
+**dbt models:** Trigger plays automatically when dbt models are refreshed, ensuring your workflows run with the latest transformed data.
 
 Sync settings allow you to control:
 
@@ -16,11 +40,9 @@ Sync settings allow you to control:
 - **Schedule:** When the play should run (real-time, hourly, daily, etc.)
 - **Filtering:** Which records should trigger the play
 
----
+### Trigger conditions
 
-## Trigger conditions
-
---add image here
+![Building A Play 2 Pn](/images/building-a-play-2.png)
 
 When dealing with repeated records, workflows can be set to handle different scenarios:
 
@@ -39,15 +61,3 @@ When dealing with repeated records, workflows can be set to handle different sce
 **Record Updates:** Triggers workflows when specific details in a record are changed, ensuring actions are based on the latest data. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
 
 **No Record Updates:** Triggers workflows when no result in a record is changed. This option allows tracking a certain column to track for updates, as opposed to tracking all the columns in a segment.
-
----
-
-## Sync schedules
-
-Cargo plays can sync per three schedule types.
-
-**Interval:** Run your play at regular time intervals (every minute, hour, day, etc.) for consistent data processing.
-
-**Cron jobs:** Use cron expressions to define complex schedules with precise timing control for specific business requirements.
-
-**dbt models:** Trigger plays automatically when dbt models are refreshed, ensuring your workflows run with the latest transformed data.

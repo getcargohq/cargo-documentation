@@ -5,24 +5,22 @@ description: "Configure BigQuery as your system of record in Cargo"
 
 This guide will walk you through setting up BigQuery as your store of records in Cargo. This setup ensures Cargo has the necessary permissions in BigQuery to read and write data efficiently.
 
-## Permissions
+### Permissions
 
-### What Cargo can do
+**What Cargo can do**
 
 - Read data from datasets and tables, even if they are spread across multiple projects
 - Write data into new datasets and tables
 
-### What Cargo will never do
+**What Cargo will never do**
 
 - Overwrite existing datasets and tables (Cargo always creates its own datasets and tables when needed)
 
----
-
-## Step 1: Create a dedicated dataset
+### **Step 1: Create a dedicated dataset**
 
 Create a dedicated dataset for Cargo where all data managed by Cargo will be stored.
 
-### Create a dataset called "cargo_dataset"
+**Create a dataset called "cargo_dataset"**
 
 You can create this through the BigQuery console or using the following command:
 
@@ -32,18 +30,18 @@ bq mk --dataset your-project-id:cargo_dataset
 
 ---
 
-## Step 2: Create a service account for Cargo
+### Step 2: Create a service account for Cargo
 
 Grant the necessary permissions for Cargo to run commands as an authenticated service account on the dataset you just created.
 
-### Create a service account
+**Create a service account**
 
 ```bash
 gcloud iam service-accounts create cargo-service-account \
     --display-name="Cargo Service Account"
 ```
 
-### Grant BigQuery permissions to the service account
+**Grant BigQuery permissions to the service account**
 
 ```bash
 gcloud projects add-iam-policy-binding your-project-id \
@@ -55,7 +53,7 @@ gcloud projects add-iam-policy-binding your-project-id \
     --role="roles/bigquery.jobUser"
 ```
 
-### Create and download a key file
+**Create and download a key file**
 
 ```bash
 gcloud iam service-accounts keys create cargo-key.json \
@@ -64,11 +62,11 @@ gcloud iam service-accounts keys create cargo-key.json \
 
 ---
 
-## Step 3: Grant additional permissions
+### Step 3: Grant additional permissions
 
 If you need Cargo to access data outside the dedicated dataset, grant additional permissions:
 
-### Grant read access to other datasets
+**Grant read access to other datasets**
 
 ```bash
 bq add-iam-policy-binding \
@@ -79,7 +77,7 @@ bq add-iam-policy-binding \
 
 ---
 
-## Step 4: Verify permissions
+### Step 4: Verify permissions
 
 Make sure the Cargo service account has access to the following permissions:
 
@@ -89,7 +87,7 @@ Make sure the Cargo service account has access to the following permissions:
 - `bigquery.tables.updateData`
 - `bigquery.jobs.create`
 
-### Check service account permissions
+**Check service account permissions**
 
 ```bash
 gcloud projects get-iam-policy your-project-id \
@@ -100,7 +98,7 @@ gcloud projects get-iam-policy your-project-id \
 
 ---
 
-## Step 5: Setup system of records
+### Step 5: Setup system of records
 
 Now that we have all required elements, navigate to workspace settings and select "System of records".
 
@@ -114,11 +112,11 @@ Fill in the settings form with the data we gathered in previous steps:
 
 ---
 
-## Step 6: Test the connection
+### Step 6: Test the connection
 
 After setup, you can test the connection by creating a simple data model that reads from your BigQuery tables.
 
-### Example: Create a data model from BigQuery
+**Example: Create a data model from BigQuery**
 
 1. Go to your workspace in Cargo
 2. Navigate to Data Models
@@ -128,10 +126,6 @@ After setup, you can test the connection by creating a simple data model that re
 6. Test the connection to ensure everything is working properly
 
 ---
-
-## Setup completed
-
-You are now ready to use Cargo with BigQuery\!
 
 ### Next steps
 

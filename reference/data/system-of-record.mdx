@@ -1,9 +1,9 @@
 ---
-title: System of record
-description: Learn about system of record and SQL operations with data warehouses
+title: "System of record"
+description: "Learn about system of record and SQL operations with data warehouses"
 ---
 
-## How it works in Cargo
+### How it works in Cargo
 
 In your Cargo workspace, the system of record is powered by a data warehouse powered by SQL that centralizes all your data operations.
 
@@ -11,12 +11,14 @@ Use the SQL connector to run complex queries, create custom data models, and per
 
 The warehouse enables automatic syncs that periodically synchronize data between external systems and your Cargo workspace, ensuring your data stays current.
 
-## Warehouse options
+### Warehouse options
 
 Cargo provides a default Snowflake warehouse to power your system of record, ensuring you have a robust data infrastructure from the start. If you already have an existing warehouse, you can connect Cargo to your current setup instead.
 
 ### [Snowflake](/reference/data/setup-cargo-snowflake)
+
 Use Cargo's default Snowflake warehouse or connect to your existing Snowflake instance for data warehouse integration.
 
 ### [BigQuery](/reference/data/setup-cargo-bigquery)
-Connect to your existing BigQuery project to leverage your current data warehouse setup. 
+
+Connect to your existing BigQuery project to leverage your current data warehouse setup.

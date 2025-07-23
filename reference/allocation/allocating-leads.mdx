@@ -33,7 +33,7 @@ All capacities are calculated independently. A member can be available for alloc
 
 ![Creating an allocation](/images/allocating-leads-4.png)
 
-The allocation node assigns leads and manages workload distribution across the memebrs. Allocation happens by default in a 'round-robin' mode, spreading assignments equally among available sales members.
+The allocation node assigns leads and manages workload distribution across the members. Allocation happens by default in a 'round-robin' mode, spreading assignments equally among available sales members.
 
 > The only pre-requisite for this node to function is a reliable record ID, which allows Cargo to track each lead allocation internally.
 
@@ -47,13 +47,9 @@ When a basic capacity calculation is not sufficient to meet your desired busines
 
 > Data models used to map this advanced setting must be transactional objects, such as a CRM deals object, since this should be organized at allocation level (i.e. one record = one deal = one allocation).
 
-It is obligatory to add a filter identifying the deal owner (i.e. the member assigned to the deal) using a model column that denotes the deal owner via a Cargo expression that will be used to identify the relevant member`{{member.ids.<Insert connector name here>}}`.
+It is obligatory to add a filter identifying the deal owner (i.e., the member assigned to the deal) using a model column that denotes the deal owner via a Cargo expression that will be used to identify the relevant member`{{member.ids.<Insert connector name here>}}`.
 
----
-
-## Monitoring & management
-
-### Allocation history - Tracking and auditing
+### Allocation history
 
 ![Monitoring allocations](/images/allocating-leads-6.png)
 
@@ -61,7 +57,7 @@ Each sales organization element (member, territory, and capacity) has a dedicate
 
 This allows you to track how allocations are performed at each level and helps with verification and troubleshooting.
 
-## Allocation fallback
+### Allocation fallback
 
 This helps the sales team provide timely responses to all leads. Cargo provides several ways to manage allocation fallbacks:
 
