@@ -1,13 +1,9 @@
 ---
-title: Set up Cargo on BigQuery
-description: Configure BigQuery as your system of record in Cargo
+title: "Set up Cargo on BigQuery"
+description: "Configure BigQuery as your system of record in Cargo"
 ---
 
-# Setting up Cargo on BigQuery
-
-In this guide, we will walk you through setting up BigQuery as your store of records in Cargo. This setup ensures Cargo has the necessary permissions in BigQuery to read and write data efficiently.
-
----
+This guide will walk you through setting up BigQuery as your store of records in Cargo. This setup ensures Cargo has the necessary permissions in BigQuery to read and write data efficiently.
 
 ## Permissions
 
@@ -86,6 +82,7 @@ bq add-iam-policy-binding \
 ## Step 4: Verify permissions
 
 Make sure the Cargo service account has access to the following permissions:
+
 - `bigquery.datasets.create`
 - `bigquery.tables.create`
 - `bigquery.tables.getData`
@@ -134,11 +131,11 @@ After setup, you can test the connection by creating a simple data model that re
 
 ## Setup completed
 
-You are now ready to use Cargo with BigQuery!
+You are now ready to use Cargo with BigQuery\!
 
 ### Next steps
 
 - Create your first data model using BigQuery tables
 - Set up data connectors to import data from other sources
 - Configure model relationships to connect different datasets
-- Set up filters and segments for targeted plays 
+- Set up filters and segments for targeted plays
