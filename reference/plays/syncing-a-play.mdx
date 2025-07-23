@@ -1,6 +1,6 @@
 ---
-title: Syncing a play
-description: Learn how to configure sync settings and trigger conditions for plays
+title: "Syncing a play"
+description: "Learn how to configure sync settings and trigger conditions for plays"
 ---
 
 Once enabled, plays can process records in batches. You can configure how often the play checks for new data and how many records to process at once using the sync settings.
@@ -10,6 +10,7 @@ For instance, the play may process in real-time for HTTP webhooks, or run only o
 ---add image here (cron job)---
 
 Sync settings allow you to control:
+
 - **Processing frequency:** How often the play checks for new data
 - **Batch size:** How many records to process at once
 - **Schedule:** When the play should run (real-time, hourly, daily, etc.)
@@ -18,6 +19,8 @@ Sync settings allow you to control:
 ---
 
 ## Trigger conditions
+
+--add image here
 
 When dealing with repeated records, workflows can be set to handle different scenarios:
 
@@ -47,4 +50,4 @@ Cargo plays can sync per three schedule types.
 
 **Cron jobs:** Use cron expressions to define complex schedules with precise timing control for specific business requirements.
 
-**dbt models:** Trigger plays automatically when dbt models are refreshed, ensuring your workflows run with the latest transformed data. 
+**dbt models:** Trigger plays automatically when dbt models are refreshed, ensuring your workflows run with the latest transformed data.
