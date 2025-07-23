@@ -1,40 +1,51 @@
 ---
-title: Building an agent
-description: Agents are intelligent components that research and answer questions about companies and people
+title: "Building an agent"
+description: "Agents are intelligent actors that research and answer questions about companies and people"
 ---
 
 ### Creating an agent
+
 ![Build an agent](/images/building-an-agent-1.png)
 
-Prompts are the main way to give immediate instructions. These can either be user-generated or standardized inside a play. A prompt can be passed to a play via the agent's chat editor or via a trigger from one of its deployments.
+Prompts are the main way to give immediate instructions to agents. These can either be user-generated or standardized inside a play. A prompt can be passed to a play via the agent's chat editor or via a trigger from one of its deployments.
 
 The system prompt defines the agent's role, capabilities, and constraints
 
 ### Agent components
 
-Agents need access to tools and resources to function and powered by a specific foundational models.
+Agents need access to tools and resources to function and are powered by foundational LLM models that power their semantic reasoning.
 
 **Tools**
+
 ![Equip an agent with a tool](/images/building-an-agent-2.png)
-Tools equip agents with specific capabilities like API access to external systems and their responses. These act as the agent's "hands" for interacting with external data sources and services.
+
+Tools equip agents with specific capabilities, such as API access to external systems and their responses. These act as the agent's "hands" for interacting with external data sources and services.
 
 **Resources**
+
 ![Add a resource to a model](/images/building-an-agent-3.png)
+
 Resources are the data sources and knowledge bases that agents can draw from. This can be any data model in your workspace, such as your CRM, a warehouse table, or external databases.
 
 **AI models**
+
 ![Add a model](/images/building-an-agent-4.png)
+
 Agents are powered by AI models that provide the reasoning and decision-making capabilities. You can choose between OpenAI or Anthropic models depending on your specific needs and requirements.
 
-**Configuration parameters**
-Agents use two main parameters to control their behavior. Reasoning steps define the number of logical steps the agent can take to reach a conclusion. Temperature: controls the creativity and randomness of responses.
+**Configuration parameters** Agents use two main parameters to control their behavior. 
+
+- Reasoning steps define the number of logical steps the agent can take to conclude.
+- Temperature: controls the creativity and randomness of responses.
 
 ### Agent deployment
 
 Once created, agents can be deployed across multiple environments and platforms to integrate with your existing workflows and systems.
 
 **Slack integration**
+
 ![Deploy a model to slack](/images/building-an-agent-5.gif)
+
 Agents can be deployed directly in Slack, allowing team members to trigger them via the '@Cargo' tag.
 
 **Play integration**
@@ -43,6 +54,4 @@ Agents can be embedded within plays as intelligent nodes, providing non-determin
 **Browser extension**
 Agents can be triggered via Cargo's chrome extension, enabling the agent to access real-time information from the user's browser.
 
-**API deployment**
-Agents can be triggered via a REST API endpoints, allowing external systems and applications to access it.
-
+**API deployment** Agents can be triggered via REST API endpoints, allowing external systems and applications to access them.

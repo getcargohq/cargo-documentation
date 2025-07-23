@@ -1,9 +1,7 @@
 ---
-title: Leverage data in plays
-description: Learn how to work with data models and records from your plays
+title: "Leverage data in plays"
+description: "Learn how to work with data models and records from your plays"
 ---
-
-Some data models support record creation while others don't. HTTP-based models typically allow creating new records,
 
 ### Model search node
 
@@ -12,11 +10,12 @@ Some data models support record creation while others don't. HTTP-based models t
 Search and retrieve model or dataset records. This node allows you to query data from any model in your workspace and use the results in your play.
 
 ### Model record node
+
 ![Use a model search node](/images/enrolling-data-in-plays-2.png)
 
-Add record to a compatible data model. Some data models, such as HTTP, allow creating new records from within Cargo's plays. It can be useful to store new data and trigger other plays.
+Add record to a compatible data model. Some data models, such as HTTP, allow creating new records from within Cargo's plays.
 
-Data models coming from external services such as CRM don't support writing records using this node. In order to create new objects, use dedicated write nodes for the service in question (e.g., HubSpot write node).
+> Data models coming from external services such as CRM don't support writing records using this node. In order to create new objects, use dedicated write nodes for the service in question (e.g., HubSpot write node).
 
 When a new row is created using this node, the first value will determine the data type, which cannot be changed later.
 
@@ -24,9 +23,9 @@ When a new row is created using this node, the first value will determine the da
 
 ![Use a custom column node](/images/enrolling-data-in-plays-3.png)
 
-Update custom columns on a selected data model. This node allows writing data to custom columns created on a particular data model. It allows extending the data model that is synchronized from an external system with additional data points. For instance, you may want to add extra metadata about particular records or flag them.
+This node allows writing data to custom column, i.e. extending the data model that is synchronized from an external system with additional data points. For instance, you may want to add extra metadata about particular records or flag them.
 
-The ID required by this node needs to be the primary identifier of the data model. When the play is using the same data model, the record ID can be set to `nodes.start._id`. In case no primary ID is available in the play, consider using the model search node.
+> The ID required by this node needs to be the primary identifier of the data model. When the play is using the same data model, the record ID can be set to `nodes.start._id`. In case no primary ID is available in the play, consider using the model search node to locate the appropriate ID of the target record.
 
 ### Memory node
 
@@ -34,7 +33,8 @@ The ID required by this node needs to be the primary identifier of the data mode
 
 Store or access structured data using a key/value store approach.
 
-The node requires a scope (workspace or play level) and a unique key identifier. Available actions include getting, setting, getting or setting, incrementing, decrementing, and removing values from storage.
+> The node requires a scope (workspace or play level) and a unique key identifier. 
+
+Available actions include getting, setting, getting or setting, incrementing, decrementing, and removing values from storage.
 
 ---
-

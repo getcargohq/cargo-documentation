@@ -1,9 +1,11 @@
 ---
-title: Create segments
-description: Learn how to create filters and segments to organize your data models
+title: "Create segments"
+description: "Learn how to create filters and segments to organize your data models"
 ---
 
-Plays respond to real-time changes in model data. When changes match filter criteria, plays import records and create runs. Plays resync periodically (except webhook models which resync automatically as a new record is added).
+Plays respond to real-time changes in the data of the model that is feeding them. When changes match filter criteria, plays import records and create runs. 
+
+> To detect model data changes, plays resync periodically (except for webhook models which resync automatically as a new record is added).
 
 ### Create a segment
 
@@ -12,3 +14,5 @@ Apply filters to your data models to create targeted segments based on specific 
 ### Modify the record enrolment settings
 
 Segments enable plays to respond to real-time changes in your data. When data changes match your filter criteria, plays automatically import the relevant records and create runs to process them.
+
+--talk about kinds of changes, etc

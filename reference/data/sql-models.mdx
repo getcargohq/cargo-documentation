@@ -1,20 +1,9 @@
 ---
-title: SQL models
-description: Learn how to work with SQL models for data operations and queries
+title: "SQL models"
+description: "Learn how to work with SQL models for data operations and queries"
 ---
 
 SQL models provide powerful ways to interact with your data warehouse, enabling you to write data back to models, perform custom queries, and maintain data consistency across your systems.
-
-## Writing data to models
-
-Custom and HTTP models permit direct writing from workflows using a **model record node**.
-
-Use the model record node to add new records to compatible data models. This node allows you to create records programmatically within workflows, maintaining a single source of truth for your business data.
-
-**Configuration:** 
-- Select the relevant data model
-- Choose the insert action
-- Pass the data object that will populate the record columns in a valid JSON (tip: passing an entire variables node will work)
 
 ## Writing data to warehouse
 
@@ -26,6 +15,7 @@ The **SQL write** node enables direct database operations inside a connected war
 - **Delete:** Removes matching rows
 
 **Configuration steps:**
+
 1. Enter database name and select schema/table
 2. Choose the action to perform
 3. Define matching criteria for non-INSERT operations
