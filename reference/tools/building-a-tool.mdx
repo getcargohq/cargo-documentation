@@ -15,6 +15,8 @@ Tools work by connecting each node's output to a matching input on another node.
 
 Once an input is provided, you can add nodes inside the tool's execution logic to enable it to perform its function. Each node performs a different task. Nodes can be chained together or perform branching logic based on the outputs of the previous node.
 
+![A node's output](/images/building-a-tool-5.png)
+
 Whenever a node executes, it will create an output. If this was a successful execution, there will either be data present in the output or an empty output object. Should an execution fail, an error message will explain what caused the failure.
 
 ## Connecting nodes
@@ -25,10 +27,14 @@ To connect two nodes, click on the output symbol of the first node and drag the 
 
 To delete a connection, hover over the middle of the connecting line between two nodes and press the delete key.
 
+![Delete a node connection](/images/building-a-tool-4.png)
+
 ## Save and publish
 
 When you first create a tool, it is automatically saved as a draft. You can leave and return later to finish building the tool without losing your progress.
 
-Once you're ready to start using the tool outside the editor, you can publish it. Published tools will be available for use in plays and agents. To publish a tool, click the publish button in the top right corner of the tool editor.
+![Publishing a draft](/images/building-a-tool-6.png)
+
+Once you're ready to start using the tool outside the editor, you can publish it. Published tools will be available for use in plays, agents and MCP servers. To publish a tool, click the publish button in the top right corner of the tool editor.
 
 After publishing a tool, you can still make changes to it. Any changes you make will be saved as a new draft. You can publish the new draft at any time by clicking the publish button again.

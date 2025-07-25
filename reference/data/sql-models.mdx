@@ -11,14 +11,17 @@ SQL models provide powerful ways to interact with your data warehouse, enabling 
 
 The **SQL write** node enables direct database operations inside a connected warehouse.
 
-1. **Step 1: **Enter database name and select schema/table
-2. **Step 2: **Choose the action to perform
+**Step 1:** Enter database name and select schema/table
+
+**Step 2:** Choose the action to perform
    1. **Insert:** Always creates a new row
    2. **Upsert:** Creates a new row if no matching row exists, otherwise updates it
    3. **Update:** Updates matching rows without creating new entries
    4. **Delete:** Removes matching rows
-3. **Step 3: **Define matching criteria for non-INSERT operations
-4. **Step 4: **Specify data mapping for each column
+
+**Step 3:** Define matching criteria for non-INSERT operations
+
+**Step 4:** Specify data mapping for each column
 
 ### Custom SQL queries
 
@@ -26,9 +29,20 @@ The **SQL write** node enables direct database operations inside a connected war
 
 Create powerful SQL-based data models that combine data from multiple sources.
 
-Add an SQL connector to enable direct database access. The connector supports both BigQuery and Snowflake with consistent patterns for table structure: `[SCOPE].datasets_[CONNECTOR].models_[MODEL]`
+Add an SQL connector to enable direct database access. The connector supports both BigQuery and Snowflake with consistent patterns for table structure.
 
-- **Step 1:** Add SQL model and configure database connection
-- **Step 2:** Write SQL queries for your specific database (BigQuery or Snowflake)
-- **Step 3:** Configure mapping for unique identifier, title, and timestamp columns
-- **Step 4:** Preview and save the query
+**Step 1:** Add SQL model and configure database connection
+
+**Step 2:** Write the SQL query for your specific database (BigQuery or Snowflake) respecting their syntax
+
+**Step 3:** Adapt the SQL query for your database scope
+
+   If you selected database scope: '[DATABASE].datasets_[CONNECTOR_SLUG].models_[MODEL_SLUG]'
+
+   If you have chosen schema scope when setting up Snowflake system of record then use the following naming convention:
+
+   '[DATABASE].[SCHEMA].datasets_[CONNECTOR_SLUG]__models_[MODEL_SLUG]'
+
+**Step 4:** Configure mapping for unique identifier, title, and timestamp columns
+
+**Step 5:** Preview and save the query

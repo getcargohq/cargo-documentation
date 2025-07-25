@@ -20,7 +20,8 @@
               "get-started/build-a-play",
               "get-started/build-a-data-model",
               "get-started/allocate-leads",
-              "get-started/purchase-credits"
+              "get-started/purchase-credits",
+              "get-started/expressions-cheatsheet"
             ]
           },
           {
@@ -53,7 +54,6 @@
                 "group": "Data",
                 "pages": [
                   "reference/data/enrol-data-in-plays",
-                  "reference/data/create-segments",
                   "reference/data/sql-models",
                   {
                     "group": "System of record",

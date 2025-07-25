@@ -5,20 +5,17 @@ description: Learn about data models and how they power Cargo plays
 
 ## What are data models?
 
-Cargo plays are powered by underlying data models, which are structured tables containing organized data. Data from these models can be imported into a workflow to generate runs.
+Cargo plays are powered by underlying data models, which are structured tables containing organized data. Data from these models can be imported into a play to create runs.
 
-To ensure efficient data management, Cargo leverages a data warehouse infrastructure to host these models. This warehouse collects, manages, and stores data for each workspace, ensuring accuracy, consistency, and accessibility across all data models within that workspace.
+To ensure efficient data management, Cargo leverages a data warehouse infrastructure to host these models. Cargo enables users to create data models from a variety of external and internal sources, including API endpoints, webhook events, and SQL queries on warehouse tables. This integration allows users to merge multiple data sources into a unified, cohesive model.
 
-Cargo enables users to create data models from a variety of external and internal sources, including API endpoints, webhook events, and SQL queries on warehouse tables. This integration allows users to merge multiple data sources into a unified, cohesive model.
-
-By supporting data model creation from both external sources and existing models within Cargo, the platform provides a flexible way to consolidate diverse datasets under a common schema.
+By supporting data model relationships and custom SQL models, the platform provides a flexible way to consolidate diverse datasets under a common schema.
 
 ---
 
 ## Data connectors
 
-Among all of the integrations available in Cargo, those available as storage connectors allow the user to bring external data to a data model using a data loader. This capability enables you to unify data from various sources, such as data warehouses, CRMs, marketing automation platforms, etc. into a single, unified model.
-
+Among all of the integrations available in Cargo, those available as storage connectors allow the user to bring external data to a data model using a data loader. 
 
 There are three types of data loaders available in Cargo:
 
@@ -34,6 +31,8 @@ There are three types of data loaders available in Cargo:
 
 Models support several advanced features, such as:
 
+**Setting up system of record:** By default, Cargo will offer a Snowflake instance at the back to power your data models. You also have the option to use your own warehouse instance as a system of record accessible by Cargo.
+
 **Creating segments:** Apply filters to data models to form segments, allowing for targeted plays based on specific criteria.
 
 **Change-based triggers:** Enable plays to respond in real-time to updates, additions, or deletions in the data, ensuring action based on the most pertinent signals.
@@ -42,12 +41,10 @@ Models support several advanced features, such as:
 
 **Model relationships:** Useful for creating a comprehensive view of your data. By connecting different models using common identifiers, you can create merged views of your customer data from different sources.
 
-**Custom columns:** Lets you add calculated fields or tags to existing rows in a model.
+**Additional columns:** Lets you add calculated fields or tags to existing rows in a model.
 - Custom columns: These columns are free-form columns that you can upsert data into from within a play.
 - Computed columns: Calculate values based on other columns in the model.
 - Metrics columns: Store aggregated data, such as sums, averages, or counts, based on the values in other columns in other models
-
-**Setting up system of record:** Allow using your own warehouse instance as a system of record accessible by Cargo.
 
 ---
 
@@ -61,6 +58,6 @@ Data models serve various business needs across different domains:
 
 **List building data loaders:** Aggregate contact lists from marketing campaigns, events, and lead generation activities for targeted outreach.
 
-**Product data loaders (SQL):** Query product catalogs, inventory levels, and usage analytics from your data warehouse to inform customer interactions and recommendations.
+**Product data loaders:** Query product catalogs, inventory levels, and usage analytics from your data warehouse to inform customer interactions and recommendations.
 
 
