@@ -1,25 +1,27 @@
 ---
-title: Build a data model
-description: Learn about data models and how they power Cargo plays
+title: "Build a data model"
+description: "Learn about data models and how they power Cargo plays"
 ---
 
 ## What are data models?
 
 Cargo plays are powered by underlying data models, which are structured tables containing organized data. Data from these models can be imported into a play to create runs.
 
-To ensure efficient data management, Cargo leverages a data warehouse infrastructure to host these models. Cargo enables users to create data models from a variety of external and internal sources, including API endpoints, webhook events, and SQL queries on warehouse tables. This integration allows users to merge multiple data sources into a unified, cohesive model.
+> Cargo leverages a data warehouse infrastructure to host these models. 
 
-By supporting data model relationships and custom SQL models, the platform provides a flexible way to consolidate diverse datasets under a common schema.
+Cargo enables users to create data models from a variety of external and internal sources, including API endpoints, webhook events, and SQL queries on warehouse tables. This integration allows users to merge multiple data sources into a unified, cohesive model.
+
+By supporting data model relationships and custom SQL models, the platform offers a flexible approach to consolidating diverse datasets under a common schema.
 
 ---
 
 ## Data connectors
 
-Among all of the integrations available in Cargo, those available as storage connectors allow the user to bring external data to a data model using a data loader. 
+Among all the integrations available in Cargo, those available as storage connectors enable users to bring external data into a data model using a data loader.
 
 There are three types of data loaders available in Cargo:
 
-**Native integrations:** These loaders allows you to connect to a supported external API endpoint to fetch data and import it into a data model.
+**Native integrations:** These loaders enable you to connect to a supported external API endpoint, fetch data, and import it into a data model.
 
 **Webhook data loader:** This loader allows you to listen for events from an external source and import the data into a data model.
 
@@ -31,17 +33,18 @@ There are three types of data loaders available in Cargo:
 
 Models support several advanced features, such as:
 
-**Setting up system of record:** By default, Cargo will offer a Snowflake instance at the back to power your data models. You also have the option to use your own warehouse instance as a system of record accessible by Cargo.
+**Setting up a system of record:** By default, Cargo will offer a Snowflake instance at the back to power your data models. You also have the option to use your warehouse instance as a system of record accessible by Cargo.
 
 **Creating segments:** Apply filters to data models to form segments, allowing for targeted plays based on specific criteria.
 
 **Change-based triggers:** Enable plays to respond in real-time to updates, additions, or deletions in the data, ensuring action based on the most pertinent signals.
 
-**Set enrolment conditions:** Track records to prevent plays from processing the same data multiple times.
+**Set enrolment conditions:** Track records to prevent players from processing the same data multiple times.
 
 **Model relationships:** Useful for creating a comprehensive view of your data. By connecting different models using common identifiers, you can create merged views of your customer data from different sources.
 
 **Additional columns:** Lets you add calculated fields or tags to existing rows in a model.
+
 - Custom columns: These columns are free-form columns that you can upsert data into from within a play.
 - Computed columns: Calculate values based on other columns in the model.
 - Metrics columns: Store aggregated data, such as sums, averages, or counts, based on the values in other columns in other models
@@ -59,5 +62,3 @@ Data models serve various business needs across different domains:
 **List building data loaders:** Aggregate contact lists from marketing campaigns, events, and lead generation activities for targeted outreach.
 
 **Product data loaders:** Query product catalogs, inventory levels, and usage analytics from your data warehouse to inform customer interactions and recommendations.
-
-
