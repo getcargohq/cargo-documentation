@@ -11,6 +11,11 @@ Cargo uses JavaScript expressions to manipulate data within workflows. This chea
 
 Split a string by a delimiter to extract specific parts.
 
+**Example**: Extract domain from email address
+- Input: `"john.smith@acme-corp.com"`
+- Formula: `{{ nodes.start.email.split('@')[1] }}`
+- Result: `"acme-corp.com"`
+
 ```javascript
 // Extract domain from email
 {{ nodes.start.email.split('@')[1] }}
@@ -20,6 +25,11 @@ Split a string by a delimiter to extract specific parts.
 
 Convert a string to lowercase for consistent formatting.
 
+**Example**: Standardize company name
+- Input: `"ACME Corporation"`
+- Formula: `{{ nodes.start.companyName.toLowerCase() }}`
+- Result: `"acme corporation"`
+
 ```javascript
 // Standardize company name
 {{ nodes.start.companyName.toLowerCase() }}
@@ -28,6 +38,11 @@ Convert a string to lowercase for consistent formatting.
 ### toUpperCase
 
 Convert a string to uppercase.
+
+**Example**: Format country code
+- Input: `"us"`
+- Formula: `{{ nodes.start.country.toUpperCase() }}`
+- Result: `"US"`
 
 ```javascript
 // Format country codes
@@ -40,6 +55,11 @@ Convert a string to uppercase.
 
 Count how many items are present in an array
 
+**Example**: Count stakeholders found
+- Input: `["John Smith", "Sarah Johnson", "Mike Davis", "Lisa Chen"]`
+- Formula: `{{ nodes.array.length }}`
+- Result: `4`
+
 ```javascript
 // Count the number of items in the array
 {{ nodes.array.length }}
@@ -48,6 +68,12 @@ Count how many items are present in an array
 ### includes
 
 Check if a value exists in an array.
+
+**Example**: Check if product is in allowed list
+- Input: `nodes.start.product = "posters"`
+- Allowed products: `["posters", "calendars", "books", "cards"]`
+- Formula: `{{ ['posters', 'calendars', 'books', 'cards'].includes(nodes.start.product) }}`
+- Result: `true`
 
 ```javascript
 // Check if product is in allowed list
@@ -58,6 +84,11 @@ Check if a value exists in an array.
 
 Extract a portion of an array.
 
+**Example**: Limit stakeholders to first 5
+- Input: `["John", "Sarah", "Mike", "Lisa", "David", "Emma", "Tom"]`
+- Formula: `{{ nodes.apollo.stakeholders.slice(0, 5) }}`
+- Result: `["John", "Sarah", "Mike", "Lisa", "David"]`
+
 ```javascript
 // Get first 5 stakeholders from search results
 {{ nodes.apollo.stakeholders.slice(0, 5) }}
@@ -66,6 +97,11 @@ Extract a portion of an array.
 ### filter
 
 Create a new array based on a condition.
+
+**Example**: Filter case study URLs
+- Input: `["https://example.com/case-studies/tech", "https://example.com/blog", "https://example.com/case-studies/finance"]`
+- Formula: `{{ nodes.start.urls.filter(url => url.includes('/case-studies/')) }}`
+- Result: `["https://example.com/case-studies/tech", "https://example.com/case-studies/finance"]`
 
 ```javascript
 // Keep only URLs containing case studies
@@ -76,6 +112,11 @@ Create a new array based on a condition.
 
 Convert an array to a string with a delimiter.
 
+**Example**: Convert countries to comma-separated string
+- Input: `["US", "CA", "UK", "DE"]`
+- Formula: `{{ nodes.start.countries.join(', ') }}`
+- Result: `"US, CA, UK, DE"`
+
 ```javascript
 // Convert countries array to comma-separated string
 {{ nodes.start.countries.join(', ') }}
@@ -84,6 +125,12 @@ Convert an array to a string with a delimiter.
 ### map
 
 Transform each element in an array.
+
+**Example**: Add company data to stakeholders
+- Input: `[{"name": "John", "title": "CEO"}, {"name": "Sarah", "title": "CTO"}]`
+- Company data: `domain = "acme.com", hubspotId = "12345"`
+- Formula: `{{ nodes.apollo.stakeholders.map(stakeholder => ({ ...stakeholder, domain: nodes.start.domain, hubspotId: nodes.hubspot.companyId })) }}`
+- Result: `[{"name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345"}, {"name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345"}]`
 
 ```javascript
 // Add domain and HubSpot ID to each stakeholder
@@ -100,6 +147,11 @@ Transform each element in an array.
 
 Merge two arrays together.
 
+**Example**: Combine prospect lists
+- Input: `countries1 = ["US", "CA"], countries2 = ["UK", "DE"]`
+- Formula: `{{ nodes.start.countries1.concat(nodes.start.countries2) }}`
+- Result: `["US", "CA", "UK", "DE"]`
+
 ```javascript
 // Combine two country lists
 {{ nodes.start.countries1.concat(nodes.start.countries2) }}
@@ -111,6 +163,10 @@ Merge two arrays together.
 
 Create a timestamp.
 
+**Example**: Get current timestamp
+- Formula: `{{ new Date() }}`
+- Result: `"2024-01-15T10:30:45.123Z"`
+
 ```javascript
 // Get current date
 {{ new Date() }}
@@ -119,6 +175,10 @@ Create a timestamp.
 ### toLocaleDateString()
 
 Format date in localized format.
+
+**Example**: Format current date
+- Formula: `{{ new Date().toLocaleDateString() }}`
+- Result: `"1/15/2024"`
 
 ```javascript
 // Format date as MM/DD/YYYY
@@ -130,6 +190,11 @@ Format date in localized format.
 ### Basic arithmetic
 
 Perform calculations on numbers.
+
+**Example**: Calculate win rate
+- Input: `wins = 15, total = 50`
+- Formula: `{{ (nodes.start.wins / nodes.start.total) * 100 }}`
+- Result: `30`
 
 ```javascript
 // Add to balance
@@ -145,6 +210,11 @@ Perform calculations on numbers.
 
 Use ternary operators for simple conditions.
 
+**Example**: Set priority based on score
+- Input: `score = 85`
+- Formula: `{{ nodes.start.score > 80 ? 'High Priority' : 'Standard' }}`
+- Result: `"High Priority"`
+
 ```javascript
 // Set status based on score
 {{ nodes.start.score > 80 ? 'High Priority' : 'Standard' }}
@@ -154,6 +224,11 @@ Use ternary operators for simple conditions.
 
 Access nested properties using dot notation.
 
+**Example**: Extract city from nested address
+- Input: `{"user": {"address": {"city": "San Francisco"}}}`
+- Formula: `{{ nodes.start.user.address.city }}`
+- Result: `"San Francisco"`
+
 ```javascript
 // Get user's city
 {{ nodes.start.user.address.city }}
@@ -162,6 +237,11 @@ Access nested properties using dot notation.
 ### Null checking
 
 Safely access properties that might not exist.
+
+**Example**: Get theme with default fallback
+- Input: `{"user": {"preferences": null}}`
+- Formula: `{{ nodes.start.user?.preferences?.theme || 'default' }}`
+- Result: `"default"`
 
 ```javascript
 // Safely access optional property
