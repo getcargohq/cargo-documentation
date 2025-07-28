@@ -1,5 +1,5 @@
 ---
-title: "Expressions cheat sheet"
+title: "Expression cheat sheet"
 description: "Essential JavaScript methods for using in your Cargo expressions"
 ---
 
@@ -13,9 +13,7 @@ Split a string by a delimiter to extract specific parts.
 
 ```javascript
 // Extract domain from email
-{
-  nodes.start.email.split('@')[1];
-}
+{{ nodes.start.email.split('@')[1] }}
 ```
 
 ### toLowerCase
@@ -24,9 +22,7 @@ Convert a string to lowercase for consistent formatting.
 
 ```javascript
 // Standardize company name
-{
-  nodes.start.companyName.toLowerCase();
-}
+{{ nodes.start.companyName.toLowerCase() }}
 ```
 
 ### toUpperCase
@@ -35,9 +31,7 @@ Convert a string to uppercase.
 
 ```javascript
 // Format country codes
-{
-  nodes.start.country.toUpperCase();
-}
+{{ nodes.start.country.toUpperCase() }}
 ```
 
 ## Array methods
@@ -48,9 +42,7 @@ Count how many items are present in an array
 
 ```javascript
 // Count the number of items in the array
-{
-  nodes.array.length;
-}
+{{ nodes.array.length }}
 ```
 
 ### includes
@@ -59,9 +51,7 @@ Check if a value exists in an array.
 
 ```javascript
 // Check if product is in allowed list
-{
-  ['posters', 'calendars', 'books', 'cards'].includes(nodes.start.product);
-}
+{{ ['posters', 'calendars', 'books', 'cards'].includes(nodes.start.product) }}
 ```
 
 ### slice
@@ -70,9 +60,7 @@ Extract a portion of an array.
 
 ```javascript
 // Get first 5 stakeholders from search results
-{
-  nodes.apollo.stakeholders.slice(0, 5);
-}
+{{ nodes.apollo.stakeholders.slice(0, 5) }}
 ```
 
 ### filter
@@ -81,9 +69,7 @@ Create a new array based on a condition.
 
 ```javascript
 // Keep only URLs containing case studies
-{
-  nodes.start.urls.filter(url => url.includes('/case-studies/'));
-}
+{{ nodes.start.urls.filter(url => url.includes('/case-studies/')) }}
 ```
 
 ### join
@@ -92,9 +78,7 @@ Convert an array to a string with a delimiter.
 
 ```javascript
 // Convert countries array to comma-separated string
-{
-  nodes.start.countries.join(', ');
-}
+{{ nodes.start.countries.join(', ') }}
 ```
 
 ### map
@@ -103,13 +87,13 @@ Transform each element in an array.
 
 ```javascript
 // Add domain and HubSpot ID to each stakeholder
-{
+{{
   nodes.apollo.stakeholders.map(stakeholder => ({
     ...stakeholder,
     domain: nodes.start.domain,
     hubspotId: nodes.hubspot.companyId
-  }));
-}
+  }))
+}}
 ```
 
 ### concat
@@ -118,9 +102,7 @@ Merge two arrays together.
 
 ```javascript
 // Combine two country lists
-{
-  nodes.start.countries1.concat(nodes.start.countries2);
-}
+{{ nodes.start.countries1.concat(nodes.start.countries2) }}
 ```
 
 ## Date and time
@@ -131,9 +113,7 @@ Create a timestamp.
 
 ```javascript
 // Get current date
-{
-  new Date();
-}
+{{ new Date() }}
 ```
 
 ### toLocaleDateString()
@@ -142,9 +122,7 @@ Format date in localized format.
 
 ```javascript
 // Format date as MM/DD/YYYY
-{
-  new Date().toLocaleDateString();
-}
+{{ new Date().toLocaleDateString() }}
 ```
 
 ## Mathematical operations
@@ -155,14 +133,10 @@ Perform calculations on numbers.
 
 ```javascript
 // Add to balance
-{
-  nodes.start.balance + 100;
-}
+{{ nodes.start.balance + 100 }}
 
 // Calculate percentage
-{
-  (nodes.start.wins / nodes.start.total) * 100;
-}
+{{ (nodes.start.wins / nodes.start.total) * 100 }}
 ```
 
 ## Common patterns
@@ -173,9 +147,7 @@ Use ternary operators for simple conditions.
 
 ```javascript
 // Set status based on score
-{
-  nodes.start.score > 80 ? 'High Priority' : 'Standard';
-}
+{{ nodes.start.score > 80 ? 'High Priority' : 'Standard' }}
 ```
 
 ### Object property access
@@ -184,9 +156,7 @@ Access nested properties using dot notation.
 
 ```javascript
 // Get user's city
-{
-  nodes.start.user.address.city;
-}
+{{ nodes.start.user.address.city }}
 ```
 
 ### Null checking
@@ -195,9 +165,7 @@ Safely access properties that might not exist.
 
 ```javascript
 // Safely access optional property
-{
-  nodes.start.user?.preferences?.theme || 'default';
-}
+{{ nodes.start.user?.preferences?.theme || 'default' }}
 ```
 
 ## Tips
