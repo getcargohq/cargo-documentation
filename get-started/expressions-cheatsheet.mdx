@@ -13,7 +13,7 @@ Split a string by a delimiter to extract specific parts.
 
 **Example**: Extract domain from email address
 
-- Input: `email = "john.smith@acme-corp.com"`
+- Input: `nodes.start.email = "john.smith@acme-corp.com"`
 - Output: `"acme-corp.com"`
 
 ```javascript
@@ -27,7 +27,7 @@ Convert a string to lowercase for consistent formatting.
 
 **Example**: Standardize company name
 
-- Input: `"ACME Corporation"`
+- Input: `nodes.start.companyName = "ACME Corporation"`
 - Output: `"acme corporation"`
 
 ```javascript
@@ -41,7 +41,7 @@ Convert a string to uppercase.
 
 **Example**: Format country code
 
-- Input: `"us"`
+- Input: `nodes.start.country = "us"`
 - Output: `"US"`
 
 ```javascript
@@ -57,7 +57,7 @@ Count how many items are present in an array
 
 **Example**: Count the number of stakeholders found
 
-- Input: `["John Smith", "Sarah Johnson", "Mike Davis", "Lisa Chen"]`
+- Input: `nodes.array = ["John Smith", "Sarah Johnson", "Mike Davis", "Lisa Chen"]`
 - Output: `4`
 
 ```javascript
@@ -86,7 +86,7 @@ Extract a portion of an array.
 
 **Example**: Limit stakeholders to first 5
 
-- Input: `["John", "Sarah", "Mike", "Lisa", "David", "Emma", "Tom"]`
+- Input: `nodes.apollo.stakeholders = "John", "Sarah", "Mike", "Lisa", "David", "Emma", "Tom"]`
 - Output: `["John", "Sarah", "Mike", "Lisa", "David"]`
 
 ```javascript
@@ -100,7 +100,7 @@ Create a new array based on a condition.
 
 **Example**: Filter case study URLs
 
-- Input: `["https://example.com/case-studies/tech", "https://example.com/blog", "https://example.com/case-studies/finance"]`
+- Input: `nodes.start.urls = ["https://example.com/case-studies/tech", "https://example.com/blog", "https://example.com/case-studies/finance"]`
 - Output: `["https://example.com/case-studies/tech", "https://example.com/case-studies/finance"]`
 
 ```javascript
@@ -114,7 +114,7 @@ Convert an array to a string with a delimiter.
 
 **Example**: Convert countries to comma-separated string
 
-- Input: `["US", "CA", "UK", "DE"]`
+- Input: `nodes.start.countries = ["US", "CA", "UK", "DE"]`
 - Output: `"US, CA, UK, DE"`
 
 ```javascript
@@ -128,7 +128,7 @@ Transform each element in an array.
 
 **Example**: Add company data to stakeholders
 
-- Input: `[{"name": "John", "title": "CEO"}, {"name": "Sarah", "title": "CTO"}]`
+- Input: `nodes.apollo.stakeholders = [{"name": "John", "title": "CEO"}, {"name": "Sarah", "title": "CTO"}]`
 - Company data: `domain = "acme.com", hubspotId = "12345"`
 - Output: `[{"name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345"}, {"name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345"}]`
 
@@ -149,7 +149,7 @@ Merge two arrays together.
 
 **Example**: Combine prospect lists
 
-- Input: `countries1 = ["US", "CA"], countries2 = ["UK", "DE"]`
+- Input: `nodes.start.countries1 = ["US", "CA"], countries2 = ["UK", "DE"]`
 - Output: `["US", "CA", "UK", "DE"]`
 
 ```javascript
@@ -195,7 +195,7 @@ Perform calculations on numbers.
 
 **Example**: Calculate win rate
 
-- Input: `wins = 15, total = 50`
+- Input: `wnodes.start.winsi = 15, total = 50`
 - Output: `30`
 
 ```javascript
@@ -214,7 +214,7 @@ Use ternary operators for simple conditions.
 
 **Example**: Set priority based on score
 
-- Input: `score = 85`
+- Input: `nodes.start.score = 85`
 - Output: `"High Priority"`
 
 ```javascript
