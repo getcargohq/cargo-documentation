@@ -195,7 +195,7 @@ Perform calculations on numbers.
 
 **Example**: Calculate win rate
 
-- Input: `wnodes.start.winsi = 15, total = 50`
+- Input: `nodes.start.wins = 15, total = 50`
 - Output: `30`
 
 ```javascript
@@ -228,7 +228,7 @@ Access nested properties using dot notation.
 
 **Example**: Extract city from nested address
 
-- Input: `{"user": {"address": {"city": "San Francisco"}}}`
+- Input: `nodes.start = {"user": {"address": {"city": "San Francisco"}}}`
 - Output: `"San Francisco"`
 
 ```javascript
@@ -242,12 +242,12 @@ Safely access properties that might not exist.
 
 **Example**: Get theme with default fallback
 
-- Input: `{"user": {"preferences": null}}`
+- Input: `nodes.start = {"user": {"preferences": null}}`
 - Output: `"default"`
 
 ```javascript
 // Safely access optional property
-{{ nodes.start.user?.preferences?.theme || 'default' }}
+{{ nodes.start.user?.preferences?.theme }}
 ```
 
 ## Tips
