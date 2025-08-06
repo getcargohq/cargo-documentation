@@ -3,9 +3,9 @@
   "theme": "mint",
   "name": "Cargo Documentation",
   "colors": {
-    "primary": "#10B981",
+    "primary": "#059669",
     "light": "#6EE7B7",
-    "dark": "#10B981"
+    "dark": "#059669"
   },
   "navigation": {
     "tabs": [
