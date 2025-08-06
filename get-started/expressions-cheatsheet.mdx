@@ -128,9 +128,15 @@ Transform each element in an array.
 
 **Example**: Add company data to stakeholders
 
-- Input: `nodes.apollo.stakeholders = [{"name": "John", "title": "CEO"}, {"name": "Sarah", "title": "CTO"}]`
-- Company data: `domain = "acme.com", hubspotId = "12345"`
-- Output: `[{"name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345"}, {"name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345"}]`
+- Input: `nodes.apollo.stakeholders = [`\
+  `{"name": "John", "title": "CEO"}, `\
+  `{"name": "Sarah", "title": "CTO"}`\
+  `]`
+- Company data: `nodes.start.domain = "acme.com", nodes.hubspot.companyId = "12345"`
+- Output: `[`\
+  `{"name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345"}, `\
+  `{"name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345"}`\
+  `]`
 
 ```javascript
 // Add domain and HubSpot ID to each stakeholder
@@ -149,7 +155,7 @@ Merge two arrays together.
 
 **Example**: Combine prospect lists
 
-- Input: `nodes.start.countries1 = ["US", "CA"], countries2 = ["UK", "DE"]`
+- Input: `nodes.start.countries1 = ["US", "CA"], nodes.start.countries2 = ["UK", "DE"]`
 - Output: `["US", "CA", "UK", "DE"]`
 
 ```javascript
@@ -165,7 +171,6 @@ Create a timestamp.
 
 **Example**: Get current timestamp
 
-- Formula: `{{ new Date() }}`
 - Output: `"2024-01-15T10:30:45.123Z"`
 
 ```javascript
@@ -179,7 +184,6 @@ Format date in localized format.
 
 **Example**: Format current date
 
-- Formula: `{{ new Date().toLocaleDateString() }}`
 - Output: `"1/15/2024"`
 
 ```javascript
@@ -195,7 +199,7 @@ Perform calculations on numbers.
 
 **Example**: Calculate win rate
 
-- Input: `nodes.start.wins = 15, total = 50`
+- Input: `nodes.start.wins = 15, nodes.start.total = 50`
 - Output: `30`
 
 ```javascript
@@ -226,9 +230,13 @@ Use ternary operators for simple conditions.
 
 Access nested properties using dot notation.
 
-**Example**: Extract city from nested address
+**Example**: Extract the city from a nested address
 
-- Input: `nodes.start = {"user": {"address": {"city": "San Francisco"}}}`
+- Input: `nodes.start = {`\
+  `"user": {`\
+  `"address": {`\
+  `"city": "San Francisco"}`\
+  `}}`
 - Output: `"San Francisco"`
 
 ```javascript
@@ -242,7 +250,10 @@ Safely access properties that might not exist.
 
 **Example**: Get theme with default fallback
 
-- Input: `nodes.start = {"user": {"preferences": null}}`
+- Input: `nodes.start = {`\
+  `"user": {`\
+  `"preferences": null`\
+  `}}`
 - Output: `"default"`
 
 ```javascript
@@ -252,9 +263,8 @@ Safely access properties that might not exist.
 
 ## Tips
 
+- Access the autocomplete feature while writing expressions using`/` on your keyboard
+- You cannot use a node's outputs inside an expression when the node isn't connected to the prior nodes in the execution logic
 - Always wrap expressions in double curly brackets: `{{ expression }}`
 - Use dot notation to access nested object properties
 - Arrays are zero-indexed in JavaScript
-- The `map` method is powerful for transforming data in group nodes
-- Use `join` when you need to convert arrays to strings for CRM fields
-- `filter` and `includes` are essential for conditional logic
