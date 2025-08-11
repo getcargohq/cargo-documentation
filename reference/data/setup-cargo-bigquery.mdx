@@ -16,6 +16,41 @@ This guide will walk you through setting up BigQuery as your store of records in
 
 - Overwrite existing datasets and tables (Cargo always creates its own datasets and tables when needed)
 
+### **Before you begin**
+
+To start, you need an existing Google Cloud Project with a payment method and billing enabled. [<u>Follow the official Google guide</u>](https://developers.google.com/workspace/guides/create-project).
+
+Once you have created the project, you can continue with this guide which will cover enabling and creating the necessary elements in your new GCP project:
+
+- BigQuery API & Cloud Resource Manager API
+- BigQuery dataset (dedicated to Cargo)
+- Object Storage Bucket (dedicated to Cargo)
+- Service Account
+
+If you have an existing BigQuery project and technical knowledge, you may skip any of these steps.
+
+**Enable the necessary APIs**
+
+Cargo uses two Google APIs that must be enabled. To do so:
+
+```
+<ul>
+  <li>Go to the Google Cloud Console.</li>
+  <li>Select `APIs & Services`.</li>
+  <li>Select `Enabled APIs & Services`.</li>
+  <li>Search for and enable the following APIs: `BigQuery API`, `Cloud Resource Manager API`</li>
+</ul>
+```
+
+**Create a storage bucket**\
+To enable Cargo to load and unload data from BigQuery, we need a dedicated storage bucket for this purpose.
+
+To create a new bucket:
+
+- Go to the `Google Cloud Console`.
+- Search `Object storage` in the search bar.
+- Create a `new bucket` and follow the steps.
+
 ### **Step 1: Create a dedicated dataset**
 
 Create a dedicated dataset for Cargo where all data managed by Cargo will be stored.
@@ -28,7 +63,12 @@ You can create this through the BigQuery console or using the following command:
 bq mk --dataset your-project-id:cargo_dataset
 ```
 
----
+If through the console, follow these steps:
+
+- Go to the `Google Cloud Console`
+- Search `BigQuery` in the search bar 
+- In BigQuery Studio click three dots next to the project name
+- Click `Create dataset`
 
 ### Step 2: Create a service account for Cargo
 
@@ -61,6 +101,17 @@ gcloud iam service-accounts keys create cargo-key.json \
 ```
 
 ---
+
+If in the console, follow the steps below:
+
+- Go to the `Google Cloud Console`
+- Click on `IAM & Admin`
+- Click on `IAM`
+- Click on `Service Accounts`
+- Click on `Create service account`
+- Give the service account a name
+- Grant the following roles: `BigQuery Data Editor`, `BigQuery Job User`, `Storage Object User`
+- Click on `Done`
 
 ### Step 3: Grant additional permissions
 
@@ -104,28 +155,12 @@ Now that we have all required elements, navigate to workspace settings and selec
 
 Fill in the settings form with the data we gathered in previous steps:
 
-- Provide your Google Cloud project ID
-- Fill in the dataset name created in step 1
-- Upload the service account key file created in step 2
-- Select your desired scope (can be either project or dataset scope)
+- Copy and paste the content of the service account key file into the field labeled `Service Account`
+- Select the `location` that was chosen during step 3
+- Fill in the name of the `bucket` created in step 2
+- Select `Dataset` as scope
+- Fill in the `name` of the BigQuery dataset created in step 3
 - Click `Setup`
-
----
-
-### Step 6: Test the connection
-
-After setup, you can test the connection by creating a simple data model that reads from your BigQuery tables.
-
-**Example: Create a data model from BigQuery**
-
-1. Go to your workspace in Cargo
-2. Navigate to Data Models
-3. Click "Create Data Model"
-4. Select "BigQuery" as the data source
-5. Enter your project ID and dataset name
-6. Test the connection to ensure everything is working properly
-
----
 
 ### Next steps
 
