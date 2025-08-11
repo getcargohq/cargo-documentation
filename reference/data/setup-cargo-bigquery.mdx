@@ -66,7 +66,7 @@ bq mk --dataset your-project-id:cargo_dataset
 If through the console, follow these steps:
 
 - Go to the `Google Cloud Console`
-- Search `BigQuery` in the search bar 
+- Search `BigQuery` in the search bar
 - In BigQuery Studio click three dots next to the project name
 - Click `Create dataset`
 
@@ -99,8 +99,6 @@ gcloud projects add-iam-policy-binding your-project-id \
 gcloud iam service-accounts keys create cargo-key.json \
     --iam-account=cargo-service-account@your-project-id.iam.gserviceaccount.com
 ```
-
----
 
 If in the console, follow the steps below:
 
@@ -146,8 +144,6 @@ gcloud projects get-iam-policy your-project-id \
     --format='table(bindings.role)' \
     --filter="bindings.members:cargo-service-account@your-project-id.iam.gserviceaccount.com"
 ```
-
----
 
 ### Step 5: Setup system of records
 
