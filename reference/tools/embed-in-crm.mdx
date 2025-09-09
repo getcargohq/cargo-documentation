@@ -42,18 +42,6 @@ Access token:
 - Enter the label and URL for your Cargo endpoint.
 - Save the credential.
 
-Use the following schema:
-
-```
-{"openapi":"3.0.1","info":{"title":"Cargo","description":""},"paths":{"CARGOPATH":{"post":{"description":"","operationId":"Query Cargo","parameters":[{"name":"token","in":"query","description":"","required":false,"allowEmptyValue":false,"schema":{"type":"string"}}],"requestBody":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"accountId":{"type":"string"},"linkedinUrl":{"type":"string"},"domain":{"type":"string"},"name":{"type":"string"},"linkedinId":{"type":"string"},"ownerId":{"type":"string"}}}}},"required":true},"responses":{"2XX":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string"}}}}}}}}}}}
-```
-
-Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
-
-```
-/v1/models/<your_model_id>/records/ingest
-```
-
 ## Step 3 - Register an external service
 
 In **Setup → External Services**, register a new one
@@ -65,6 +53,24 @@ Select the named credential you just created and register the service with the p
 ```
 {"openapi":"3.0.1","info":{"title":"Cargo","description":""},"paths":{"CARGOPATH":{"post":{"description":"","operationId":"Query Cargo","parameters":[{"name":"token","in":"query","description":"","required":false,"allowEmptyValue":false,"schema":{"type":"string"}}],"requestBody":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"accountId":{"type":"string"},"linkedinUrl":{"type":"string"},"domain":{"type":"string"},"name":{"type":"string"},"linkedinId":{"type":"string"},"ownerId":{"type":"string"}}}}},"required":true},"responses":{"2XX":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string"}}}}}}}}}}}
 ```
+
+> ### Important to note
+>
+> Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
+>
+> ```
+> /v1/models/<your_model_id>/records/ingest
+> ```
+>
+> Make sure the `schema` section of this reflects the fields that you'll be specifying in **Step 4.2 **below. As an example, we'll be using the following. 
+>
+> ```
+> {
+>   "ownerId": { "type": "string" },
+>   "accountId": { "type": "string" },
+>   "domain": { "type": "string" }
+> }
+> ```
 
 ## Step 4 - **Create a flow**
 
@@ -80,13 +86,13 @@ Map the Salesforce fields to the inputs required by your Cargo **HTTP call**.
 
 ![Step 4 - Map Fields in a Salesforce Flow Assignment Step (8).gif](/images/Step4-MapFieldsinaSalesforceFlowAssignmentStep\(8\).gif)
 
-Use this JSON schema for the HTTP callout:
+At this point we need to specify the JSON schema for the HTTP callout that aligns with the one we specified before during **Step 3**. For the example that we shared above, the schema below will be valid. Note, that we're providing random example of values for each field to configure this action.
 
 ```
 {
-  "ownerId": { "type": "string" },
-  "accountId": { "type": "string" },
-  "domain": { "type": "string" }
+"accountId": "0018b00002ABCDeAA1",
+"domain": "example.com",
+"ownerId": "0058b00001XYZAbAA1"
 }
 ```
 
@@ -95,6 +101,10 @@ Use this JSON schema for the HTTP callout:
 Add a **screen element** to show results or request user input before finishing the flow.
 
 ![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
+
+### 4.3 - Map the variable created during the HTTP callout action's creation into the assignment action
+
+### 
 
 ## Step 5 - Add a custom button to your Accounts interface
 
