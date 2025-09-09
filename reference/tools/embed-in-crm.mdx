@@ -1,5 +1,5 @@
 ---
-title: "Triggering a tool from Salesforce"
+title: "Triggering from Salesforce"
 description: "Description of your new file."
 ---
 
@@ -41,11 +41,11 @@ Use the following schema:
 {"openapi":"3.0.1","info":{"title":"Cargo","description":""},"paths":{"CARGOPATH":{"post":{"description":"","operationId":"Query Cargo","parameters":[{"name":"token","in":"query","description":"","required":false,"allowEmptyValue":false,"schema":{"type":"string"}}],"requestBody":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"accountId":{"type":"string"},"linkedinUrl":{"type":"string"},"domain":{"type":"string"},"name":{"type":"string"},"linkedinId":{"type":"string"},"ownerId":{"type":"string"}}}}},"required":true},"responses":{"2XX":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string"}}}}}}}}}}}
 ```
 
-- Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
+Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
 
-  ```
-  /v1/models/<your_model_id>/records/ingest
-  ```
+```
+/v1/models/<your_model_id>/records/ingest
+```
 
 ## Step 3 - Register an external service
 
@@ -59,42 +59,45 @@ Use the following schema:
 
 ### 4.1 - Retrieve account records
 
-![Step 3 - Create a Flow to Retrieve Account Records in Salesforce.gif](/images/Step3-CreateaFlowtoRetrieveAccountRecordsinSalesforce.gif)
+Create a **flow** that pulls account records from Salesforce.
 
-- Create a **flow** that pulls account records from Salesforce.
+![Step 3 - Create a Flow to Retrieve Account Records in Salesforce.gif](/images/Step3-CreateaFlowtoRetrieveAccountRecordsinSalesforce.gif)
 
 ### 4.2 - Map fields in an assignment step
 
+Map the Salesforce fields to the inputs required by your Cargo **HTTP call**.
+
 ![Step 4 - Map Fields in a Salesforce Flow Assignment Step (8).gif](/images/Step4-MapFieldsinaSalesforceFlowAssignmentStep\(8\).gif)
 
-- Map the Salesforce fields to the inputs required by your Cargo **HTTP call**.
-- Use this JSON schema for the HTTP callout:
+Use this JSON schema for the HTTP callout:
 
-  ```
-  {
-    "ownerId": { "type": "string" },
-    "accountId": { "type": "string" },
-    "domain": { "type": "string" }
-  }
-  ```
+```
+{
+  "ownerId": { "type": "string" },
+  "accountId": { "type": "string" },
+  "domain": { "type": "string" }
+}
+```
 
 ### 4.3 - Add a screen step at the end of the flow
 
-![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
+Add a **screen element** to show results or request user input before finishing the flow.
 
-- Add a **screen element** to show results or request user input before finishing the flow.
+![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
 
 ## Step 5 - Add a custom button to your Accounts interface
 
+Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
+
 ![Step 6 - Add a Custom Flow Button to an Account in Salesforce (6).gif](/images/Step6-AddaCustomFlowButtontoanAccountinSalesforce\(6\).gif)
 
-- Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
 - Create a new Flow Button.
 - Link it to the flow you just built.
 - Add the button to the Account page layout.
 
 ## Step 6 - Enable a workflow to update the Account in Salesforce
 
-- Create a `Play` that is fed by the HTTP  model you created above
+Create a `Play` that is fed by the HTTP  model you created above
+
 - Within the Play, add an AI node with the right prompt to perform the account research
-- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model to as the `Matching Salesforce Property` 
+- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model to as the `Matching Salesforce Property`
