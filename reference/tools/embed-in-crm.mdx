@@ -62,7 +62,7 @@ Select the named credential you just created and register the service with the p
 > /v1/models/<your_model_id>/records/ingest
 > ```
 >
-> Make sure the `schema` section of this reflects the fields that you'll be specifying in **Step 4.2 **below. As an example, we'll be using the following. 
+> Make sure the `schema` section of this reflects the fields that you'll be specifying in \*\*Step 4.2 \*\*below. As an example, we'll be using the following.
 >
 > ```
 > {
@@ -102,9 +102,9 @@ Add a **screen element** to show results or request user input before finishing 
 
 ![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
 
-### 4.3 - Map the variable created during the HTTP callout action's creation into the assignment action
+### 4.3 - Map the variable(s) created during the HTTP callout action's creation into the assignment action
 
-### 
+![Configure Variable Assignments for HTTP Callouts in Salesforce Flow (1).gif](/images/ConfigureVariableAssignmentsforHTTPCalloutsinSalesforceFlow\(1\).gif)
 
 ## Step 5 - Add a custom button to your Accounts interface
 
@@ -116,7 +116,7 @@ Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
 - Link it to the flow you just built.
 - Add the button to the Account page layout.
 
-## Step 6 - Enable a workflow to update the Account in Salesforce
+## Step 6 - Setup a Cargo Play to update the Account in Salesforce with automated account research
 
 Create a `Play` that is fed by the HTTP  model you created above
 
