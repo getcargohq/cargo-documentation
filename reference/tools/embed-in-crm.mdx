@@ -9,28 +9,86 @@ This is pretty useful to enable your reps to autonomously launch ad-hoc actions 
 
 Follow this 6-step tutorial to implement this logic in your CRM.
 
-## Step 1 - Create a named credential
+## Step 1- Create an HTTP data model in Cargo
+
+![Step 0 - Connect a New HTTP Data Source and Set Up a Model.gif](/images/Step0-ConnectaNewHTTPDataSourceandSetUpaModel.gif)
+
+- In Cargo, create a new **HTTP connector**.
+- Give it a clear name (e.g., `CRMButton`).
+- Configure headers and advanced settings as needed.
+- Click **Create**.
+
+```
+https://api.getcargo.io
+
+/v1/models/61ff298a-436d-4467-8a3f-13debf1a770e/records/ingest?
+
+token=092ca909d626b2a4cde0578cf4257c43fc93f5ad22043dc5ad9beac1b089bd23
+```
+
+## Step 2 - Create a named credential
 
 ![Step 1 - Create a Named Credential in Salesforce.gif](/images/Step1-CreateaNamedCredentialinSalesforce.gif)
 
-## Step 2 - Register an external service
+- Go to **Setup → Named Credentials**.
+- Click **New** and select **Legacy Named Credential**.
+- Enter the label and URL for your Cargo endpoint.
+- Save the credential.
+
+Use the following schema:
+
+```
+{"openapi":"3.0.1","info":{"title":"Cargo","description":""},"paths":{"CARGOPATH":{"post":{"description":"","operationId":"Query Cargo","parameters":[{"name":"token","in":"query","description":"","required":false,"allowEmptyValue":false,"schema":{"type":"string"}}],"requestBody":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"accountId":{"type":"string"},"linkedinUrl":{"type":"string"},"domain":{"type":"string"},"name":{"type":"string"},"linkedinId":{"type":"string"},"ownerId":{"type":"string"}}}}},"required":true},"responses":{"2XX":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string"}}}}}}}}}}}
+```
+
+- Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
+
+  ```
+  /v1/models/<your_model_id>/records/ingest
+  ```
+
+## Step 3 - Register an external service
 
 ![Step 2 - Register an External Service in Salesforce.gif](/images/Step2-RegisteranExternalServiceinSalesforce.gif)
 
-## Step 3 - **Create a flow**
+- In **Setup → External Services**, register your new Cargo service.
+- Select the named credential you just created.
+- Once registered, the service will be available for use in flows.
 
-### 3.1 - Retrieve account records
+## Step 4 - **Create a flow**
+
+### 4.1 - Retrieve account records
 
 ![Step 3 - Create a Flow to Retrieve Account Records in Salesforce.gif](/images/Step3-CreateaFlowtoRetrieveAccountRecordsinSalesforce.gif)
 
-### 3.2 - Map fields in an assignment step
+- Create a **flow** that pulls account records from Salesforce.
 
-![Step 4 - Map Fields in a Salesforce Flow Assignment Step (6).gif](/images/Step4-MapFieldsinaSalesforceFlowAssignmentStep\(6\).gif)
+### 4.2 - Map fields in an assignment step
 
-### 3.3 - Add a screen step at the end of the flow
+![Step 4 - Map Fields in a Salesforce Flow Assignment Step (8).gif](/images/Step4-MapFieldsinaSalesforceFlowAssignmentStep\(8\).gif)
+
+- Map the Salesforce fields to the inputs required by your Cargo **HTTP call**.
+- Use this JSON schema for the HTTP callout:
+
+  ```
+  {
+    "ownerId": { "type": "string" },
+    "accountId": { "type": "string" },
+    "domain": { "type": "string" }
+  }
+  ```
+
+### 4.3 - Add a screen step at the end of the flow
 
 ![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
 
-## Step 4 - Add a custom button to your Accounts interface
+- Add a **screen element** to show results or request user input before finishing the flow.
+
+## Step 5 - Add a custom button to your Accounts interface
 
 ![Step 6 - Add a Custom Flow Button to an Account in Salesforce (6).gif](/images/Step6-AddaCustomFlowButtontoanAccountinSalesforce\(6\).gif)
+
+- Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
+- Create a new Flow Button.
+- Link it to the flow you just built.
+- Add the button to the Account page layout.
