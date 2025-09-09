@@ -92,3 +92,9 @@ Use the following schema:
 - Create a new Flow Button.
 - Link it to the flow you just built.
 - Add the button to the Account page layout.
+
+## Step 6 - Enable a workflow to update the Account in Salesforce
+
+- Create a `Play` that is fed by the HTTP  model you created above
+- Within the Play, add an AI node with the right prompt to perform the account research
+- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model to as the `Matching Salesforce Property` 
