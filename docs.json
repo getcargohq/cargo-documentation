@@ -34,7 +34,8 @@
                   "reference/tools/building-a-tool",
                   "reference/tools/actions",
                   "reference/tools/launching-a-tool",
-                  "reference/tools/monitoring-a-tool"
+                  "reference/tools/monitoring-a-tool",
+                  "reference/tools/embed-in-crm"
                 ]
               },
               {
