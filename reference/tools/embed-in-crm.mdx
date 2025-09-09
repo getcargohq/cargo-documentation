@@ -1,9 +1,7 @@
 ---
 title: "Triggering from Salesforce"
-description: "Description of your new file."
+description: "Create a custom button inside the native Salesforce app in order to trigger the tool directly from within the CRM."
 ---
-
-You can create a custom button inside the native Salesforce app in order to trigger the tool directly from within the CRM.
 
 This is pretty useful to enable your reps to autonomously launch ad-hoc actions directly associated to a contact or account without leaving the CRM.
 
@@ -11,19 +9,28 @@ Follow this 6-step tutorial to implement this logic in your CRM.
 
 ## Step 1- Create an HTTP data model in Cargo
 
+Create a new **HTTP connector** and **Model** in Cargo
+
 ![Step 0 - Connect a New HTTP Data Source and Set Up a Model.gif](/images/Step0-ConnectaNewHTTPDataSourceandSetUpaModel.gif)
 
-- In Cargo, create a new **HTTP connector**.
-- Give it a clear name (e.g., `CRMButton`).
-- Configure headers and advanced settings as needed.
-- Click **Create**.
+The copied URL will resemble the following items
+
+Base URL:
 
 ```
 https://api.getcargo.io
+```
 
-/v1/models/61ff298a-436d-4467-8a3f-13debf1a770e/records/ingest?
+Model Id:
 
-token=092ca909d626b2a4cde0578cf4257c43fc93f5ad22043dc5ad9beac1b089bd23
+```
+/v1/models/<your_model_id>/records/ingest
+```
+
+Access token:
+
+```
+?token=<your_token>
 ```
 
 ## Step 2 - Create a named credential
@@ -49,11 +56,15 @@ Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part s
 
 ## Step 3 - Register an external service
 
+In **Setup → External Services**, register a new one
+
 ![Step 2 - Register an External Service in Salesforce.gif](/images/Step2-RegisteranExternalServiceinSalesforce.gif)
 
-- In **Setup → External Services**, register your new Cargo service.
-- Select the named credential you just created.
-- Once registered, the service will be available for use in flows.
+Select the named credential you just created and register the service with the provided schema:
+
+```
+{"openapi":"3.0.1","info":{"title":"Cargo","description":""},"paths":{"CARGOPATH":{"post":{"description":"","operationId":"Query Cargo","parameters":[{"name":"token","in":"query","description":"","required":false,"allowEmptyValue":false,"schema":{"type":"string"}}],"requestBody":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"accountId":{"type":"string"},"linkedinUrl":{"type":"string"},"domain":{"type":"string"},"name":{"type":"string"},"linkedinId":{"type":"string"},"ownerId":{"type":"string"}}}}},"required":true},"responses":{"2XX":{"description":"","content":{"application/json":{"schema":{"type":"object","properties":{"message":{"type":"string"}}}}}}}}}}}
+```
 
 ## Step 4 - **Create a flow**
 
