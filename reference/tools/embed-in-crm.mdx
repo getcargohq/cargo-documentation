@@ -3,9 +3,16 @@ title: "Triggering from Salesforce"
 description: "Create a custom button inside the native Salesforce app in order to trigger the tool directly from within the CRM."
 ---
 
-This is pretty useful to enable your reps to autonomously launch ad-hoc actions directly associated to a contact or account without leaving the CRM.
+This integration enables your sales reps to autonomously launch Cargo actions directly associated to a contact or account without leaving the CRM. Perfect for on-demand company research, contact enrichment, and lead scoring.
 
-Follow this 6-step tutorial to implement this logic in your CRM.
+## Prerequisites
+
+What you'll need to make this possible:
+- **Salesforce admin access** - Required to create flows, named credentials, and custom buttons and to create the SFDC connector in Cargo (if not already the case)
+- **Cargo workspace** - With write access and an active HTTP model set up
+- **API access** - Your Cargo API token and model endpoint URL
+
+Follow this 6-step tutorial to implement this integration in your CRM.
 
 ## Step 1- Create an HTTP data model in Cargo
 
@@ -102,7 +109,7 @@ Add a **screen element** to show results or request user input before finishing 
 
 ![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
 
-### 4.3 - Map the variable(s) created during the HTTP callout action's creation into the assignment action
+### 4.4 - Map the variable(s) created during the HTTP callout action's creation into the assignment action
 
 ![Configure Variable Assignments for HTTP Callouts in Salesforce Flow (1).gif](/images/ConfigureVariableAssignmentsforHTTPCalloutsinSalesforceFlow\(1\).gif)
 
@@ -118,9 +125,42 @@ Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
 
 ## Step 6 - Setup a Cargo Play to update the Account in Salesforce with automated account research
 
-Create a `Play` that is fed by the HTTP  model you created above
+Create a `Play` that is fed by the HTTP model you created above
 
 ![Step 6 - Build a Workflow to Automate Salesforce Integrations.gif](/images/Step6-BuildaWorkflowtoAutomateSalesforceIntegrations.gif)
 
 - Within the Play, add an AI node with the right prompt to perform the account research
-- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model to as the `Matching Salesforce Property`
+- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model as the `Matching Salesforce Property`
+- Configure the Play to automatically update the Salesforce record with the research results
+
+## Testing your integration
+
+### Verify the setup
+1. **Test the button** - Click your custom button on an Account record
+2. **Check the flow** - Ensure the flow runs without errors
+3. **Monitor the Play** - Verify the Cargo Play executes and updates the Salesforce record
+4. **Review results** - Confirm the Account record is updated with the research data
+
+### Common issues and solutions
+
+**"Flow failed to start"**
+- Check that the custom button is properly linked to the flow
+- Verify the flow is active and has the correct permissions
+
+**"HTTP callout failed"**
+- Verify the named credential is correctly configured
+- Check that the API token is valid and has proper permissions
+- Ensure the model ID in the URL matches your Cargo model
+
+**"Play not executing"**
+- Confirm the HTTP model is receiving data from Salesforce
+- Check that the Play is active and properly configured
+- Verify the Salesforce update action has the correct field mappings
+
+## Next steps
+
+Once your integration is working:
+- **Train your team** - Show reps how to use the new button
+- **Monitor usage** - Track which accounts are being researched
+- **Optimize prompts** - Refine your AI prompts based on results
+- **Scale up** - Consider adding similar buttons for Contacts or Leads
