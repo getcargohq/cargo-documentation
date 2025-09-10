@@ -9,36 +9,31 @@ This integration enables your sales reps to autonomously launch Cargo actions di
 
 What you'll need to make this possible:
 - **Salesforce admin access** - Required to create flows, named credentials, and custom buttons and to create the SFDC connector in Cargo (if not already the case)
-- **Cargo workspace** - With write access and an active HTTP model set up
-- **API access** - Your Cargo API token and model endpoint URL
+- **Cargo workspace** - With write access and a Tool set up
+- **API access** - Your Cargo API token and tool endpoint URL
 
-Follow this 6-step tutorial to implement this integration in your CRM.
+Follow this 5-step tutorial to implement this integration in your CRM.
 
-## Step 1- Create an HTTP data model in Cargo
+## Step 1 - Create and configure a Tool in Cargo
 
-Create a new **HTTP connector** and **Model** in Cargo
+Create a new **Tool** in Cargo that will handle the account research and Salesforce updates
 
-![Step 0 - Connect a New HTTP Data Source and Set Up a Model.gif](/images/Step0-ConnectaNewHTTPDataSourceandSetUpaModel.gif)
+![Step 0 - Create a Tool in Cargo.gif](/images/Step0-CreateaToolinCargo.gif)
 
-The copied URL will resemble the following items
+Configure your tool with:
+- **AI prompt** for account research
+- **Salesforce Update action** to update the Account record
+- **Input parameters** to receive data from Salesforce
 
-Base URL:
-
-```
-https://api.getcargo.io
-```
-
-Model Id:
+The tool will provide a webhook URL that looks like this:
 
 ```
-/v1/models/<your_model_id>/records/ingest
+https://api.getcargo.io/v1/tools/e276dc92-aca1-4136-bbe7-dce879346c58/execute?token=<your_token>
 ```
 
-Access token:
-
-```
-?token=<your_token>
-```
+Where:
+- `e276dc92-aca1-4136-bbe7-dce879346c58` is your unique tool ID
+- `<your_token>` is your Cargo API token
 
 ## Step 2 - Create a named credential
 
@@ -63,10 +58,10 @@ Select the named credential you just created and register the service with the p
 
 > ### Important to note
 >
-> Replace `CargoPath` by your Webhook URL from Cargo, make sure to take the part starting `v1` and ending `ingest`
+> Replace `CargoPath` by your Tool URL from Cargo, make sure to take the part starting `v1` and ending `execute`
 >
 > ```
-> /v1/models/<your_model_id>/records/ingest
+> /v1/tools/e276dc92-aca1-4136-bbe7-dce879346c58/execute
 > ```
 >
 > Make sure the `schema` section of this reflects the fields that you'll be specifying in \*\*Step 4.2 \*\*below. As an example, we'll be using the following.
@@ -79,7 +74,7 @@ Select the named credential you just created and register the service with the p
 > }
 > ```
 
-## Step 4 - **Create a flow**
+## Step 4 - Create a flow
 
 ### 4.1 - Retrieve account records
 
@@ -123,22 +118,13 @@ Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
 - Link it to the flow you just built.
 - Add the button to the Account page layout.
 
-## Step 6 - Setup a Cargo Play to update the Account in Salesforce with automated account research
-
-Create a `Play` that is fed by the HTTP model you created above
-
-![Step 6 - Build a Workflow to Automate Salesforce Integrations.gif](/images/Step6-BuildaWorkflowtoAutomateSalesforceIntegrations.gif)
-
-- Within the Play, add an AI node with the right prompt to perform the account research
-- Add a Salesforce `Update` action, using the account ID being passed from the HTTP model as the `Matching Salesforce Property`
-- Configure the Play to automatically update the Salesforce record with the research results
 
 ## Testing your integration
 
 ### Verify the setup
 1. **Test the button** - Click your custom button on an Account record
 2. **Check the flow** - Ensure the flow runs without errors
-3. **Monitor the Play** - Verify the Cargo Play executes and updates the Salesforce record
+3. **Monitor the Tool** - Verify the Cargo Tool executes and updates the Salesforce record
 4. **Review results** - Confirm the Account record is updated with the research data
 
 ### Common issues and solutions
@@ -150,11 +136,11 @@ Create a `Play` that is fed by the HTTP model you created above
 **"HTTP callout failed"**
 - Verify the named credential is correctly configured
 - Check that the API token is valid and has proper permissions
-- Ensure the model ID in the URL matches your Cargo model
+- Ensure the tool ID in the URL matches your Cargo tool
 
-**"Play not executing"**
-- Confirm the HTTP model is receiving data from Salesforce
-- Check that the Play is active and properly configured
+**"Tool not executing"**
+- Confirm the tool is receiving data from Salesforce
+- Check that the Tool is active and properly configured
 - Verify the Salesforce update action has the correct field mappings
 
 ## Next steps
@@ -162,5 +148,5 @@ Create a `Play` that is fed by the HTTP model you created above
 Once your integration is working:
 - **Train your team** - Show reps how to use the new button
 - **Monitor usage** - Track which accounts are being researched
-- **Optimize prompts** - Refine your AI prompts based on results
+- **Optimize prompts** - Refine your Tool's AI prompts based on results
 - **Scale up** - Consider adding similar buttons for Contacts or Leads
