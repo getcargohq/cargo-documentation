@@ -19,6 +19,8 @@ Follow this 5-step tutorial to implement this integration in your CRM.
 
 Create a new **Tool** in Cargo that will handle the account research and Salesforce updates
 
+
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/DyYrU1nsWb9SQ9w0PEBz?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Integrate Account Research Workflows with API Access" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
 ![Step 0 - Create a Tool in Cargo.gif](/images/Step0-CreateaToolinCargo.gif)
 
 Configure your tool with:
@@ -40,6 +42,8 @@ Where:
 
 ## Step 2 - Create a named credential
 
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/IpsfnyJoEXUbDZvTIhOz?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 2 - Register an External Service in Salesforce" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
+
 ![Step 1 - Create a Named Credential in Salesforce.gif](/images/Step1-CreateaNamedCredentialinSalesforce.gif)
 
 - Go to **Setup → Named Credentials**.
@@ -50,6 +54,8 @@ Where:
 ## Step 3 - Register an external service
 
 In **Setup → External Services**, register a new one
+
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/988fE6fMLjlHfXnGcdkF?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 3 - Create a Flow to Retrieve Account Records in Salesforce" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
 
 ![Step 2 - Register an External Service in Salesforce.gif](/images/Step2-RegisteranExternalServiceinSalesforce.gif)
 
@@ -83,11 +89,15 @@ Select the named credential you just created and register the service with the p
 
 Create a **flow** that pulls account records from Salesforce.
 
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/988fE6fMLjlHfXnGcdkF?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 3 - Create a Flow to Retrieve Account Records in Salesforce" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
+
 ![Step 3 - Create a Flow to Retrieve Account Records in Salesforce.gif](/images/Step3-CreateaFlowtoRetrieveAccountRecordsinSalesforce.gif)
 
 ### 4.2 - Map fields in an assignment step
 
 Map the Salesforce fields to the inputs required by your Cargo **HTTP call**.
+
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/Za7j5UmPAgopbrrTLFoL?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 4 - Map Fields in a Salesforce Flow Assignment Step" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
 
 ![Step 4 - Map Fields in a Salesforce Flow Assignment Step (8).gif](/images/Step4-MapFieldsinaSalesforceFlowAssignmentStep\(8\).gif)
 
@@ -105,15 +115,21 @@ At this point we need to specify the JSON schema for the HTTP callout that align
 
 Add a **screen element** to show results or request user input before finishing the flow.
 
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(57.12240515390121% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/2iwQ5qUufacXyp23nDXB?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 5 - Add a Screen Step to Your Salesforce Flow" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
+
 ![Step 5 - Add a Screen Step to Your Salesforce Flow (1).gif](/images/Step5-AddaScreenSteptoYourSalesforceFlow\(1\).gif)
 
 ### 4.4 - Map the variable(s) created during the HTTP callout action's creation into the assignment action
+
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/7bwz9KwQfUqKM90O9oxm?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 4.4 - Configure Variable Assignments for HTTP Callouts in Salesforce Flow" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
 
 ![Configure Variable Assignments for HTTP Callouts in Salesforce Flow (1).gif](/images/ConfigureVariableAssignmentsforHTTPCalloutsinSalesforceFlow\(1\).gif)
 
 ## Step 5 - Add a custom button to your Accounts interface
 
 Go to Setup → Object Manager → Account → Buttons, Links, and Actions.
+
+<!--ARCADE EMBED START--><div style="position: relative; padding-bottom: calc(62.5% + 41px); height: 0; width: 100%;"><iframe src="https://demo.arcade.software/ZhmmQaWb6J37VdfD4YXF?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Step 6 - Add a Custom Flow Button to an Account in Salesforce" frameborder="0" loading="lazy" webkitallowfullscreen mozallowfullscreen allowfullscreen allow="clipboard-write" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; color-scheme: light;" ></iframe></div><!--ARCADE EMBED END-->
 
 ![Step 6 - Add a Custom Flow Button to an Account in Salesforce (6).gif](/images/Step6-AddaCustomFlowButtontoanAccountinSalesforce\(6\).gif)
 
