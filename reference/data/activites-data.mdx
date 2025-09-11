@@ -1,16 +1,18 @@
 ---
-title: "Activities data"
-description: "Learn how to track and analyze activities data from Cargo tools and plays using SQL queries"
+title: "Track workspace activities"
+description: "Track and analyze activities data from Cargo tools and plays using SQL queries"
 ---
 
-Activities data provides comprehensive insights into your workspace's orchestration activities, including workflow executions, node operations, and segment transitions. This data is automatically captured and stored in your data warehouse, allowing you to monitor performance, debug issues, and analyze usage patterns.
+The activities data table associated with your workspace compiles insights record enrolments and node success and failure
+ outcomes. These logs give you real-time visibility into how your tools and plays are performing, helping you identify 
+ bottlenecks, errors, and optimization opportunities.
 
 ## Getting started
 
-1. **Access the sandbox**: Navigate to **System of records** → **Sandbox** tab at `https://app.getcargo.io/workspaces/<workspace_uuid>/settings/sor`
-2. **Write your query**: Enter your SQL query in the query input field using the appropriate syntax for your database (BigQuery or Snowflake)
-3. **Replace placeholders**: Update `[DATASET]`, `[CONNECTOR_SLUG]`, and workflow UUIDs with your actual values
-4. **Execute and analyze**: Click the **Query** button to run your query and view results in the results area below
+1. **Access the sandbox**: Navigate to the **System of records** section in your workspace's settings view
+2. Enter your SQL query in the query input field using the appropriate syntax for your database (BigQuery or Snowflake)
+
+**Note**: If you're using your own data warehouse as the system of record, the dataset name is the **Dataset name** from your System of records configuration. If you're using Cargo's Snowflake under the hood, reach out to the Cargo team for these details.
 
 ## Understanding the activities table
 
@@ -27,8 +29,6 @@ The activities data is stored in the `compute__activities` table with the follow
 - **`context`**: JSON object containing detailed activity information
 
 ## Querying activities data
-
-You can write SQL queries to analyze activities data directly from the sandbox area of your Cargo workspace. Navigate to **System of records** → **Sandbox** tab at `https://app.getcargo.io/workspaces/<workspace_uuid>/settings/sor` to access the query interface. This allows you to explore your orchestration patterns and troubleshoot issues in real-time.
 
 ### Example: Track workflow node executions
 
@@ -68,7 +68,3 @@ ORDER BY _time DESC;
 - **Table naming**: Follow the same naming conventions as described in the SQL models documentation
 - **Dataset scope**: Use `[DATASET].datasets_[CONNECTOR_SLUG].models_[MODEL_SLUG]` for dataset scope
 - **Schema scope**: Use `[DATASET].[SCHEMA].datasets_[CONNECTOR_SLUG]__models_[MODEL_SLUG]` for Snowflake schema scope
-
-**Note**: If you're using your own data warehouse as the system of record, the dataset name is the **Dataset name** from your System of records configuration. If you're using Cargo's Snowflake under the hood, reach out to the Cargo team for these details.
-
-This approach gives you real-time visibility into how your tools and plays are performing, helping you identify bottlenecks, errors, and optimization opportunities.
