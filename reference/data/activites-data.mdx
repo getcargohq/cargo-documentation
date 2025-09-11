@@ -1,0 +1,74 @@
+---
+title: "Activities data"
+description: "Learn how to track and analyze activities data from Cargo tools and plays using SQL queries"
+---
+
+Activities data provides comprehensive insights into your workspace's orchestration activities, including workflow executions, node operations, and segment transitions. This data is automatically captured and stored in your data warehouse, allowing you to monitor performance, debug issues, and analyze usage patterns.
+
+## Getting started
+
+1. **Access the sandbox**: Navigate to **System of records** → **Sandbox** tab at `https://app.getcargo.io/workspaces/<workspace_uuid>/settings/sor`
+2. **Write your query**: Enter your SQL query in the query input field using the appropriate syntax for your database (BigQuery or Snowflake)
+3. **Replace placeholders**: Update `[DATASET]`, `[CONNECTOR_SLUG]`, and workflow UUIDs with your actual values
+4. **Execute and analyze**: Click the **Query** button to run your query and view results in the results area below
+
+## Understanding the activities table
+
+The activities data is stored in the `compute__activities` table with the following key structure:
+
+- **`_id`**: Unique identifier for each activity
+- **`_time`**: Timestamp when the activity occurred
+- **`kind`**: Type of activity (workflowNodeExecuted, workflowEntered, workflowLeft, segmentEntered, segmentLeft)
+- **`model_uuid`**: Reference to the data model (if applicable)
+- **`workflow_uuid`**: Reference to the workflow
+- **`play_uuid`**: Reference to the play (if applicable)
+- **`tool_uuid`**: Reference to the tool (if applicable)
+- **`segment_uuid`**: Reference to the segment (for segment activities)
+- **`context`**: JSON object containing detailed activity information
+
+## Querying activities data
+
+You can write SQL queries to analyze activities data directly from the sandbox area of your Cargo workspace. Navigate to **System of records** → **Sandbox** tab at `https://app.getcargo.io/workspaces/<workspace_uuid>/settings/sor` to access the query interface. This allows you to explore your orchestration patterns and troubleshoot issues in real-time.
+
+### Example: Track workflow node executions
+
+Here's a simple query to track all node executions for a specific workflow, including their status and any error messages:
+
+**BigQuery syntax:**
+```sql
+SELECT 
+  _time,
+  json_value(context, '$.nodeSlug') as node_name,
+  json_value(context, '$.nodeKind') as node_type,
+  json_value(context, '$.nodeStatus') as status,
+  json_value(context, '$.nodeErrorMessage') as error_message
+FROM [DATASET].datasets_[CONNECTOR_SLUG].compute__activities
+WHERE kind = 'workflowNodeExecuted' 
+  AND json_value(context, '$.workflowUuid') = 'your-workflow-uuid-here'
+ORDER BY _time DESC;
+```
+
+**Snowflake syntax:**
+```sql
+SELECT 
+  _time,
+  context:nodeSlug as node_name,
+  context:nodeKind as node_type,
+  context:nodeStatus as status,
+  context:nodeErrorMessage as error_message
+FROM [DATASET].[SCHEMA].datasets_[CONNECTOR_SLUG]__compute__activities
+WHERE kind = 'workflowNodeExecuted' 
+  AND context:workflowUuid = 'your-workflow-uuid-here'
+ORDER BY _time DESC;
+```
+
+### Key differences between BigQuery and Snowflake
+
+- **JSON field access**: BigQuery uses `json_value(context, '$.fieldName')` while Snowflake uses `context:fieldName`
+- **Table naming**: Follow the same naming conventions as described in the SQL models documentation
+- **Dataset scope**: Use `[DATASET].datasets_[CONNECTOR_SLUG].models_[MODEL_SLUG]` for dataset scope
+- **Schema scope**: Use `[DATASET].[SCHEMA].datasets_[CONNECTOR_SLUG]__models_[MODEL_SLUG]` for Snowflake schema scope
+
+**Note**: If you're using your own data warehouse as the system of record, the dataset name is the **Dataset name** from your System of records configuration. If you're using Cargo's Snowflake under the hood, reach out to the Cargo team for these details.
+
+This approach gives you real-time visibility into how your tools and plays are performing, helping you identify bottlenecks, errors, and optimization opportunities.
