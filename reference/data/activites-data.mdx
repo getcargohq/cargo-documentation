@@ -40,7 +40,7 @@ SELECT
   json_value(context, '$.nodeKind') as node_type,
   json_value(context, '$.nodeStatus') as status,
   json_value(context, '$.nodeErrorMessage') as error_message
-FROM [DATASET].datasets_[CONNECTOR_SLUG].compute__activities
+FROM [DATASET].compute__activities
 WHERE kind = 'workflowNodeExecuted' 
   AND json_value(context, '$.workflowUuid') = 'your-workflow-uuid-here'
 ORDER BY _time DESC;
@@ -55,7 +55,7 @@ SELECT
   context:nodeKind as node_type,
   context:nodeStatus as status,
   context:nodeErrorMessage as error_message
-FROM [DATASET].[SCHEMA].datasets_[CONNECTOR_SLUG]__compute__activities
+FROM [DATABASE]._compute.activities
 WHERE kind = 'workflowNodeExecuted' 
   AND context:workflowUuid = 'your-workflow-uuid-here'
 ORDER BY _time DESC;
@@ -63,7 +63,11 @@ ORDER BY _time DESC;
 
 ### Key differences between BigQuery and Snowflake
 
-- **JSON field access**: BigQuery uses `json_value(context, '$.fieldName')`while Snowflake uses `context:fieldName`
-- **Table naming**: Follow the same naming conventions as described in the SQL models documentation
-- **Dataset scope**: Use `[DATASET].datasets_[CONNECTOR_SLUG].models_[MODEL_SLUG]` for dataset scope
-- **Schema scope**: Use `[DATASET].[SCHEMA].datasets_[CONNECTOR_SLUG]__models_[MODEL_SLUG]` for Snowflake schema scope
+- **JSON field access**: BigQuery uses `json_value(context, '$.fieldName')` while Snowflake uses `context:fieldName`
+- **Table naming**: Depending on the scope selected for your system of record, you'll need to adapt the table references as follows:
+  - **BigQuery project-level scope**: Use `[PROJECT_ID].[DATASET].compute__activities` to fully qualify the table
+  - **BigQuery dataset-level scope**: Use `[DATASET].compute__activities` when working within a specific dataset
+  - **Snowflake database-level scope**: Use `[DATABASE]._compute.activities` to reference tables at the database level
+  - **Snowflake schema-level scope**: Use `[DATABASE].[SCHEMA]._compute__activities` for schema-specific access
+
+Note: Replace the bracketed values (e.g. [PROJECT_ID], [DATASET], etc.) with your actual configuration values.
