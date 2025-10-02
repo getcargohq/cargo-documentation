@@ -62,7 +62,8 @@
                     "pages": [
                       "reference/data/system-of-record",
                       "reference/data/setup-cargo-snowflake",
-                      "reference/data/setup-cargo-bigquery"
+                      "reference/data/setup-cargo-bigquery",
+                      "reference/data/setup-cargo-redshift"
                     ]
                   }
                 ]
