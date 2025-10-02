@@ -9,19 +9,15 @@ description: "This page outlines how to use the Redshift integration to create a
 - Network connectivity between Cargo and your Redshift cluster (if they exist in separate VPCs)
 - Proper IAM permissions and database credentials
 
-### **Guide**
+### **Configure Connection Details**
 
-1. **Verify Cluster Connectivity**
-   - Ensure your Redshift cluster is active and accessible from Cargo
-   - Use the "Test Connection" feature in the Cargo UI to verify connectivity
-   - For network configuration help, refer to the [<u>AWS Redshift documentation</u>](https://docs.aws.amazon.com/redshift/latest/gsg/rs-gsg-authorize-cluster-access.html)
-2. **Configure Connection Details**
-   - Provide the following connection information:
-     - Host: Your Redshift endpoint (format: `<cluster-id>.<region>.redshift.amazonaws.com`)
-     - Port: Default is 5439
-     - Database name
-     - Username and password
-   - All information can be found in your AWS Redshift console under cluster details
+Provide the following connection information:
+
+- Host: Your Redshift endpoint (format: `<cluster-id>.<region>.redshift.amazonaws.com`)
+- Port: Default is 5439
+- Database name
+- Username and password
+- All information can be found in your AWS Redshift console under cluster details
 
 ### **Allow Cargo IP addresses**
 
