@@ -77,7 +77,7 @@
               {
                 "group": "Integrations",
                 "pages": [
-                  "reference/integrations/setup-cargo-redshift"
+                  "reference/integrations/redshift"
                 ]
               }
             ]
