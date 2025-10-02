@@ -58,9 +58,9 @@
                   "reference/data/sql-models",
                   "reference/data/activites-data",
                   {
-                    "group": "System of record",
+                    "group": "System of records",
                     "pages": [
-                      "reference/data/system-of-record",
+                      "reference/data/system-of-records",
                       "reference/data/setup-cargo-snowflake",
                       "reference/data/setup-cargo-bigquery",
                       "reference/data/setup-cargo-redshift"
@@ -72,6 +72,12 @@
                 "group": "Allocation",
                 "pages": [
                   "reference/allocation/allocating-leads"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "reference/integrations/setup-cargo-redshift"
                 ]
               }
             ]
