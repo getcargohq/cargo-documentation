@@ -1,0 +1,83 @@
+---
+title: "Attio"
+description: "Comprehensive CRM integration with Attio for modern sales and marketing automation"
+---
+
+## How to set up Attio
+   - Connect Attio to Cargo using API credentials
+   - Choose "Attio" from the node catalog from inside a Play, Tool or Agent
+   - Setup an Attio data model
+
+## Attio Actions
+
+### Find Record
+
+Retrieve a single record from Attio by its unique ID:
+* **Record lookup** – Get specific record details for processing workflows
+* **Data validation** – Verify record existence before performing operations
+
+### Insert Record
+
+Insert a new record into Attio:
+* **Lead capture** – Create new leads from various sources and channels
+* **Contact creation** – Add new contacts from forms, events, or imports
+* **Company creation** - Add new companies from forms, events, or imports
+
+### Match Record
+
+Check if a record exists in Attio:
+* **Duplicate prevention** – Avoid creating duplicate records
+* **Smart routing** – Route records based on existing data
+
+### Search Records
+
+Retrieve multiple records from Attio based on search criteria:
+* **Advanced filtering** – Find records meeting specific criteria
+* **Bulk operations** – Retrieve multiple records for processing
+
+### Update Record
+
+Update an existing record in Attio:
+* **Data maintenance** – Keep record information current and accurate
+* **Lifecycle management** – Update record stages and statuses
+* **Enrichment workflows** – Enhance records with additional data
+
+### Upsert Records
+
+Upsert multiple records into Attio (insert or update):
+* **Bulk data operations** – Handle large-scale data imports and updates
+* **Data synchronization** – Keep external systems synchronized with Attio
+
+### Delete Record
+
+Delete a record from Attio:
+* **Data cleanup** – Remove outdated or incorrect records programmatically or in batches
+
+
+## Data Models on Attio
+
+Cargo allows you to create data models on top of your Attio CRM data that can be used to trigger Plays and power model search actions.
+
+### Creating Attio data models
+- **Name**: Choose a descriptive name for your model (required)
+- **Slug**: Set a unique identifier that cannot be changed once created (required)
+- **Object Type**: Select the Attio object type you want to model:
+   
+
+### Object Types Available
+
+**Deal Models**
+- Track opportunities, pipeline stages, and deal progression
+- Monitor deal velocity, conversion rates, and forecasting
+- Analyze win/loss patterns and sales performance
+
+**Company Models**  
+- Manage company records with domains, descriptions, and team information
+- Track company categories, locations, and relationships
+- Monitor company engagement and lifecycle stages
+
+**Person Models**
+- Handle contact and lead information
+- Track individual engagement and communication history
+- Manage contact lifecycle and qualification status
+
