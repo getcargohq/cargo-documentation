@@ -77,7 +77,9 @@
               {
                 "group": "Integrations",
                 "pages": [
-                  "reference/integrations/redshift"
+                  "reference/integrations/redshift",
+                  "reference/integrations/attio",
+                  "reference/integrations/fullenrich"
                 ]
               }
             ]
