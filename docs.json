@@ -23,65 +23,75 @@
               "get-started/purchase-credits",
               "get-started/expressions-cheatsheet"
             ]
+          }
+        ]
+      },
+      {
+        "tab": "Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "reference/overview"
+            ]
           },
           {
-            "group": "Reference",
+            "group": "Tools",
             "pages": [
-              "reference/overview",
+              "reference/tools/building-a-tool",
+              "reference/tools/actions",
+              "reference/tools/launching-a-tool",
+              "reference/tools/monitoring-a-tool",
+              "reference/tools/embed-in-crm"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "reference/agents/building-an-agent"
+            ]
+          },
+          {
+            "group": "Plays",
+            "pages": [
+              "reference/plays/building-a-play",
+              "reference/plays/syncing-a-play"
+            ]
+          },
+          {
+            "group": "Data",
+            "pages": [
+              "reference/data/enrol-data-in-plays",
+              "reference/data/sql-models",
+              "reference/data/activites-data",
               {
-                "group": "Tools",
+                "group": "System of records",
                 "pages": [
-                  "reference/tools/building-a-tool",
-                  "reference/tools/actions",
-                  "reference/tools/launching-a-tool",
-                  "reference/tools/monitoring-a-tool",
-                  "reference/tools/embed-in-crm"
-                ]
-              },
-              {
-                "group": "Agents",
-                "pages": [
-                  "reference/agents/building-an-agent"
-                ]
-              },
-              {
-                "group": "Plays",
-                "pages": [
-                  "reference/plays/building-a-play",
-                  "reference/plays/syncing-a-play"
-                ]
-              },
-              {
-                "group": "Data",
-                "pages": [
-                  "reference/data/enrol-data-in-plays",
-                  "reference/data/sql-models",
-                  "reference/data/activites-data",
-                  {
-                    "group": "System of records",
-                    "pages": [
-                      "reference/data/system-of-records",
-                      "reference/data/setup-cargo-snowflake",
-                      "reference/data/setup-cargo-bigquery",
-                      "reference/data/setup-cargo-redshift"
-                    ]
-                  }
-                ]
-              },
-              {
-                "group": "Allocation",
-                "pages": [
-                  "reference/allocation/allocating-leads"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "pages": [
-                  "reference/integrations/redshift",
-                  "reference/integrations/attio",
-                  "reference/integrations/fullenrich"
+                  "reference/data/system-of-records",
+                  "reference/data/setup-cargo-snowflake",
+                  "reference/data/setup-cargo-bigquery",
+                  "reference/data/setup-cargo-redshift"
                 ]
               }
+            ]
+          },
+          {
+            "group": "Allocation",
+            "pages": [
+              "reference/allocation/allocating-leads"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": "Integrations",
+            "pages": [
+              "reference/integrations/redshift",
+              "reference/integrations/attio",
+              "reference/integrations/fullenrich"
             ]
           }
         ]
