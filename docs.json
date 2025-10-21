@@ -79,9 +79,9 @@
           {
             "group": "Integration",
             "pages": [
-              "reference/integrations/redshift",
-              "reference/integrations/attio",
-              "reference/integrations/fullenrich"
+              "reference/integration/redshift",
+              "reference/integration/attio",
+              "reference/integration/fullenrich"
             ]
           }
         ]
