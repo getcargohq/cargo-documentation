@@ -1,0 +1,33 @@
+---
+title: "Loading Resources "
+description: "Resources provide the Agent with non-public, up-to-date data, grounding its reasoning in facts via RAG."
+---
+
+![Image(1) Web](/images/image\(1\).webp)
+
+Cargo Agents support connecting to a variety of data sources, allowing for comprehensive grounding across the organization:
+
+| **Data Type**        | **Examples (Source Categories)**                                       | **Purpose**                                                                                          |
+| :------------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- |
+| **CRM Objects**      | Hubspot Deals, Salesforce Accounts                                     | Structured data necessary for Go-To-Market (GTM) operations and automation.                          |
+| **Knowledge Bases**  | Notion, Google Docs, Internal Files                                    | Unstructured documentation (playbooks, FAQs) used for internal expertise _(ie: ICP, selling points)_ |
+| **Product Data**     | Usage databases, Analytics platforms                                   | Structured/semi-structured data for use cases like churn detection or qualification based on usage.  |
+| **Custom Databases** | SQL databases, Cloud Data Warehouses _(Bigquery, Snowflake, Redshift)_ | Internal data sources accessible via dedicated integration models.                                   |
+
+**Resource Configuration and Query Modes**
+
+| **Query Mode** | **Mechanism**                                                                                                            | **Data Type Focus**                              | **When to Use**                                                                                  |
+| :------------- | :----------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| **SQL**        | Uses the LLM to generate and execute structured **SQL queries** against the resource (e.g., _Hubspot Deals_).            | Structured Data (Databases, CRM Tables)          | When the query requires filtering, sorting, or aggregation of specific fields.                   |
+| **Vector**     | Uses **vector similarity search** to find text chunks that are semantically (conceptually) related to the Agent's query. | Unstructured Data (Documents, PDFs, Transcripts) | When the query is conceptual and requires finding relevant passages within large bodies of text. |
+
+**Configuration Details**
+
+Once a resource is selected, by clicking on it, you can access the configuration details:
+
+- **Model:** Specifies the specific data object or service to be queried (e.g., _Deals_ object within Hubspot).
+- **Prompt/Guidelines:** Custom instructions provided to the LLM on how to phrase queries or interpret the resource data (e.g., _Always prioritize high-value deals_).
+- **Filter & Selected Columns:** Allows administrators to restrict the data the Agent can access.
+  - **Filter:** Defines specific conditions (e.g., only retrieve deals in 'Discovery' stage).
+  - **Selected Columns:** (SQL Mode only) Limits the fields returned, improving performance by reducing context window overhead.
+- **Limit:** Sets the maximum number of records or results returned by the query, balancing result quality against retrieval cost and speed.

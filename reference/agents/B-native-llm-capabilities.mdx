@@ -1,0 +1,21 @@
+---
+title: "2.B Native LLM Capabilities"
+description: "Capabilities are the built-in, native features of the underlying Large Language Model (LLM) that facilitate complex decision-making, information handling, and interaction management. "
+---
+
+![image.png](/images/image.png)
+
+These are built-in features that facilitate complex, multi-step agency.
+
+- **Memory:** Memory is essential for maintaining context and learning across task executions.
+  - **User Memory:** Stores persistent knowledge about the end-user for personalization.
+  - **Workspace Memory:** Stores organizational context shared across agents.
+  - **Agent Memory:** Short-term context (previous steps, tool outputs) for the current execution loop.
+
+
+- **Canvas:** Enables the Agent to generate structured, shareable digital assets (e.g., text files, documents, spreadsheets).
+  - **Use Case Example:** If a user requests a specific segment (e.g., "CROs in San Francisco"), the Agent delivers the output as a fully formatted **spreadsheet file**.
+- **WebSearch:** Provides real-time data retrieval from the internet.
+  - **Use Case:** Critical for tasks requiring current market information (account research) or validating company information that may have recently changed.
+- **Suggested Action:** A proactive workflow assistant that suggests the **next best action** after providing an output.
+  - **Example:** After retrieving a list of contacts (e.g., CROs in San Francisco), it suggests follow-up actions like, _"Should we add them to [Sequence XX]?"_

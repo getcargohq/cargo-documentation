@@ -39,12 +39,6 @@
                 ]
               },
               {
-                "group": "Agents",
-                "pages": [
-                  "reference/agents/building-an-agent"
-                ]
-              },
-              {
                 "group": "Plays",
                 "pages": [
                   "reference/plays/building-a-play",

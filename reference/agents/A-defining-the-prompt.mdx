@@ -1,0 +1,21 @@
+---
+title: "2.A Defining the prompt "
+description: "The Prompt is the foundation of the Agent's behavior, establishing its context, mission, and constraints via a structured template:ion of your new file."
+---
+
+### **Core Prompt Components**
+
+Based on the configuration interface, the Prompt is divided into three mandatory sections:
+
+1. **Role / Purpose**
+   - **Function:** Defines the Agent's overall mission and specialization. This sets the primary context for the LLM.
+   - **Example:** _You evaluate LinkedIn company URLs to determine if they are a good fit for [Cargo]._
+   - **Best Practice:** Keep this statement concise and focused on the **end goal**.
+2. **Behavior**
+   - **Function:** Outlines the mandatory steps, tools to be used, and the desired format of the output. This directly guides the Agent's **Planning** phase.
+   - **Example:** _Analyze the provided URL using the tool "Cargo-qualif"_. _Provide a clear and concise evaluation..._
+   - **Note:** This section often dictates the sequence of tool calls and specifies the required inputs and outputs. Make sure each tool feature specific name and description to help the agent pick the right tool at the right time.
+3. **Avoidances**
+   - **Function:** Establishes critical constraints and guardrails, preventing the Agent from performing undesired actions
+   - **Example:** _Do not share sensitive or private information..._
+   - **Importance:** This is crucial for **security, compliance, and maintaining a professional tone**.

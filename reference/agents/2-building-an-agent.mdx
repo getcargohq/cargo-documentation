@@ -1,0 +1,46 @@
+---
+title: "2. Building an agent"
+description: "Cargo Agents are LLM-powered autonomous workers configured to plan and execute multi-step tasks. They use a reasoning engine to dynamically determine the best path to a goal based on the input context and available tools."
+---
+
+While Cargo Plays follows a pre-defined sequence of steps, Agents use a reasoning engine to dynamically determine the best path to a goal based on the input context and available tools.
+
+You should deploy an Agent when:
+
+- **Inputs are variable:** The data source is unstructured text (emails, website copy, notes) rather than structured JSON.
+- **Reasoning is required:** The task requires semantic understanding, categorization, or qualitative assessment rather than simple regex or string matching.
+- **Adaptability is needed:** The Agent needs to retry with different parameters or search alternative sources if a first attempt fails.
+
+**Agents can:**
+
+- **Enrich, research, and qualify** accounts and leads using live external data.
+- **Update CRM fields,** upsert records, and manage data integrity based on interpreted inputs.
+- **Assign owners, push prospects to sequences,** and notify reps via Slack or email.
+- **Summarize customer conversations** and extract critical signals (e.g., product interest).
+- **Detect risks** (e.g., churn signals, usage drops, job changes) proactively.
+- **Allocate each lead to the right rep** based on territory, capacity, and qualification criteria.
+
+### 2. Architecture of an Agent: Configuration details
+
+The Agent's intelligence is defined by a stack of interconnected components.The table below serves as the central reference for the Agent's configuration, with each component linking to a detailed technical section.
+
+![Architecture VG Jp](/images/Architecture_VG.jpg)
+
+| **Component Name**            | **Description**                                                                                                                                         | **Key Technical Sub-Section** |
+| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------- |
+| **1. Prompt/Goal**            | The mission statement and behavioral guardrails that define the agent's task.                                                                           | A. Defining the Prompt        |
+| **2. Capabilities**           | Inherent LLM features that enhance agency (e.g., Memory, WebSearch, Canvas).                                                                            | B. Native LLM Capabilities    |
+| **3. Tools/Actions**          | External functions (APIs) the Agent can execute to interact with systems (CRM, Slack, etc.).                                                            | C. Integrating Tools/Actions  |
+| **4. Resources (RAG)**        | The internal knowledge base and data sources used to ground the Agent's reasoning in facts.                                                             | D. Loading Resources (RAG)    |
+| **5. AI model configuration** | The underlying inference engine (e.g., OpenAI, Anthropic) and behavioral parameters (Temperature, Reasoning steps) that drive the Agent's intelligence. | E. AI Model Configuration     |
+
+### 3. Agent deployment
+
+Once created, Agents are designed to be deployed directly into the flow of work across key channels:
+
+- **Plays (Workflow Automation):** Agents are triggered by a variety of conditions, including **scheduled intervals** or changes within a **system of records** (CRM, data warehouse tables)
+- **Slack:** Agents are called via slash commands or mentions to answer real-time queries. Most common ones includes “enrich a contact”, “generate an account research”, “find most relevants stakeholders”.
+
+  <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/k9zuFGXmjQY" title="Deploy an agent in Slack" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+- **Chat (**[**Browser extension**](https://www.getcargo.ai/modules/chrome)\*\* or Embedded chat UI in Cargo):\*\* Agents act as a real-time conversational assistant, available both as a **Chrome Extension** (to analyze and provide context on the current browser page, or atop your CRM) or an **Embedded Chat Interface** in Cargo.
+- **CRM button:** Allows users to initiate specific, one-click, goal-oriented executions on demand directly from a CRM record.
