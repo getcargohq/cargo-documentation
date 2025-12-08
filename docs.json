@@ -42,11 +42,11 @@
                   "group": "Agents",
                   "pages": [
                     "reference/agents/building-an-agent",
-                    "reference/agents/A-defining-the-prompt",
-                    "reference/agents/B-native-llm-capabilities",
-                    "reference/agents/C-tools-and-actions",
-                    "reference/agents/D-resources-and-context",
-                    "reference/agents/E-model-configuration"
+                    "reference/agents/defining-the-prompt",
+                    "reference/agents/native-llm-capabilities",
+                    "reference/agents/tools-and-actions",
+                    "reference/agents/resources-and-context",
+                    "reference/agents/model-configuration"
                   ]
               },
               {
