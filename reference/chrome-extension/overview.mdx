@@ -1,0 +1,173 @@
+---
+title: "Chrome Extension"
+description: "Access Cargo agents and tools directly from your browser—inside your CRM, on any webpage, or anywhere you work."
+---
+
+The Cargo Chrome extension brings your AI-powered workflows to wherever you work. Run agents, execute tools, and enrich data without leaving your browser.
+
+---
+
+## What the extension does
+
+The Chrome extension integrates Cargo directly into your daily workflow:
+
+| Capability            | Description                                                                           |
+| :-------------------- | :------------------------------------------------------------------------------------ |
+| **Page analysis**     | Analyze the current webpage with your agents—extract insights, summarize, or research |
+| **Quick access**      | Launch agents and tools from any browser tab                                          |
+| **Context awareness** | Automatically pull context from CRM records or page content                           |
+
+---
+
+## Installation
+
+1. Visit the [Chrome Web Store](https://chromewebstore.google.com/detail/cargo/gfgbpfecclegmmogcfonjpcicjhlelkb)
+2. Click **Add to Chrome**
+3. Sign in with your Cargo workspace credentials
+4. Pin the extension to your toolbar for quick access
+
+<Tip>
+  After installation, click the Cargo icon in your toolbar and sign in to
+  connect the extension to your workspace.
+</Tip>
+
+---
+
+## Using the extension
+
+### Inside your CRM
+
+When viewing a contact, company, or deal in HubSpot or Salesforce, the extension adds a Cargo sidebar:
+
+1. Navigate to a record in your CRM
+2. Click the Cargo icon in your browser toolbar (or use the sidebar if enabled)
+3. Choose an agent to run—the extension automatically pulls context from the page (CRM record details, visible data) and passes it to the agent
+4. View results in the sidebar and let them sync back to your CRM
+
+**Example workflow:**
+
+- View a company in HubSpot
+- Click the Cargo icon
+- Run "Enrich & Score Lead"
+- See results in the sidebar
+
+<Note>
+  The extension reads data from your CRM page to provide context. No additional
+  CRM permissions are required beyond what Cargo already has.
+</Note>
+
+### On any webpage
+
+Analyze any webpage with your Cargo agents:
+
+1. Navigate to any webpage (company website, LinkedIn profile, news article)
+2. Click the Cargo icon in your toolbar
+3. Select an agent
+4. The agent can read and analyze the current page content
+5. Ask questions or run workflows based on what's on the page
+
+**Use cases:**
+
+- Research a prospect's company website before a call
+- Summarize a news article about a target account
+- Extract contact information from a LinkedIn profile
+- Analyze competitor pricing pages
+
+### Quick actions
+
+Access your most-used tools instantly:
+
+1. Click the Cargo icon from any tab
+2. See your pinned agents and tools
+3. Run with one click—enter inputs manually if needed
+4. View results directly in the extension popup
+
+---
+
+## Configuring the extension
+
+### Available agents
+
+By default, the Chrome extension gives you access to:
+
+- **Master Agent** — A general-purpose agent built by Cargo, ready to use out of the box
+- **All workspace agents** — Every agent you've deployed in your Cargo workspace
+
+### Customizing available agents
+
+You can control which agents appear in the Chrome extension:
+
+1. Open Cargo and navigate to **Settings**
+2. Select **Cargo for Chrome**
+3. In the **Available agents** section, enable or disable specific agents
+4. Save your changes
+
+This lets you curate the agent list for your team—hide agents that aren't relevant for browser-based work, or keep the list focused on your most-used workflows.
+
+### Selecting a default agent
+
+You can also choose which agent opens by default when you launch the extension:
+
+1. In **Settings → Cargo for Chrome**, find the **Default agent** dropdown
+2. Choose your preferred agent
+3. Save your changes
+
+The selected agent will automatically load whenever you open the extension, saving you a click on every use.
+
+<Tip>
+  Set your most-used agent as the default. You can always switch to a different
+  agent from the extension's agent selector.
+</Tip>
+
+---
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Set a default agent for faster access">
+    Configure your most-used agent as the default in **Settings → Cargo for
+    Chrome**. This loads your preferred agent instantly when you open the
+    extension.
+  </Accordion>
+  <Accordion title="Curate your agent list">
+    Disable agents you don't need in the extension settings. A focused list
+    makes it faster to find the right agent for browser-based work.
+  </Accordion>
+  <Accordion title="Use page context effectively">
+    Your agent can read the current page content. Be specific in your
+    prompts—ask "What does this company do?" or "Summarize the key points on
+    this page" to get targeted results.
+  </Accordion>
+  <Accordion title="Leverage CRM context">
+    When viewing a CRM record, the extension automatically pulls in record
+    details. Use this to run enrichment, qualification, or research without
+    re-entering data.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related
+
+<CardGroup cols={2}>
+  <Card
+    title="Embed tools in CRM"
+    icon="puzzle-piece"
+    href="/reference/tools/embed-in-crm"
+  >
+    Configure CRM buttons for one-click tool execution.
+  </Card>
+  <Card title="Deploy agents" icon="robot" href="/reference/agents/overview">
+    Learn how to build and deploy agents for use in the extension.
+  </Card>
+  <Card title="HubSpot integration" icon="hubspot" href="/integration/hubspot">
+    Set up your HubSpot connection for seamless CRM integration.
+  </Card>
+  <Card
+    title="Salesforce integration"
+    icon="salesforce"
+    href="/integration/salesforce"
+  >
+    Configure Salesforce to work with the Chrome extension.
+  </Card>
+</CardGroup>

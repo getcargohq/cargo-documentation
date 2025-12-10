@@ -3,29 +3,174 @@ title: Launching a tool
 description: Tools in Cargo can be launched through multiple methods depending on your use case
 ---
 
+Once you've built and published a tool, there are several ways to execute it. Choose the method that best fits your use case.
+
 ![Launching a tool](/images/launching-a-tool-1.png)
+
+---
 
 ## Launch tab
 
-The most direct way to launch a tool is through the launch tab in the Cargo interface.
+The most direct way to launch a tool is through the **Launch** tab in the Cargo interface.
 
-**Single run:** To execute a tool once with specific parameters, navigate to your tool in the Cargo workspace and click on the "Launch" tab. Select "Single" mode, enter the required input parameters, and click "Run tool" to execute immediately.
+### Single run
 
-**Bulk run:** For processing multiple records at once, navigate to your tool and select the "Launch" tab. Choose "Bulk" mode, upload a file containing multiple input records, and click "Continue" to process the entire batch.
+Execute a tool once with specific parameters:
+
+1. Navigate to your tool in the Cargo workspace
+2. Click on the **Launch** tab
+3. Select **Single** mode
+4. Enter the required input parameters
+5. Click **Run tool** to execute immediately
+
+<Tip>
+Single runs are perfect for testing tools or processing one-off requests without setting up a full workflow.
+</Tip>
+
+### Bulk run
+
+Process multiple records at once:
+
+1. Navigate to your tool and select the **Launch** tab
+2. Choose **Bulk** mode
+3. Upload a CSV file containing multiple input records
+4. Map the CSV columns to your tool's input fields
+5. Click **Continue** to process the entire batch
+
+Your CSV should have headers that match your tool's input field names. For example:
+
+```csv
+company_domain,contact_email
+acme.com,john@acme.com
+globex.io,jane@globex.io
+```
+
+---
 
 ## Through a play
 
-Add your tool as an action in a play and configure its inputs using data from previous actions. The tool will execute automatically when the play runs, and its results can be passed to subsequent actions in the workflow.
+Integrate tools into automated workflows by adding them as actions in a play.
+
+1. Create or edit a play
+2. Add your tool as a node in the play
+3. Map inputs from previous play nodes or enrolled data
+4. Configure what happens with the tool's output
+
+The tool executes automatically when the play runs, and its results can be passed to subsequent actions. This is ideal for building multi-step automation sequences.
+
+<Card title="Learn more about plays" icon="circle-play" href="/reference/plays/overview">
+  See how to build plays that orchestrate multiple tools together.
+</Card>
+
+---
 
 ## Through an agent
 
-Configure an agent to use specific tools, and it will automatically launch them when needed. Tool results feed into the agent's decision-making process, and agents can chain multiple tools together for complex workflows.
+AI agents can autonomously decide when and how to use your tools.
+
+1. Open your agent's configuration
+2. Add your tool to the agent's available tools
+3. The agent will automatically launch the tool when relevant to the conversation
+
+Tool results feed into the agent's reasoning process, enabling sophisticated workflows where the agent chains multiple tools together based on context.
+
+<Card title="Configure agent tools" icon="robot" href="/reference/agents/tools-and-actions">
+  Learn how to give agents access to your tools.
+</Card>
+
+---
 
 ## Through an MCP server
 
-Set up an MCP server connection and use the MCP protocol to send tool execution requests. Tools run on the server and return results, integrating seamlessly with external systems and workflows.
+[Model Context Protocol (MCP)](https://modelcontextprotocol.io/) allows external AI systems to discover and use your tools.
+
+1. Enable MCP server in your Cargo workspace settings
+2. Configure which tools are exposed via MCP
+3. Connect your MCP client (Claude Desktop, VS Code, etc.)
+4. Your tools appear as available actions in the external system
+
+This is powerful for integrating Cargo tools with AI assistants and development environments.
+
+---
 
 ## Through API calls
 
-Tools can be executed directly via REST API calls for programmatic access. This method allows you to integrate tools into custom applications, automated systems, and third-party workflows.
+Execute tools programmatically via the REST API for maximum flexibility and integration options.
 
+### Getting your API credentials
+
+1. Navigate to **Settings** → **API** in your Cargo workspace
+2. Generate or copy your API token
+3. Find your tool's ID in the tool editor URL or settings
+
+### API endpoint
+
+```
+POST https://api.getcargo.io/v1/tools/{tool_id}/execute
+```
+
+### Example request
+
+```bash
+curl -X POST "https://api.getcargo.io/v1/tools/{tool_id}/execute?token={your_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_domain": "acme.com",
+    "contact_email": "john@acme.com"
+  }'
+```
+
+### Example response
+
+```json
+{
+  "execution_id": "exec_abc123",
+  "status": "completed",
+  "output": {
+    "company_name": "Acme Corporation",
+    "employee_count": 500,
+    "industry": "Technology"
+  }
+}
+```
+
+### Async execution
+
+For long-running tools, use async mode:
+
+```bash
+curl -X POST "https://api.getcargo.io/v1/tools/{tool_id}/execute?token={your_token}&async=true" \
+  -H "Content-Type: application/json" \
+  -d '{"company_domain": "acme.com"}'
+```
+
+This returns immediately with an `execution_id` that you can poll for results:
+
+```bash
+curl "https://api.getcargo.io/v1/executions/{execution_id}?token={your_token}"
+```
+
+### Webhook callbacks
+
+Configure a webhook URL to receive results when the tool completes:
+
+```bash
+curl -X POST "https://api.getcargo.io/v1/tools/{tool_id}/execute?token={your_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_domain": "acme.com",
+    "webhook_url": "https://your-server.com/cargo-callback"
+  }'
+```
+
+---
+
+## Choosing the right launch method
+
+| Method | Best for | Automation level |
+|--------|----------|------------------|
+| **Launch tab** | Testing, ad-hoc execution, bulk imports | Manual |
+| **Plays** | Scheduled workflows, multi-step automation | Fully automated |
+| **Agents** | Context-aware, intelligent automation | AI-driven |
+| **MCP server** | External AI system integration | AI-driven |
+| **API** | Custom applications, programmatic access | Fully automated |

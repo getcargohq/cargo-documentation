@@ -1,0 +1,73 @@
+---
+title: "Triggering a play"
+description: "Learn how to configure sync settings and trigger conditions for plays"
+---
+
+Plays can process records in batches—either in real-time when changes are detected, or on a predefined schedule. This page explains how to configure schedules, change detection modes, enrolment rules, and health monitoring.
+
+<Note>
+  The minimum sync interval depends on the model type—it may be as short as 5
+  minutes, 30 minutes, or up to 1 day. If you select an interval shorter than
+  the allowed minimum or the model was already refreshed during that period, the
+  sync will be skipped.
+</Note>
+
+## Schedule types
+
+Configure when and how your play triggers:
+
+| Type           | Description                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| **Manual**     | Enrol records manually via the `Enroll manually` button           |
+| **Real-time**  | Trigger your play instantly when changes are detected             |
+| **Interval**   | Schedule your play to run on a set interval (e.g., once per hour) |
+| **Cron**       | Schedule your play using a cron expression for precise timing     |
+| **Dependency** | Schedule after another play finishes running                      |
+
+<Info>
+  Real-time triggers are currently only available for **HubSpot** and
+  **Salesforce** integrations.
+</Info>
+
+When using **Interval** scheduling, you can select a frequency (e.g., every 12 hours). All syncs are scheduled in UTC.
+
+## Conditions
+
+Use **Filters** to control which records are eligible to trigger the play. Only records matching your filter conditions will be enrolled.
+
+## Changes mode
+
+The **Changes** section controls which types of data changes trigger the play. The available options depend on your schedule type.
+
+### For Real-time schedules
+
+| Mode                            | Behavior                                                                    |
+| ------------------------------- | --------------------------------------------------------------------------- |
+| **Created records only**        | Only newly created records that match the conditions will be enrolled       |
+| **Created and updated records** | Both created and updated records that match the conditions will be enrolled |
+
+### For Interval, Cron, and Dependency schedules
+
+| Mode                        | Behavior                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------ |
+| **New records only**        | Only new records that match the conditions will be enrolled in the play        |
+| **New and updated records** | New and updated records that match the conditions will be enrolled in the play |
+| **Full**                    | Process all matching records, regardless of whether they've changed            |
+| **Custom**                  | Advanced mode for custom change detection logic                                |
+
+## Enrolment rules
+
+Control how the play handles records that trigger multiple times:
+
+| Rule                             | Behavior                                                                                  |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Always enrol**                 | Enrol the record into a new play run every time the trigger fires for that record         |
+| **Enrol once**                   | Only enrol each record once, even if the trigger fires multiple times for the same record |
+| **If is not currently enrolled** | Only enrol a record if it's not already in an active run, preventing concurrent runs      |
+
+## Health monitoring
+
+Monitor the health of your play runs and set up alerts:
+
+- **Batch Health threshold** — Set the percentage of runs that need to be successful for a batch to be considered healthy (0-100%)
+- **Health alert** — Configure a Slack notification to be alerted when a batch falls below your health threshold

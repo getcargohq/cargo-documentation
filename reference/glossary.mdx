@@ -1,0 +1,243 @@
+---
+title: "Glossary"
+description: "Definitions of key terms and concepts used throughout Cargo"
+---
+
+Quick reference for the terminology you'll encounter when building with Cargo.
+
+---
+
+## Core concepts
+
+<AccordionGroup>  
+  <Accordion title="Tool" icon="wrench">
+    **Modular, reusable automation workflows that you build once and deploy anywhere.**
+
+    Tools are the building blocks of Cargo—single-purpose automations for enrichment, scoring, CRM updates, or any custom logic. You can use tools standalone, chain them in plays, invoke them from agents, or expose them via API.
+
+    **Example:** A tool that takes a company domain as input, enriches it with firmographic data, and returns a qualification score.
+
+    [Learn more →](/reference/tools/overview)
+
+  </Accordion>
+
+  <Accordion title="Play" icon="diagram-project">
+    **Automated workflows that trigger based on changes in your data models.**
+
+    Unlike tools which are manually triggered, plays continuously monitor your data and execute when relevant changes occur. Plays orchestrate tools, agents, and actions into multi-step processes that run on autopilot.
+
+    **Example:** A play that triggers when a new lead is added to your CRM, enriches their data, scores them, and routes them to the appropriate sales rep.
+
+    [Learn more →](/reference/plays/overview)
+
+  </Accordion>
+
+  <Accordion title="Agent" icon="robot">
+    **AI-powered autonomous workers that plan and execute multi-step tasks using reasoning.**
+
+    Unlike plays that follow predetermined paths, agents use large language models (LLMs) to dynamically determine the best approach based on context. They can call tools, search data, and make decisions when tasks require adaptability.
+
+    **Example:** An agent that researches a prospect by browsing their website, finding relevant news, and synthesizing a personalized outreach angle.
+
+    [Learn more →](/reference/agents/overview)
+
+  </Accordion>
+
+  <Accordion title="Node" icon="circle">
+    **An individual step in a tool or play workflow.**
+
+    Nodes are the building blocks you connect together on the visual canvas. Each node performs a specific action—enriching data, branching logic, writing to a CRM, or calling an API. Data flows from one node to the next via connections.
+
+    **Example:** An "Enrich Company" node that takes a domain and returns firmographic data, followed by a "Branch" node that routes based on company size.
+
+    [Learn more →](/reference/tools/overview#working-with-nodes)
+
+  </Accordion>
+
+  <Accordion title="Action" icon="bolt">
+    **Operations that make things happen in Cargo.**
+
+    Actions are the individual capabilities you can add to tools and plays—enrichment calls, CRM writes, AI prompts, logic branches, and more. Cargo offers 120+ actions across categories like Logic, AI, Sales, Storage, and Integrations.
+
+    **Example:** A "HubSpot Upsert" action that creates or updates a contact, or a "Model Ask" action that queries an LLM.
+
+    [Learn more →](/reference/actions/overview)
+
+  </Accordion>
+
+  <Accordion title="Resource" icon="layer-group">
+    **Data foundations that power your Cargo workspace.**
+
+    Resources connect your tools, agents, and plays to the information they need. This includes structured models, unstructured files (documents, PDFs), and your data warehouse connection.
+
+    **Example:** A "Product Knowledge Base" file resource that agents can search to answer customer questions accurately.
+
+    [Learn more →](/reference/resources/overview)
+
+  </Accordion>
+
+  <Accordion title="Model (Data Model)" icon="table">
+    **Structured tables that power your plays and workflows.**
+
+    Models contain organized data imported from CRMs, APIs, webhooks, or SQL queries. They serve as the foundation for triggering plays and storing results. Models live in your data warehouse (managed or self-hosted).
+
+    **Example:** A "Leads" model that syncs contacts from HubSpot and tracks which ones have been processed by your qualification play.
+
+    [Learn more →](/reference/resources/models/overview)
+
+  </Accordion>
+
+  <Accordion title="Workspace" icon="grid-2">
+    **Your Cargo environment where you build and manage automations.**
+
+    A workspace contains your tools, plays, agents, models, and integrations. Team members collaborate within a shared workspace, and all automations run against the same connected data sources.
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Workflow concepts
+
+<AccordionGroup>
+  <Accordion title="Trigger" icon="bolt">
+    **The condition that starts a play execution.**
+
+    Triggers define when a play runs and what data it receives. Common triggers include scheduled intervals, data changes (new records, updated fields), and manual enrolment.
+
+    [Learn more →](/reference/plays/triggering-a-play)
+
+  </Accordion>
+
+  <Accordion title="Run" icon="play">
+    **A single execution of a play for one record.**
+
+    When a play triggers, it creates a run for each matching record. Runs track the execution status, node outputs, and any errors. You can monitor, retry, or re-run failed runs.
+
+  </Accordion>
+
+  <Accordion title="Enrolment" icon="user-plus">
+    **The process of adding records to a play for processing.**
+
+    Records can be enrolled automatically (when trigger conditions are met) or manually (by importing specific records). Enrolment conditions prevent the same record from being processed multiple times.
+
+    [Learn more →](/reference/resources/models/using-models-in-plays)
+
+  </Accordion>
+
+  <Accordion title="Connection" icon="arrow-right">
+    **The link between two nodes that defines data flow.**
+
+    Connections determine the execution order and how outputs from one node become inputs to the next. Branch and Switch nodes have multiple output connections for different paths.
+
+  </Accordion>
+
+  <Accordion title="Fallback" icon="shield">
+    **An alternative path that executes when a node fails.**
+
+    Fallbacks let you handle errors gracefully—sending notifications, trying alternative providers, or writing default values instead of letting the entire run fail.
+
+    [Learn more →](/reference/plays/overview#handling-failures-with-fallbacks)
+
+  </Accordion>
+
+  <Accordion title="Expression" icon="code">
+    **A reference to data from previous nodes.**
+
+    Expressions use double curly braces to access outputs: `{{input.company_domain}}`, `{{enrich_company.name}}`. They let you map data between nodes dynamically.
+
+    [Learn more →](/get-started/expressions-cheatsheet)
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Data concepts
+
+<AccordionGroup>
+  <Accordion title="Warehouse" icon="database">
+    **The data infrastructure that hosts your models.**
+
+    Cargo uses a data warehouse (Snowflake, BigQuery, or Redshift) as the backbone for storing and querying model data. You can use Cargo's managed Snowflake instance or connect your own warehouse.
+
+    [Learn more →](/reference/resources/warehouse/overview)
+
+  </Accordion>
+
+  <Accordion title="Segment" icon="filter">
+    **A filtered subset of a model's records.**
+
+    Segments let you create targeted groups for specific plays based on criteria like industry, company size, or lead score. Different plays can operate on different segments of the same model.
+
+  </Accordion>
+
+  <Accordion title="Custom column" icon="table-columns">
+    **A user-defined field you can write to from plays.**
+
+    Custom columns extend your models with data generated by your workflows—enrichment results, scores, processing timestamps, or any other values your plays produce.
+
+  </Accordion>
+
+  <Accordion title="RAG (Retrieval-Augmented Generation)" icon="magnifying-glass">
+    **A technique that gives agents access to your data when reasoning.**
+
+    RAG allows agents to search your models and files to find relevant context before generating responses. This grounds the agent's output in your actual business data.
+
+    [Learn more →](/reference/agents/resources-and-context)
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Deployment concepts
+
+<AccordionGroup>
+  <Accordion title="Draft" icon="pencil">
+    **An unpublished version of a tool or play.**
+
+    Changes are automatically saved as drafts while you work. Draft changes don't affect live executions until you publish them.
+
+  </Accordion>
+
+  <Accordion title="Publish" icon="rocket">
+    **Making a tool or play version active.**
+
+    Publishing creates a new version that will be used for all future executions. Previously running plays continue using their configured version until updated.
+
+  </Accordion>
+
+  <Accordion title="MCP (Model Context Protocol)" icon="plug">
+    **A protocol for exposing Cargo tools to external AI systems.**
+
+    MCP lets you use your Cargo tools from AI assistants like Claude, Cursor, or other MCP-compatible clients. Your tools become callable functions in any MCP environment.
+
+  </Accordion>
+
+  <Accordion title="Revenue Organization" icon="users">
+    **Specialized routing and territory management features.**
+
+    Revenue organization includes lead allocation rules, territory definitions, and workload distribution—automating how leads get assigned to the right sales reps.
+
+    [Learn more →](/reference/revenue-organization/overview)
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Quick reference
+
+| Term           | One-line definition                               |
+| :------------- | :------------------------------------------------ |
+| **Play**       | Event-driven workflow that runs when data changes |
+| **Tool**       | Reusable automation you can deploy anywhere       |
+| **Agent**      | AI worker that reasons and executes autonomously  |
+| **Model**      | Structured data table that powers plays           |
+| **Node**       | Single step in a tool or play                     |
+| **Action**     | Operation a node performs (enrich, write, branch) |
+| **Resource**   | Data source (model, file, or warehouse)           |
+| **Run**        | One execution of a play for one record            |
+| **Trigger**    | Condition that starts a play                      |
+| **Expression** | Reference to data: `{{node.field}}`               |

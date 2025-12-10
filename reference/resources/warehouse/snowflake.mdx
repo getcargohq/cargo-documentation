@@ -1,0 +1,185 @@
+---
+title: "Set up Cargo on Snowflake"
+description: "Configure Snowflake as your system of record in Cargo"
+---
+
+This guide will walk you through setting up Snowflake as your store of records in Cargo. This setup ensures Cargo has the necessary permissions in Snowflake to read and write data efficiently.
+
+### Permissions
+
+**What Cargo can do**
+
+- Read data from schemas and tables, even if they are spread across multiple databases
+- Write data into new schemas and tables
+
+**What Cargo will never do**
+
+- Overwrite existing schemas and tables (Cargo always creates its own schemas and tables when needed)
+
+### Before you begin
+
+To start, you need an existing Snowflake account with appropriate admin access to create databases, warehouses, roles, and users.
+
+### Step 1: Create a dedicated database
+
+Create a dedicated database for Cargo where all data managed by Cargo will be stored.
+
+**Create a database called "cargo_db"**
+
+```sql
+CREATE DATABASE cargo_db;
+```
+
+### Step 2: Create a user for Cargo
+
+Grant the necessary permissions for Cargo to run commands as an authenticated user on the database you just created.
+
+**Create a role for Cargo**
+
+```sql
+CREATE ROLE cargo_role;
+```
+
+**Grant the cargo database you created above to cargo role**
+
+```sql
+GRANT ALL ON DATABASE cargo_db TO ROLE cargo_role;
+```
+
+**Create a warehouse for Cargo**
+
+```sql
+CREATE WAREHOUSE cargo_wh
+  WITH WAREHOUSE_SIZE = 'XSMALL'
+  WAREHOUSE_TYPE = 'STANDARD'
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE;
+```
+
+**Grant warehouse to cargo role**
+
+```sql
+GRANT USAGE ON WAREHOUSE cargo_wh TO ROLE cargo_role;
+```
+
+**Create a user for Cargo**
+
+<Warning>
+Replace `<YOUR_SECURE_PASSWORD>` with a strong, unique password. Store it securely — you'll need it in Step 6.
+</Warning>
+
+```sql
+CREATE USER cargo_user
+  PASSWORD = '<YOUR_SECURE_PASSWORD>'
+  DEFAULT_ROLE = cargo_role
+  DEFAULT_WAREHOUSE = cargo_wh
+  MUST_CHANGE_PASSWORD = FALSE;
+```
+
+**Grant role to user**
+
+```sql
+GRANT ROLE cargo_role TO USER cargo_user;
+```
+
+**Grant access to schema tables**
+
+If Cargo needs to access data outside the `cargo_db` database, grant the appropriate permissions:
+
+```sql
+GRANT SELECT ON ALL TABLES IN SCHEMA cargo_db.public TO ROLE cargo_role;
+```
+
+<Tip>
+  To grant access to other databases, run similar `GRANT` statements for each
+  database/schema Cargo needs to read from.
+</Tip>
+
+### Step 3: Verify granted privileges
+
+Make sure the Cargo role has access to the following permissions on `cargo_db`: `OWNERSHIP`, `MODIFY`, `MONITOR`, `USAGE`, `CREATE SCHEMA`.
+
+**Show granted privileges on cargo_db**
+
+```sql
+SHOW GRANTS ON DATABASE cargo_db;
+```
+
+---
+
+### Step 4: Set up RSA key authentication
+
+You must provide an RSA private key for authentication.
+
+**Generate a private key**
+
+```bash
+openssl genrsa 2048 | openssl pkcs8 -topk8 -inform PEM -out rsa_key.p8 -nocrypt
+```
+
+**Generate a public key**
+
+```bash
+openssl rsa -in rsa_key.p8 -pubout -out rsa_key.pub
+```
+
+<Warning>
+  Keep your private key (`rsa_key.p8`) secure and never share it. You'll need to
+  provide it when configuring Cargo.
+</Warning>
+
+**Assign the public key to your Snowflake user**
+
+Copy the contents of `rsa_key.pub` (excluding the header and footer lines) and run:
+
+```sql
+ALTER USER cargo_user SET RSA_PUBLIC_KEY = 'MIIBIjANBgkqh...your_public_key_here...';
+```
+
+---
+
+### Step 5: Configure allowed IP addresses
+
+If you're using Snowflake's network policy to restrict access, add these Cargo IP addresses to your allowlist:
+
+| IP Address      |
+| --------------- |
+| `3.251.34.134`  |
+| `54.220.135.99` |
+| `79.125.105.52` |
+
+---
+
+### Step 6: Set up system of records
+
+Now that we have all the required elements, navigate to workspace settings and select **System of records**.
+
+Fill in the settings form with the data we gathered in the previous steps:
+
+| Field           | Value                                   |
+| --------------- | --------------------------------------- |
+| Account name    | Your Snowflake account identifier       |
+| Database        | `cargo_db` (created in Step 1)          |
+| Warehouse       | `cargo_wh` (created in Step 2)          |
+| Role            | `cargo_role` (created in Step 2)        |
+| User            | `cargo_user` (created in Step 2)        |
+| Password        | The password you set in Step 2          |
+| RSA Private Key | Contents of `rsa_key.p8`                |
+| Scope           | Choose **Database** or **Schema** scope |
+
+<Info>
+  **Database scope** allows Cargo to create multiple schemas within `cargo_db`.
+  **Schema scope** restricts Cargo to a single schema.
+</Info>
+
+Click **Setup** to complete the configuration.
+
+---
+
+### Next steps
+
+- Create your first data model using Snowflake tables
+- Set up data connectors to import data from other sources
+- Configure model relationships to connect different datasets
+- Set up filters and segments for targeted plays
+

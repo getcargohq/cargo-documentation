@@ -3,11 +3,18 @@ title: "Allocate leads"
 description: "Learn how to automate and customize lead allocation to your sales reps"
 ---
 
-<iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/5FPvlxMg9gI" title="Allocate leads in Cargo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/5FPvlxMg9gI"
+  title="Allocate leads in Cargo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
 
 ## What is lead allocation?
 
-Lead allocation is the process of assigning incoming leads to the right sales reps, teams, or territories. 
+Lead allocation is the process of assigning incoming leads to the right sales reps, teams, or territories.
 
 > Getting this right is critical for maximizing speed-to-lead, rep productivity, and conversion rates.
 
@@ -20,4 +27,115 @@ Cargo lets you automate lead allocation using custom rules and real-time data, s
 - **Priority assignment:** Route high-value or urgent leads to your top performers.
 - **Custom logic:** Use any data point or business rule to create your allocation strategy.
 
-Cargo makes it easy to adapt your lead allocation process as your team and business needs evolve.
+---
+
+## Step-by-step: Set up lead allocation
+
+Follow these steps to configure automated lead distribution in your workspace.
+
+### Step 1: Connect your sales organization
+
+1. Navigate to **Allocation** in your Cargo workspace sidebar
+2. Connect a tool containing your sales organization (such as your CRM)
+3. Cargo automatically imports team members and keeps them synchronized
+
+<Tip>
+  Enhance member profiles with custom metadata—like spoken languages or
+  specializations—to enable smarter routing.
+</Tip>
+
+### Step 2: Create territories
+
+Territories group members into logical units that match your sales structure:
+
+1. Go to the **Territories** tab
+2. Click **+ New Territory**
+3. Name your territory (e.g., "EMEA Enterprise" or "Healthcare Vertical")
+4. Add members who should receive leads in this territory
+5. Optionally designate a **fallback member** for when others hit capacity
+
+### Step 3: Configure capacity limits
+
+Capacity settings prevent rep overload and ensure fair distribution:
+
+1. Navigate to the **Capacity** tab
+2. Click **+ New Capacity**
+3. Set the maximum allocations per member (e.g., 3 leads per day)
+4. Define the timeframe for the limit
+
+<Note>
+  Capacities are calculated independently—a member can be available under one
+  capacity while fully booked under another.
+</Note>
+
+### Step 4: Add an allocation node to your play
+
+1. Open or create a play that processes incoming leads
+2. Add an **Allocation** node from the node picker
+3. Configure how leads should be matched:
+   - **Territory** — Assign to members within a specific territory
+   - **Email address** — Route based on the lead's email domain
+   - **Round robin** — Distribute evenly across available reps
+   - **Connector matching** — Use data from connected tools
+
+### Step 5: Test and publish
+
+1. Click **Test** to simulate an allocation with sample data
+2. Verify the lead routes to the expected member
+3. Publish your play to activate the allocation rules
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Start with round robin" icon="arrows-rotate">
+    Begin with simple even distribution, then add complexity as your routing
+    needs evolve.
+  </Card>
+  <Card title="Set realistic capacity" icon="gauge">
+    Base limits on your team's actual throughput—overloading reps hurts
+    conversion rates.
+  </Card>
+  <Card title="Use fallback members" icon="life-ring">
+    Always designate fallbacks so no lead ever goes unassigned.
+  </Card>
+  <Card title="Monitor allocation history" icon="clock-rotate-left">
+    Regularly audit assignments to ensure rules work as expected.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Revenue Organization reference"
+    icon="book"
+    href="/reference/revenue-organization/allocating-leads"
+  >
+    Dive deeper into territories, capacity mapping, and advanced configuration.
+  </Card>
+  <Card
+    title="Build a play"
+    icon="circle-play"
+    href="/get-started/build-a-play"
+  >
+    Learn how to create automated workflows that trigger allocations.
+  </Card>
+  <Card
+    title="Enrol data in plays"
+    icon="database"
+    href="/reference/resources/models/using-models-in-plays"
+  >
+    Connect your data models to power lead routing decisions.
+  </Card>
+  <Card
+    title="Sync to your CRM"
+    icon="rotate"
+    href="/reference/plays/triggering-a-play"
+  >
+    Push allocation results back to Salesforce or HubSpot.
+  </Card>
+</CardGroup>

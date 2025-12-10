@@ -1,0 +1,94 @@
+---
+title: "Resources"
+description: "Connect your workspace to data models, files, and warehouses"
+---
+
+Resources are the data foundations that power your Cargo workspace. They connect your tools, agents, and plays to the information they need—whether that's structured CRM data, unstructured documents, or your data warehouse.
+
+---
+
+## Resource types
+
+<CardGroup cols={2}>
+  <Card title="Models" icon="table" href="/reference/resources/models/overview">
+    Structured data tables that power your plays. Import from CRMs, APIs,
+    webhooks, or SQL queries.
+  </Card>
+  <Card title="Files" icon="file" href="/reference/resources/files/overview">
+    Unstructured content like documents, PDFs, and knowledge bases for semantic
+    search.
+  </Card>
+  <Card
+    title="Warehouse"
+    icon="database"
+    href="/reference/resources/warehouse/overview"
+  >
+    Configure your data warehouse (Snowflake, BigQuery, Redshift) as the system
+    of record.
+  </Card>
+  <Card
+    title="Activities"
+    icon="chart-line"
+    href="/reference/resources/activities"
+  >
+    Track and analyze workflow executions, node performance, and error rates.
+  </Card>
+</CardGroup>
+
+---
+
+## Models vs Files
+
+| Aspect            | Models                               | Files                                   |
+| :---------------- | :----------------------------------- | :-------------------------------------- |
+| **Data type**     | Structured (rows & columns)          | Unstructured (text, documents)          |
+| **Query method**  | SQL queries, filters                 | Semantic/vector search                  |
+| **Best for**      | CRM records, product data, analytics | Knowledge bases, playbooks, transcripts |
+| **Use in plays**  | Trigger workflows, search records    | —                                       |
+| **Use in agents** | RAG with SQL or vector mode          | RAG with semantic search                |
+
+---
+
+## How resources connect
+
+```
+┌───────────────────────────────────────────────────────────┐
+│                        WAREHOUSE                          │
+│                  (Snowflake / BigQuery )                  │
+│                                                           │
+│   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐   │
+│   │   Model A   │    │   Model B   │    │   Model C   │   │
+│   │  (CRM data) │    │ (Products)  │    │  (Custom)   │   │
+│   └─────────────┘    └─────────────┘    └─────────────┘   │
+└───────────────────────────────────────────────────────────┘
+           │                  │                   │
+           ▼                  ▼                   ▼
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│      Plays      │  │     Agents      │  │      Tools      │
+│  (Trigger from  │  │  (Query as RAG  │  │  (Access data   │
+│   model data)   │  │   resources)    │  │   in workflows) │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+```
+
+---
+
+## Getting started
+
+<Steps>
+  <Step title="Set up your warehouse">
+    Connect your existing data warehouse or use Cargo's managed Snowflake
+    instance. [Warehouse setup →](/reference/resources/warehouse/overview)
+  </Step>
+  <Step title="Create data models">
+    Import data from CRMs, APIs, or SQL queries into structured models. [Data
+    models →](/reference/resources/models/overview)
+  </Step>
+  <Step title="Add files (optional)">
+    Upload documents or connect knowledge bases for semantic search in agents.
+    [Files →](/reference/resources/files/overview)
+  </Step>
+  <Step title="Use in workflows">
+    Trigger plays from model data, or give agents access to resources for RAG.
+    [Using models in plays →](/reference/resources/models/using-models-in-plays)
+  </Step>
+</Steps>

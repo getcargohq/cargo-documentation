@@ -1,0 +1,125 @@
+---
+title: "Files"
+description: "Unstructured data resources like documents, PDFs, and knowledge bases"
+---
+
+Files are unstructured data resources that power your Cargo agents and workflows. Unlike structured [data models](/reference/resources/models/overview), files contain documents, PDFs, transcripts, and other text content that can be searched semantically.
+
+---
+
+## What are files?
+
+Files connect your workspace to **unstructured data**—documents, PDFs, and text content. When used as resources in agents or tools, the system searches this content using vector similarity to find relevant information.
+
+**Best for:**
+
+- Knowledge Bases (Notion, Google Docs, uploaded files)
+- Playbooks, FAQs, and process documentation
+- Meeting transcripts and call notes
+- Product documentation and guides
+
+---
+
+## How files work
+
+When you add files as a resource:
+
+1. **Content is indexed** — Files are processed and converted into searchable chunks
+2. **Vector embeddings** — Each chunk is converted to a vector representation for semantic search
+3. **Retrieval** — When queried, the most relevant chunks are retrieved based on meaning, not just keywords
+
+<Note>
+  Vector search finds content by meaning, not exact text matches. A query for
+  "pricing concerns" will find content about "cost objections" or "budget
+  questions" even if those exact words aren't used.
+</Note>
+
+---
+
+## Supported file types
+
+| File type     | Extensions                 |
+| :------------ | :------------------------- |
+| Documents     | `.pdf`, `.docx`, `.doc`    |
+| Text          | `.txt`, `.md`, `.markdown` |
+| Presentations | `.pptx`, `.ppt`            |
+| Spreadsheets  | `.xlsx`, `.xls`, `.csv`    |
+
+---
+
+## Adding files to your workspace
+
+Files can be added to your workspace through:
+
+<CardGroup cols={2}>
+  <Card title="Direct upload" icon="upload">
+    Upload files directly to your Cargo workspace from your computer.
+  </Card>
+  <Card title="Connected sources" icon="link">
+    Connect to Notion, Google Drive, or other document sources for automatic
+    syncing.
+  </Card>
+</CardGroup>
+
+---
+
+## Using files in agents
+
+When configuring an [agent](/reference/agents/resources-and-context), you can add file resources to give it access to your organization's knowledge.
+
+### Selecting content
+
+Choose which files or folders to include. The agent will search all selected content using vector similarity to find relevant information.
+
+### Adding context with prompts
+
+Add custom instructions to guide how the agent interprets or prioritizes this content:
+
+```
+This folder contains our sales playbooks. Prioritize the
+objection handling guide when the user asks about pricing concerns.
+```
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Organize by topic">
+    Group related files into folders so you can selectively grant access to
+    specific knowledge areas.
+  </Card>
+  <Card title="Keep content current">
+    Regularly update files to ensure agents have access to the latest
+    information.
+  </Card>
+  <Card title="Use clear file names">
+    Descriptive file names help both humans and agents understand content at a
+    glance.
+  </Card>
+  <Card title="Test retrieval quality">
+    Run test queries to verify the right content is being retrieved for common
+    questions.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Data models"
+    icon="table"
+    href="/reference/resources/models/overview"
+  >
+    Work with structured data tables and CRM objects.
+  </Card>
+  <Card
+    title="Agent resources"
+    icon="robot"
+    href="/reference/agents/resources-and-context"
+  >
+    Learn how agents use files and models as context.
+  </Card>
+</CardGroup>

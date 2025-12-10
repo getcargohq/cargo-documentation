@@ -1,14 +1,75 @@
 ---
 title: "Overview"
-description: "How all of the concepts below tie together"
+description: "Core concepts that power your go-to-market automation"
 ---
 
-Cargo is built around a set of core concepts that work together to automate, analyze, and optimize your go-to-market operations:
+Cargo is built around five interconnected concepts that work together to automate, analyze, and optimize your revenue operations. Understanding how they relate is key to building powerful workflows.
 
-- [**Tools**](/reference/tools) are modular building blocks for repeatable actions, such as data enrichment, outreach, or integration. Use them on their own or as part of larger workflows.
-- [**Agents**](/reference/agents) are AI-powered components that leverage tools and data to perform research, analysis, or decision-making tasks.
-- [**Plays**](/reference/plays) are automated workflows that orchestrate tools and logic, triggered by changes in your data models. Plays let you automate complex business processes end-to-end.
-- [**Data models**](/reference/data/system-of-record) provide the structured foundation for your workspace, organizing information and powering automations. They can connect to your data warehouse or use Cargo’s built-in storage.
-- [**Lead allocation**](/reference/allocation) is a specialized feature for handling workload distribution and territory management for revenue operations teams.
+## Core concepts
 
-Use this **reference** section to find detailed explanations, implementation guides, and best practices for each concept. Each page is organized by topic, so you can quickly locate the information you need to build on your Cargo workspace.
+<CardGroup cols={2}>
+  <Card title="Tools" icon="wrench" href="/reference/tools/overview">
+    Modular building blocks for repeatable actions—enrichment, outreach,
+    integrations, and more. Use standalone or chain together in workflows.
+  </Card>
+  <Card title="Agents" icon="robot" href="/reference/agents/overview">
+    AI-powered components that leverage tools and data to perform research,
+    analysis, and autonomous decision-making.
+  </Card>
+  <Card title="Plays" icon="diagram-project" href="/reference/plays/overview">
+    Automated workflows that orchestrate tools and logic, triggered by data
+    changes. Build complex end-to-end business processes.
+  </Card>
+  <Card
+    title="Data models"
+    icon="database"
+    href="/reference/resources/overview"
+  >
+    The structured foundation of your workspace. Connect your data warehouse or
+    use Cargo's built-in storage to power automations.
+  </Card>
+</CardGroup>
+
+<Card
+  title="Revenue Organization"
+  icon="users-gear"
+  href="/reference/revenue-organization/overview"
+>
+  Specialized routing and territory management for revenue operations teams.
+  Distribute workload intelligently based on rules you define.
+</Card>
+
+## How it all connects
+
+<Steps>
+  <Step title="Data flows in">
+    Your data models pull from warehouses, CRMs, or Cargo's native
+    storage—creating a unified view of accounts, contacts, and activities.
+  </Step>
+  <Step title="Plays trigger on changes">
+    When data changes (new records, updated fields, time-based conditions),
+    plays automatically kick off to process the change.
+  </Step>
+  <Step title="Tools and agents execute">
+    Plays orchestrate tools for enrichment, outreach, and integrations. Agents
+    handle complex reasoning when deterministic logic isn't enough.
+  </Step>
+  <Step title="Results sync back">
+    Outputs flow back to your data models, CRM, or downstream systems—closing
+    the loop and triggering the next action.
+  </Step>
+</Steps>
+
+## Dive deeper
+
+Each section in this reference provides detailed explanations, implementation patterns, and best practices:
+
+| Section                                                          | What you'll learn                                                    |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [Glossary](/reference/glossary)                                  | Definitions of key terms: Play, Tool, Agent, Model, Node, and more   |
+| [Tools](/reference/tools/overview)                               | Building, launching, monitoring, and embedding tools in your CRM     |
+| [Agents](/reference/agents/overview)                             | Prompting, capabilities, resources, and advanced agent configuration |
+| [Plays](/reference/plays/overview)                               | Building plays, trigger types, and orchestration patterns            |
+| [Resources](/reference/resources/overview)                       | Data models, files, warehouse setup, and activity tracking           |
+| [Revenue Organization](/reference/revenue-organization/overview) | Lead routing rules, territories, and workload distribution           |
+| [Security](/reference/security)                                  | Data protection, compliance, and infrastructure security             |

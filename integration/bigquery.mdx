@@ -1,0 +1,105 @@
+---
+title: "BigQuery"
+description: "This page outlines how to use the BigQuery integration to create and manage your data warehouse in Cargo."
+---
+
+BigQuery is Google Cloud's fully managed, serverless data warehouse that enables super-fast SQL queries. Cargo's native integration with BigQuery allows you to use it as your system of records—powering data models, plays, and automated workflows with the scale and speed of Google's infrastructure.
+
+## How to set up BigQuery
+
+### Prerequisites
+
+Before connecting BigQuery to Cargo, ensure you have:
+
+- An active Google Cloud Project with billing enabled
+- BigQuery API and Cloud Resource Manager API enabled
+- A dedicated BigQuery dataset for Cargo
+- A Cloud Storage bucket for data loading/unloading
+- A service account with appropriate permissions
+
+### Connection details
+
+To set up the connection, provide the following details when creating the connector:
+
+| Field               | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| **Service Account** | Paste the full JSON content of your service account key file |
+| **Location**        | The region where your BigQuery resources are located         |
+| **Bucket**          | The Cloud Storage bucket name for data operations            |
+| **Scope**           | Select `Dataset` for dataset-level access                    |
+| **Dataset**         | The dedicated dataset for Cargo (e.g., `cargo_dataset`)      |
+
+---
+
+## BigQuery actions
+
+Once connected, you can use BigQuery in your workflows through the SQL connector.
+
+### Run SQL query
+
+Execute custom SQL queries against your BigQuery warehouse.
+
+**Use cases**
+
+- **Data extraction** – Pull specific data from your warehouse for enrichment or processing
+- **Advanced analytics** – Run complex queries leveraging BigQuery's powerful SQL engine
+- **Real-time insights** – Query massive datasets in seconds for live decision-making
+
+### Write to table
+
+Insert or update data in your BigQuery tables.
+
+**Use cases**
+
+- **Data sync** – Keep your warehouse updated with enriched or processed data
+- **Audit logging** – Record workflow executions and outcomes
+- **Data aggregation** – Store computed results for reporting and dashboards
+
+---
+
+## BigQuery data models
+
+Cargo allows you to create data models on top of your BigQuery data that can be used to trigger Plays and power workflows.
+
+### Creating BigQuery data models
+
+| Field      | Description                                                            |
+| ---------- | ---------------------------------------------------------------------- |
+| **Name**   | Choose a descriptive name for your model (required)                    |
+| **Slug**   | Set a unique identifier that cannot be changed once created (required) |
+| **Source** | Select the BigQuery table or view to model                             |
+
+---
+
+## Required permissions
+
+Ensure your service account has the following roles:
+
+<AccordionGroup>
+  <Accordion title="Required IAM roles">
+    - **BigQuery Data Editor** – Create and modify tables in the Cargo dataset -
+    **BigQuery Job User** – Run queries and load jobs - **Storage Object User**
+    – Read/write to the Cloud Storage bucket - **BigQuery Data Viewer** – Read
+    access to source datasets (optional, for accessing external data)
+  </Accordion>
+</AccordionGroup>
+
+### Required permissions breakdown
+
+| Permission                   | Purpose                  |
+| ---------------------------- | ------------------------ |
+| `bigquery.datasets.create`   | Create new datasets      |
+| `bigquery.tables.create`     | Create new tables        |
+| `bigquery.tables.getData`    | Read data from tables    |
+| `bigquery.tables.updateData` | Write data to tables     |
+| `bigquery.jobs.create`       | Execute queries and jobs |
+
+---
+
+## Security
+
+- All BigQuery connections use Google's secure authentication
+- Service account keys are encrypted at rest
+- Cargo uses OAuth 2.0 for API authentication
+- Cargo never overwrites existing tables—it always creates its own
+- Data in transit is encrypted using TLS

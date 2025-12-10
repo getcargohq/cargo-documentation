@@ -1,5 +1,5 @@
 ---
-title: "Agents Overview"
+title: "Building an Agent"
 description: "Cargo Agents are LLM-powered autonomous workers that plan and execute multi-step tasks using reasoning, tools, and real-time data."
 ---
 
@@ -40,13 +40,13 @@ Agents excel at tasks that require intelligence and context-awareness:
 
 An Agent's intelligence comes from five interconnected components:
 
-| Component             | What it does                                                                       | Learn more                                                           |
-| :-------------------- | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
-| **Instructions**      | Defines the Agent's mission, behavior, and constraints                             | [Defining the instructions](/reference/agents/defining-the-prompt)   |
-| **Capabilities**      | Built-in LLM features like Memory, Web Search, and Canvas                          | [Native LLM capabilities](/reference/agents/native-llm-capabilities) |
-| **Tools & Actions**   | External APIs the Agent can call (CRM, Slack, enrichment services)                 | [Integrating tools](/reference/agents/tools-and-actions)             |
-| **Resources**         | Knowledge bases and data sources that ground the Agent's reasoning                 | [Loading resources](/reference/agents/resources-and-context)         |
-| **Advanced settings** | The LLM provider and behavioral parameters (temperature, reasoning, maximum steps) | [Advanced settings](/reference/agents/advanced-settings)             |
+| Component             | What it does                                                                                                                     | Learn more                                                           |
+| :-------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- |
+| **Instructions**      | Defines the Agent's mission, behavior, and constraints                                                                           | [Defining the instructions](/reference/agents/defining-the-prompt)   |
+| **Capabilities**      | Built-in LLM features like Memory, Web Search, and Canvas                                                                        | [Native LLM capabilities](/reference/agents/native-llm-capabilities) |
+| **Tools & Actions**   | Operations the Agent can perform—from [120+ available actions](/reference/actions/overview) including CRM, Slack, and enrichment | [Integrating tools](/reference/agents/tools-and-actions)             |
+| **Resources**         | Knowledge bases and data sources that ground the Agent's reasoning                                                               | [Loading resources](/reference/agents/resources-and-context)         |
+| **Advanced settings** | The LLM provider and behavioral parameters (temperature, reasoning, maximum steps)                                               | [Advanced settings](/reference/agents/advanced-settings)             |
 
 ---
 
@@ -55,7 +55,7 @@ An Agent's intelligence comes from five interconnected components:
 Once configured, Agents can be triggered from multiple channels:
 
 <AccordionGroup>
-  <Accordion title="Plays (Workflow Automation)">
+  <Accordion title="Plays">
     Agents integrate directly into Cargo Plays, triggered by: - Scheduled
     intervals - Changes in your system of records (CRM, data warehouse) This is
     ideal for automated, recurring tasks like enrichment or qualification.
@@ -64,9 +64,9 @@ Once configured, Agents can be triggered from multiple channels:
 {" "}
 
 <Accordion title="Slack">
-  Call Agents via slash commands or mentions for real-time queries: - "Enrich
-  this contact" - "Generate account research for Acme Corp" - "Find the most
-  relevant stakeholders"
+  Call Agents via mentions for real-time queries: - "Enrich this contact" -
+  "Generate account research for Acme Corp" - "Find the most relevant
+  stakeholders"
   <iframe
     className="w-full aspect-video rounded-xl"
     src="https://www.youtube.com/embed/k9zuFGXmjQY"
@@ -80,9 +80,10 @@ Once configured, Agents can be triggered from multiple channels:
 {" "}
 
 <Accordion title="Chat (Browser extension or Embedded UI)">
-  Agents work as real-time conversational assistants: - **Chrome Extension** —
-  Analyze the current browser page or work atop your CRM - **Embedded Chat** —
-  Access Agents directly within the Cargo interface
+  Agents work as real-time conversational assistants: - **[Chrome
+  Extension](/reference/chrome-extension/overview)** — Analyze the current
+  browser page or work atop your CRM - **Embedded Chat** — Access Agents
+  directly within the Cargo interface
 </Accordion>
 
   <Accordion title="CRM Button">

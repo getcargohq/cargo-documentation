@@ -7,15 +7,13 @@ Cargo's allocation system distributes leads across your sales organization based
 
 ## Members
 
+When you connect a tool containing your sales organization (such as a CRM), Cargo automatically imports team members and keeps them synchronized. This creates a unified view of your team across your workspace.
+
+You can enhance member profiles with custom metadata—such as spoken languages, mailboxes, or specializations—to personalize how leads are assigned.
+
 ![Inspect available members](/images/allocating-leads-1.png)
 
-When you connect a tool containing your sales organization (such as a CRM), Cargo automatically imports team members and keeps them synchronized.
-
-This creates a unified view of your team across your workspace. You can enhance member profiles with custom metadata—such as spoken languages, mailboxes, or specializations—to personalize how leads are assigned.
-
 ## Territories
-
-![Creating a territory](/images/allocating-leads-2.png)
 
 Territories group members into logical units that reflect your sales structure. Common examples include:
 
@@ -25,13 +23,11 @@ Territories group members into logical units that reflect your sales structure. 
 
 Each territory can have a **fallback member** who receives allocations when all other members reach their capacity limits.
 
+![Creating a territory](/images/allocating-leads-2.png)
+
 ## Capacity
 
-![Creating a capacity](/images/allocating-leads-3.png)
-
-Capacity configurations set maximum allocation limits per member within a defined timeframe. This ensures fair workload distribution and prevents rep overload.
-
-For example, you might set a capacity of 3 leads per day to match your team's average sales cadence.
+Capacity configurations set maximum allocation limits per member within a defined timeframe. This ensures fair workload distribution and prevents rep overload. For example, you might set a capacity of 3 leads per day to match your team's average sales cadence.
 
 <Note>
   Capacities are calculated independently. A member can be available for
@@ -39,16 +35,11 @@ For example, you might set a capacity of 3 leads per day to match your team's av
   another.
 </Note>
 
+![Creating a capacity](/images/allocating-leads-3.png)
+
 ## Allocation node
 
-![Creating an allocation](/images/allocating-leads-4.png)
-
 The allocation node is where leads get assigned to members. By default, it uses **round-robin** distribution, spreading assignments evenly across available reps.
-
-<Note>
-  The allocation node requires a reliable record ID to track each lead
-  assignment internally.
-</Note>
 
 You can configure the allocation node to match leads based on:
 
@@ -57,9 +48,14 @@ You can configure the allocation node to match leads based on:
 - **Static list** — Choose from a predefined set of members
 - **Connector matching** — Use data from connected tools to determine ownership
 
-## Capacity model mapping
+<Note>
+  The allocation node requires a reliable record ID to track each lead
+  assignment internally.
+</Note>
 
-![Capacity model mapping](/images/image.png)
+![Creating an allocation](/images/allocating-leads-4.png)
+
+## Capacity model mapping
 
 For complex allocation logic, capacity model mapping calculates member availability based on data in a Cargo model—such as open deals or active opportunities.
 
@@ -76,9 +72,9 @@ To configure capacity model mapping:
 
 This approach lets you factor in real pipeline data when determining who should receive the next lead.
 
-## Allocation history
+![Capacity model mapping](/images/image.png)
 
-![Monitoring allocations](/images/allocating-leads-6.png)
+## Allocation history
 
 Every sales organization element—members, territories, and capacities—has a dedicated history screen that logs all allocations. Each entry links to the specific play run that triggered the assignment.
 
@@ -87,6 +83,8 @@ Use allocation history to:
 - Verify that distribution rules are working as expected
 - Troubleshoot assignment issues
 - Audit lead routing decisions
+
+![Monitoring allocations](/images/allocating-leads-6.png)
 
 ## Allocation fallback
 

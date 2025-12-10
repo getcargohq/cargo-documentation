@@ -1,33 +1,103 @@
 ---
 title: "Redshift"
-description: "This page outlines how to use the Redshift integration to create and manage tables in your Cargo."
+description: "This page outlines how to use the Redshift integration to create and manage your data warehouse in Cargo."
 ---
 
-### **Requirements**
+Amazon Redshift is a fast, fully managed cloud data warehouse that makes it simple and cost-effective to analyze data using standard SQL. Cargo's native integration with Redshift allows you to use it as your system of records—powering data models, plays, and automated workflows.
 
-- Active Amazon Redshift cluster
-- Network connectivity between Cargo and your Redshift cluster (if they exist in separate VPCs)
+## How to set up Redshift
+
+### Prerequisites
+
+Before connecting Redshift to Cargo, ensure you have:
+
+- An active Amazon Redshift cluster
+- Network connectivity between Cargo and your Redshift cluster
+- A dedicated schema and user for Cargo
 - Proper IAM permissions and database credentials
 
-### **Configure Connection Details**
+### Connection details
 
-Provide the following connection information:
+To set up the connection, provide the following details when creating the connector:
 
-- Host: Your Redshift endpoint (format: `<cluster-id>.<region>.redshift.amazonaws.com`)
-- Port: Default is 5439
-- Database name
-- Username and password
-- All information can be found in your AWS Redshift console under cluster details
+| Field        | Description                                                               |
+| ------------ | ------------------------------------------------------------------------- |
+| **Host**     | Your Redshift endpoint (e.g., `cluster-id.region.redshift.amazonaws.com`) |
+| **Port**     | Default is `5439`                                                         |
+| **Database** | Your database name                                                        |
+| **Username** | The Cargo service user (e.g., `cargo_user`)                               |
+| **Password** | The user's password                                                       |
 
-### **Allow Cargo IP addresses**
+<Tip>
+  Find your Redshift endpoint in the AWS Console under **Redshift → Clusters →
+  Your Cluster → General information**.
+</Tip>
 
-If you restrict access to your Redshift cluster, make sure Cargo is allowed to access it by whitelisting our IP addresses:
+---
 
-- 3.251.34.134
-- 54.220.135.99
-- 79.125.105.52
+## Redshift actions
 
-### **Security**
+Once connected, you can use Redshift in your workflows through the SQL connector.
+
+### Run SQL query
+
+Execute custom SQL queries against your Redshift warehouse.
+
+**Use cases**
+
+- **Data extraction** – Pull specific data from your warehouse for enrichment or processing
+- **Advanced analytics** – Run complex queries leveraging Redshift's columnar storage
+- **Data validation** – Check data conditions before triggering actions
+
+### Write to table
+
+Insert or update data in your Redshift tables.
+
+**Use cases**
+
+- **Data sync** – Keep your warehouse updated with enriched or processed data
+- **Audit logging** – Record workflow executions and outcomes
+- **Data aggregation** – Store computed results for reporting
+
+---
+
+## Redshift data models
+
+Cargo allows you to create data models on top of your Redshift data that can be used to trigger Plays and power workflows.
+
+### Creating Redshift data models
+
+| Field      | Description                                                            |
+| ---------- | ---------------------------------------------------------------------- |
+| **Name**   | Choose a descriptive name for your model (required)                    |
+| **Slug**   | Set a unique identifier that cannot be changed once created (required) |
+| **Source** | Select the Redshift table or view to model                             |
+
+---
+
+## Network configuration
+
+If you restrict access to your Redshift cluster, add these Cargo IP addresses to your security group or VPC whitelist:
+
+- `3.251.34.134`
+- `54.220.135.99`
+- `79.125.105.52`
+
+**Update via AWS CLI**
+
+```bash
+aws ec2 authorize-security-group-ingress \
+    --group-id sg-your-security-group-id \
+    --protocol tcp \
+    --port 5439 \
+    --cidr 3.251.34.134/32
+```
+
+---
+
+## Security
 
 - All Redshift connections are encrypted using SSL/TLS
 - Credentials are securely stored and encrypted at rest
+- Cargo uses dedicated user credentials with minimal required permissions
+- Cargo never overwrites existing tables—it always creates its own

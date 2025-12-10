@@ -3,122 +3,156 @@ title: "Attio"
 description: "This page outlines how to use the Attio integration to pull and manage CRM data in Cargo."
 ---
 
-Attio is a modern customer relationship management tool which is easy to get started with and scale with your team's operations. Cargo's native integration with Cargo allows the user to both pull data from the CRM as part of data models, but also write and delete data from all CRM objects to maintain it.
+Attio is a modern customer relationship management tool that's easy to get started with and scales with your team's operations. Cargo's native integration with Attio allows you to both pull data from the CRM as part of data models, and write or delete data from all CRM objects to maintain it.
 
 ## How to set up Attio
-{/*ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/lmvsg4b9DhVVkKuq3hQI?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END*/}
+
+{/* ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/lmvsg4b9DhVVkKuq3hQI?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END */}
 
 Attio uses your logged-in instance to establish the sync with Cargo. During connection, you'll be asked to authorize Cargo with the following permissions:
 
-### Required permissions
-- Read and write records  
-- Read object configuration  
-- Read list entries  
-- Read and write comments  
-- Read and write notes  
-- Read and write tasks  
-- Read user management settings  
-- Read list configuration  
+<AccordionGroup>
+  <Accordion title="Required permissions">
+    - Read and write records - Read object configuration - Read list entries -
+    Read and write comments - Read and write notes - Read and write tasks - Read
+    user management settings - Read list configuration
+  </Accordion>
+</AccordionGroup>
 
-### After connecting
 Once redirected and the connector is created, you can:
-- Set up an **Attio data model**
-  ![Attio data model](/images/attio_model.png)
-  
-- Choose **Attio** from the node catalog within a **Play**, **Tool**, or **Agent**
-  ![Attio data model](/images/attio_catalog.png)
+
+<CardGroup cols={2}>
+  <Card title="Set up an Attio data model" icon="database">
+    Create data models from your Attio objects to trigger Plays and power model
+    search actions. ![Attio data model](/images/attio_model.png)
+  </Card>
+  <Card title="Use Attio in workflows" icon="diagram-project">
+    Choose **Attio** from the node catalog within a **Play**, **Tool**, or
+    **Agent**. ![Attio catalog](/images/attio_catalog.png)
+  </Card>
+</CardGroup>
+
+---
 
 ## Attio actions
 
+<Tip>
+  All Attio actions support People, Companies, Deals, and any custom objects
+  you've created in your Attio workspace.
+</Tip>
+
 ### Insert record
-{/*ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/2wU88aix9VmxpW2F5bT3?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END*/}
+
+{/* ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/2wU88aix9VmxpW2F5bT3?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END */}
 
 Insert a new record into Attio.
 
 **Use cases**
-* **Lead capture** – Create new leads from various sources and channels
-* **Contact creation** – Add new contacts from forms, events, or imports
-* **Company creation** - Add new companies from forms, events, or imports
+
+- **Lead capture** – Create new leads from various sources and channels
+- **Contact creation** – Add new contacts from forms, events, or imports
+- **Company creation** – Add new companies from forms, events, or imports
 
 ### Find record
 
 Retrieve a single record from Attio by its unique ID.
 
 **Use cases**
-* **Record lookup** – Get specific record details for processing workflows
-* **Data validation** – Verify record existence before performing operations
+
+- **Record lookup** – Get specific record details for processing workflows
+- **Data validation** – Verify record existence before performing operations
 
 ### Match record
 
-Check if a record exists in Attio.
+Check if a record exists in Attio based on matching criteria.
 
 **Use cases**
-* **Duplicate prevention** – Avoid creating duplicate records
-* **Smart routing** – Route records based on existing data
+
+- **Duplicate prevention** – Avoid creating duplicate records
+- **Smart routing** – Route records based on existing data
+
+<Info>
+  Use **Match record** before **Insert record** to implement an upsert pattern
+  for single records.
+</Info>
 
 ### Search records
 
 Retrieve multiple records from Attio based on search criteria.
 
 **Use cases**
-* **Advanced filtering** – Find if records exist meeting specific criteria
-* **Bulk operations** – Retrieve multiple records for processing inside a group node
+
+- **Advanced filtering** – Find records meeting specific criteria
+- **Bulk operations** – Retrieve multiple records for processing inside a group node
 
 ### Update record
 
 Update an existing record in Attio.
 
 **Use cases**
-* **Data enrichment** – Keep record information current and accurate
-* **Lifecycle management** – Update record stages and statuses
 
-### Upsert Records
+- **Data enrichment** – Keep record information current and accurate
+- **Lifecycle management** – Update record stages and statuses
 
-Upsert multiple records into Attio (insert or update).
+### Upsert records
+
+Upsert multiple records into Attio (insert or update based on matching criteria).
 
 **Use cases**
-* **Bulk data operations** – Insert records in bulk while avoiding duplicates
-* **Data synchronization** – Keep external systems synchronized with Attio
+
+- **Bulk data operations** – Insert records in bulk while avoiding duplicates
+- **Data synchronization** – Keep external systems synchronized with Attio
+
+<Warning>
+  Upsert operations will match on the fields you specify. Ensure your matching
+  criteria is unique to avoid unintended updates.
+</Warning>
 
 ### Delete record
 
 Delete a record from Attio.
 
 **Use cases**
-* **Data cleanup** – Remove outdated or incorrect records programmatically or in batches
 
+- **Data cleanup** – Remove outdated or incorrect records programmatically or in batches
+
+---
 
 ## Attio data models
 
 Cargo allows you to create data models on top of your Attio CRM data that can be used to trigger Plays and power model search actions.
 
 ### Creating Attio data models
-{/*ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/GealNS6hKRgI81TAAuRP?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END*/}
-- **Name**: Choose a descriptive name for your model (required)
-- **Slug**: Set a unique identifier that cannot be changed once created (required)
-- **Object Type**: Select the Attio object type you want to model:
-   
+
+{/* ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/GealNS6hKRgI81TAAuRP?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END */}
+
+| Field           | Description                                                                                  |
+| --------------- | -------------------------------------------------------------------------------------------- |
+| **Name**        | Choose a descriptive name for your model (required)                                          |
+| **Slug**        | Set a unique identifier that cannot be changed once created (required)                       |
+| **Object Type** | Select the Attio object type you want to model (People, Companies, Deals, or custom objects) |
 
 ### Object types available
 
-**Deal models**
+<AccordionGroup>
+  <Accordion title="Deal models" icon="handshake">
+    **Use cases** - Track opportunities, pipeline stages, and deal progression -
+    Monitor deal velocity, conversion rates, and forecasting - Analyze win/loss
+    patterns and sales performance
+  </Accordion>
+  <Accordion title="Company models" icon="building">
+    **Use cases** - Manage company records with domains, descriptions, and team
+    information - Track company categories, locations, and relationships -
+    Monitor company engagement and lifecycle stages
+  </Accordion>
+  <Accordion title="Person models" icon="user">
+    **Use cases** - Handle contact and lead information - Track individual
+    engagement and communication history - Manage contact lifecycle and
+    qualification status
+  </Accordion>
+</AccordionGroup>
 
-**Use cases**
-- Track opportunities, pipeline stages, and deal progression
-- Monitor deal velocity, conversion rates, and forecasting
-- Analyze win/loss patterns and sales performance
-
-**Company models**  
-
-**Use cases**
-- Manage company records with domains, descriptions, and team information
-- Track company categories, locations, and relationships
-- Monitor company engagement and lifecycle stages
-
-**Person models**
-
-**Use cases**
-- Handle contact and lead information
-- Track individual engagement and communication history
-- Manage contact lifecycle and qualification status
-
+<Tip>
+  You can also model any **custom objects** you've created in Attio, giving you
+  full flexibility to work with your unique data structures.
+</Tip>

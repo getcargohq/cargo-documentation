@@ -5,6 +5,11 @@ description: "Tools are external APIs that give your Agent the ability to take a
 
 Tools transform your Agent from a reasoning engine into an action-taker. Each tool is an external API endpoint that the Agent can call to interact with the world.
 
+<Note>
+  For a complete reference of all available actions and how they're used across
+  Cargo, see the [Actions overview](/reference/actions/overview).
+</Note>
+
 <img
   src="/images/image(14).png"
   alt="Tools configuration interface"
@@ -82,6 +87,18 @@ Enable this when the Agent should apply the tool across multiple records in a si
 
 ---
 
+## MCP Servers
+
+Cargo Agents support the **Model Context Protocol (MCP)**—an open standard for connecting AI models to external tools and data sources. You can connect your Agent to any MCP-compatible server, giving it instant access to a wide ecosystem of pre-built integrations.
+
+Simply provide the server URL, and Cargo will automatically discover and register the available tools. For example, you can connect your Agent to:
+
+- **Notion** — Search pages, create databases, and manage workspace content
+- **HeyReach** — Automate LinkedIn outreach and manage campaigns
+- **HubSpot** — Access CRM data, manage contacts, and trigger workflows
+
+---
+
 ## Best practices
 
 <CardGroup cols={2}>
@@ -100,5 +117,26 @@ Enable this when the Agent should apply the tool across multiple records in a si
   <Card title="Limit scope">
     Only give Agents access to the tools they need. Fewer tools = faster, more
     accurate tool selection.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="All actions reference"
+    icon="layer-group"
+    href="/reference/actions/overview"
+  >
+    Complete reference for all action types available in Cargo.
+  </Card>
+  <Card
+    title="Using actions everywhere"
+    icon="arrows-split-up-and-left"
+    href="/reference/actions/using-actions"
+  >
+    Learn how to leverage actions across tools, plays, agents, and APIs.
   </Card>
 </CardGroup>

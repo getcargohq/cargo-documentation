@@ -1,0 +1,193 @@
+---
+title: "Building a play"
+description: "Learn how to build, test, and manage plays in the Cargo editor"
+---
+
+Plays are automated workflows that trigger based on changes in your data models. Unlike tools which are manually triggered, plays continuously monitor your data and execute when relevant changes occur. This guide covers everything you need to know about the play editor.
+
+---
+
+## The play editor
+
+The play editor provides a visual canvas for building automation workflows. Each play connects to a data model and executes whenever matching changes are detected.
+
+**Key concepts:**
+
+- **Trigger** defines when the play executes and what data it receives
+- **Nodes** are the individual steps in your play (enrich, branch, write, etc.)
+- **[Actions](/reference/actions/overview)** are the operations each node performs—Cargo offers 120+ actions across logic, AI, integrations, and more
+- **Connections** define how data flows between nodes
+- **Fallbacks** handle errors gracefully when nodes fail
+
+---
+
+## Publishing and enabling
+
+### Draft mode
+
+When you create or modify a play, changes are saved as a draft. You can leave and return later without losing progress.
+
+### Publishing
+
+![Publishing a play](/images/building-a-play-1.png)
+
+Once you're satisfied with your play design, click **Publish** to create a new version. Publishing makes your changes active for all future runs.
+
+| State         | Behavior                                                                          |
+| ------------- | --------------------------------------------------------------------------------- |
+| **Draft**     | Changes are saved but not active—the previous published version continues running |
+| **Published** | The latest version is active and will be used for all new runs                    |
+| **Enabled**   | The play automatically enrolls records when trigger conditions are met            |
+| **Disabled**  | The play won't auto-enroll, but you can still manually enroll records             |
+
+<Tip>
+  Disable a play when you need to pause automatic processing without losing your
+  configuration. Disabled plays remain available for manual testing.
+</Tip>
+
+---
+
+## Running and re-running
+
+### Manual enrolment
+
+You can manually enrol records into a play regardless of whether it's enabled:
+
+1. Navigate to the **Records** view in your play
+2. Click the import button to enrol specific records
+3. Monitor execution in the runs panel
+
+This is useful for testing, backfilling data, or processing specific records on demand.
+
+### Re-running failed runs
+
+![Re-running failed runs](/images/building-a-play-3.gif)
+
+When runs fail due to errors, you can re-run them after making corrections:
+
+1. Navigate to the **Records** view
+2. Select the failed runs you want to retry
+3. Choose your re-run strategy:
+
+| Strategy         | Behavior                                                 |
+| ---------------- | -------------------------------------------------------- |
+| **From scratch** | Re-run the entire workflow from the beginning            |
+| **From failure** | Resume from the failed node, preserving successful steps |
+
+<Note>
+  Re-running from the failure point prevents duplicate actions for nodes that
+  already completed successfully.
+</Note>
+
+---
+
+## Handling failures with fallbacks
+
+![Configuring fallback paths](/images/building-a-play-4.png)
+
+Plays can encounter errors during execution. Rather than letting the entire run fail, you can define fallback paths to handle errors gracefully.
+
+### Adding a fallback path
+
+1. Right-click on the node you want to add a fallback to
+2. Select **Failure** from the context menu
+3. Choose the fallback option under the fail mode
+
+This creates a new connection handle on the right side of the node. Any nodes connected from this fallback handle will only execute if the original node fails.
+
+### Common fallback patterns
+
+| Pattern                | Use case                                                              |
+| ---------------------- | --------------------------------------------------------------------- |
+| **Notification**       | Send a Slack message when enrichment fails so a human can investigate |
+| **Alternative action** | Try a different enrichment provider if the primary one fails          |
+| **Default values**     | Write placeholder data to your CRM to prevent incomplete records      |
+| **Skip and continue**  | Log the failure and continue with remaining records in the batch      |
+
+---
+
+## Monitoring workflow health
+
+![Monitoring play health](/images/building-a-play-5.png)
+
+Play health needs to be closely monitored to avoid disruptions in key processes. The editor provides real-time visibility into execution status.
+
+### Health indicators
+
+The play header displays:
+
+- **Success rate** — Percentage of runs completing without errors
+- **Recent runs** — Quick view of the latest execution results
+- **Active runs** — Number of records currently being processed
+
+### Setting up alerts
+
+Configure notifications to catch issues early:
+
+1. Open the **Sync** settings panel
+2. Set a **Batch Health threshold** (e.g., 80%)
+3. Connect a **Slack channel** for alerts
+4. You'll be notified when a batch falls below your threshold
+
+<Warning>
+  Don't set your health threshold too high initially. Some failure rate is
+  normal, especially with external API calls. Start at 70-80% and adjust based
+  on your workflow's typical behavior.
+</Warning>
+
+---
+
+## Best practices
+
+<AccordionGroup>
+  <Accordion title="Test with manual enrolment first">
+    Before enabling automatic triggers, manually enrol a few test records to
+    validate your workflow end-to-end. This catches issues before they affect
+    production data.
+  </Accordion>
+  <Accordion title="Add fallbacks for critical nodes">
+    Any node that calls an external API can fail. Add fallback paths for
+    enrichment nodes and CRM writes to handle rate limits, timeouts, and
+    temporary outages.
+  </Accordion>
+  <Accordion title="Use descriptive node names">
+    Rename nodes from defaults like "Enrich 1" to meaningful names like "Enrich
+    company from Clearbit". This makes debugging failed runs much easier.
+  </Accordion>
+  <Accordion title="Set appropriate batch sizes">
+    Large batches process faster but make debugging harder. Start with smaller
+    batches (10-50 records) until you're confident in the workflow, then scale
+    up.
+  </Accordion>
+  <Accordion title="Monitor health proactively">
+    Set up Slack alerts before issues cascade. A 90% success rate might seem
+    fine, but 10% of your leads not being processed can add up quickly.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Configure triggers"
+    icon="bolt"
+    href="/reference/plays/triggering-a-play"
+  >
+    Learn about schedules, change detection, and enrolment rules.
+  </Card>
+  <Card
+    title="Enrol data in plays"
+    icon="database"
+    href="/reference/resources/models/using-models-in-plays"
+  >
+    Understand how records flow into your plays.
+  </Card>
+  <Card title="Build a tool" icon="wrench" href="/reference/tools/overview">
+    Create reusable tools to use within your plays.
+  </Card>
+  <Card title="Build an agent" icon="robot" href="/reference/agents/overview">
+    Add AI-powered decision making to your workflows.
+  </Card>
+</CardGroup>

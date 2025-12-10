@@ -1,11 +1,7 @@
 ---
-title: "Build a data model"
-description: "Learn about data models and how they power Cargo plays"
+title: "Data models"
+description: "Structured tables that power your Cargo plays and workflows"
 ---
-
-{/* ARCADE EMBED START*/}<div style={{position: "relative", paddingBottom: "calc(62.5% + 41px)", height: 0, width: "100%"}}><iframe src="https://demo.arcade.software/Nu9WlOMFVouu1S2pT8wZ?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=true" title="Setup a data model" frameBorder="0" loading="lazy" webkitAllowFullScreen mozAllowFullScreen allowFullScreen allow="clipboard-write" style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%", colorScheme: "light"}} ></iframe></div>{/*ARCADE EMBED END */}
-
-## What are data models?
 
 Data models are structured tables that power your Cargo plays. They contain organized data that can be imported into plays to create runs.
 
@@ -39,15 +35,11 @@ Cargo offers three types of data loaders to bring external data into your models
 
 ---
 
-## Advanced features
+## Model capabilities
 
 Data models support powerful capabilities to help you orchestrate your GTM workflows:
 
 <AccordionGroup>
-  <Accordion title="System of record" icon="server">
-    Use your own Snowflake or BigQuery instance as the system of record, or rely
-    on Cargo's managed warehouse.
-  </Accordion>
   <Accordion title="Segments" icon="filter">
     Apply filters to create targeted segments for specific plays based on custom
     criteria.
@@ -65,10 +57,10 @@ Data models support powerful capabilities to help you orchestrate your GTM workf
     your customer data.
   </Accordion>
   <Accordion title="Additional columns" icon="table-columns">
-    Extend your models with calculated fields and custom data: - **Custom
-    columns:** Free-form columns you can upsert from within a play - **Computed
-    columns:** Calculated values based on other columns in the model - **Metrics
-    columns:** Aggregated data (sums, averages, counts) from related models
+    Extend your models with calculated fields and custom data:
+    - **Custom columns:** Free-form columns you can upsert from within a play
+    - **Computed columns:** Calculated values based on other columns in the model
+    - **Metrics columns:** Aggregated data (sums, averages, counts) from related models
   </Accordion>
 </AccordionGroup>
 
@@ -102,28 +94,25 @@ Data models power a wide range of GTM scenarios:
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Build a play" icon="play" href="/get-started/build-a-play">
-    Learn how to create automated workflows powered by your data models.
-  </Card>
-  <Card
-    title="SQL models"
-    icon="code"
-    href="/reference/resources/models/sql-models"
-  >
+  <Card title="SQL models" icon="code" href="/reference/resources/models/sql-models">
     Write custom SQL queries to transform and combine your data.
   </Card>
+  <Card title="Using models in plays" icon="play" href="/reference/resources/models/using-models-in-plays">
+    Learn how to leverage data models in your plays.
+  </Card>
   <Card
-    title="System of records"
+    title="Warehouse setup"
     icon="database"
     href="/reference/resources/warehouse/overview"
   >
     Connect your own data warehouse as the backbone of your models.
   </Card>
   <Card
-    title="Enrol data in plays"
-    icon="arrow-right"
-    href="/reference/resources/models/using-models-in-plays"
+    title="Files"
+    icon="file"
+    href="/reference/resources/files/overview"
   >
-    Configure how records flow from models into your plays.
+    Work with unstructured data like documents and PDFs.
   </Card>
 </CardGroup>
+

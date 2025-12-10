@@ -3,32 +3,203 @@ title: Monitoring a tool
 description: Learn how to monitor tool performance, view records, and manage failed runs
 ---
 
-Once your tool is running, you can monitor its performance, view execution history, and manage any issues that arise.
+Once your tool is running, you can monitor its performance, view execution history, and manage any issues that arise. Cargo provides comprehensive monitoring capabilities to help you understand how your tools are performing.
+
+---
 
 ## Records
 
 ![Inspect previous runs](/images/monitoring-a-tool-1.png)
 
-Access your tool's execution history through the records view. In the top bar of the tool editor, click on records to see the full history of the tool's runs.
+Access your tool's execution history through the **Records** view. In the top bar of the tool editor, click on **Records** to see the full history of the tool's runs.
 
-The records view shows:
-- **Running executions:** Currently active tool runs
-- **Completed runs:** Successfully finished executions
-- **Failed runs:** Executions that encountered errors
-- **Node-level details:** Progress and status of each node within the tool
+### What you'll see
 
-To give the user the most flexibility with understanding the tool's execution history. Filter by batch to view all records from a specific batch execution, by version or by status (running, completed, or failed executions). 
+| Status | Description |
+|--------|-------------|
+| **Running** | Currently active tool executions |
+| **Completed** | Successfully finished executions |
+| **Failed** | Executions that encountered errors |
+| **Pending** | Executions waiting to start |
 
-You can also filter on the outcomes of specific nodes in the execution flow.
+### Filtering records
 
-## Retrying fails
+Use filters to find specific executions:
+
+- **By batch:** View all records from a specific bulk execution
+- **By version:** See executions from a particular tool version
+- **By status:** Filter to running, completed, or failed executions
+- **By date range:** Focus on a specific time period
+- **By node outcome:** Filter based on specific node results
+
+### Inspecting an execution
+
+Click on any record to see detailed information:
+
+1. **Input data:** What was passed to the tool
+2. **Node-by-node breakdown:** Status and output of each step
+3. **Timing:** How long each node took to execute
+4. **Output data:** The final result returned by the tool
+5. **Error details:** For failed executions, exactly what went wrong
+
+---
+
+## Retrying failed executions
 
 <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/TmVNoHot68Q" title="Retrying a fail" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
 
-When a tool execution fails, you can retry the operation by navigating to the failed record in the records view, clicking on the failed execution to view error details, using the "Retry" option to re-execute the tool with the same inputs, and monitoring the retry attempt in the records view.
+When a tool execution fails, you can retry the operation:
+
+1. Navigate to the failed record in the Records view
+2. Click on the failed execution to view error details
+3. Use the **Retry** button to re-execute with the same inputs
+4. Monitor the retry attempt in the Records view
+
+<Tip>
+Before retrying, check if the failure was due to a transient issue (like a rate limit) or a permanent problem (like invalid data). Fix permanent issues before retrying.
+</Tip>
+
+### Bulk retry
+
+For multiple failures, you can retry them in bulk:
+
+1. Filter the Records view to show only failed executions
+2. Select multiple records using the checkboxes
+3. Click **Retry selected** to re-run all at once
+
+---
 
 ## Metrics
 
-Access comprehensive performance metrics for your tool by clicking on "Metrics" in the tool editor.
+Access comprehensive performance metrics for your tool by clicking on **Metrics** in the tool editor.
 
-The metrics view provides success rates showing the percentage of successful vs failed executions for each node grouped by batches,versions or date of execution.
+### Available metrics
+
+- **Success rate:** Percentage of successful vs failed executions
+- **Execution time:** Average, p50, p95, and p99 latencies
+- **Volume:** Number of executions over time
+- **Error distribution:** Most common error types
+- **Node-level performance:** Success rates and timing per node
+
+### Grouping options
+
+View metrics grouped by:
+
+- **Batches:** Compare performance across bulk runs
+- **Versions:** Track improvements or regressions between versions
+- **Date:** Understand usage patterns over time
+
+---
+
+## Troubleshooting common issues
+
+<AccordionGroup>
+  <Accordion title="Tool execution times out">
+    **Symptoms:** Executions fail with a timeout error after running for extended periods.
+    
+    **Solutions:**
+    - Break complex tools into smaller, focused tools
+    - Check if external API calls are slow and add appropriate timeouts
+    - Reduce batch sizes for bulk operations
+    - Consider using async execution for long-running operations
+  </Accordion>
+  
+  <Accordion title="Rate limit errors from integrations">
+    **Symptoms:** Executions fail with 429 or rate limit errors from external services.
+    
+    **Solutions:**
+    - Add **Delay** nodes between API calls
+    - Use **Balance** nodes to distribute load
+    - Reduce concurrent executions in bulk runs
+    - Check the integration's rate limit documentation
+  </Accordion>
+  
+  <Accordion title="Data not found in enrichment">
+    **Symptoms:** Enrich nodes return empty results when you expect data.
+    
+    **Solutions:**
+    - Verify the input format (e.g., domain without `https://`)
+    - Check if the company/person exists in the enrichment provider's database
+    - Use multiple enrichment sources with fallback logic
+    - Add validation before the enrichment node
+  </Accordion>
+  
+  <Accordion title="CRM write failures">
+    **Symptoms:** Write nodes fail when trying to update your CRM.
+    
+    **Solutions:**
+    - Verify the record exists (use a Read node first)
+    - Check field permissions in your CRM
+    - Ensure required fields are populated
+    - Validate data types match CRM field types
+    - Check for duplicate detection rules
+  </Accordion>
+  
+  <Accordion title="Branch conditions not working as expected">
+    **Symptoms:** Executions take unexpected paths through Branch or Switch nodes.
+    
+    **Solutions:**
+    - Check your expression syntax in the node configuration
+    - Verify the data type being compared (string vs number)
+    - Test with the exact data format from the previous node
+    - Use the test mode to step through the logic
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Setting up alerts
+
+Stay informed about tool issues without constantly checking the dashboard.
+
+### Slack notifications
+
+Connect Slack to receive alerts for:
+
+- Failed executions exceeding a threshold
+- Success rate dropping below a percentage
+- Unusual execution volumes
+- Specific error types
+
+### Email alerts
+
+Configure email notifications for critical issues:
+
+1. Go to **Settings** → **Notifications**
+2. Add your email address
+3. Select which events trigger notifications
+4. Set frequency (immediate, hourly digest, daily digest)
+
+### Webhook alerts
+
+Send alerts to your own systems:
+
+```json
+{
+  "event": "tool.execution.failed",
+  "tool_id": "tool_abc123",
+  "tool_name": "Company Enrichment",
+  "execution_id": "exec_xyz789",
+  "error": "Rate limit exceeded",
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+
+---
+
+## Best practices for monitoring
+
+<CardGroup cols={2}>
+  <Card title="Set up alerts early" icon="bell">
+    Don't wait for users to report issues. Configure alerts before deploying tools to production.
+  </Card>
+  <Card title="Review metrics weekly" icon="calendar-week">
+    Check your tools' metrics regularly to spot trends before they become problems.
+  </Card>
+  <Card title="Track error patterns" icon="magnifying-glass-chart">
+    When you see repeated failures, investigate and fix the root cause—don't just retry.
+  </Card>
+  <Card title="Version your changes" icon="code-branch">
+    Use tool versions to correlate performance changes with code changes.
+  </Card>
+</CardGroup>

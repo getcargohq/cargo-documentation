@@ -1,0 +1,123 @@
+---
+title: "Security"
+description: "How Cargo protects your data and keeps your workflows secure"
+---
+
+Cargo is built with security at its core. We understand that you're trusting us with sensitive business data, and we take that responsibility seriously.
+
+## Infrastructure security
+
+<CardGroup cols={2}>
+  <Card title="Cloud hosting" icon="cloud">
+    Cargo runs on enterprise-grade cloud infrastructure with 99.9% uptime SLA,
+    automatic failover, and geo-redundant backups.
+  </Card>
+  <Card title="Network isolation" icon="shield-halved">
+    All services are designed to run in isolated virtual private clouds, with
+    strict network policies and firewall rules.
+  </Card>
+</CardGroup>
+
+## Data protection
+
+### Encryption
+
+All data is encrypted both in transit and at rest:
+
+| Layer      | Protection                                               |
+| ---------- | -------------------------------------------------------- |
+| In transit | TLS 1.3 encryption for all API and web traffic           |
+| At rest    | AES-256 encryption for all stored data                   |
+| Database   | Encrypted storage with customer-isolated data partitions |
+| Backups    | Encrypted backups with point-in-time recovery            |
+
+### Data handling
+
+<Steps>
+  <Step title="Minimal data retention">
+    Cargo only stores data necessary to run your workflows. Intermediate
+    processing data is automatically purged after execution.
+  </Step>
+  <Step title="Customer isolation">
+    Each workspace's data is logically isolated. Strict access controls ensure
+    no cross-tenant data access.
+  </Step>
+  <Step title="Secure deletion">
+    When you delete data or close your account, we permanently remove all
+    associated data from our systems.
+  </Step>
+</Steps>
+
+## Access control
+
+### Authentication
+
+- **Single Sign-On (SSO)**: Connect your identity provider for centralized authentication
+- **Multi-factor authentication (MFA)**: Add an extra layer of security to user accounts
+- **API keys**: Scoped, rotatable keys for programmatic access with granular permissions
+
+### Permissions
+
+Cargo provides role-based access control (RBAC) to manage what users can do within your workspace:
+
+| Role   | Capabilities                                                   |
+| ------ | -------------------------------------------------------------- |
+| Admin  | Full access to all settings, integrations, and user management |
+| Editor | Create and modify tools, agents, plays, and data models        |
+| Viewer | Read-only access to view workflows and results                 |
+
+## Compliance
+
+<CardGroup cols={2}>
+  <Card title="SOC 2 Type II" icon="certificate">
+    Cargo maintains SOC 2 Type II certification, demonstrating our commitment to
+    security, availability, and confidentiality.
+  </Card>
+  <Card title="GDPR-aligned" icon="shield-check">
+    We align with GDPR requirements and provide Data Processing Agreements (DPA)
+    as well as support data subject access requests. Note: Cargo does not hold
+    formal GDPR certification.
+  </Card>
+</CardGroup>
+
+### Data residency
+
+Cargo supports data residency requirements for customers with specific regional data storage needs. Contact us to discuss your requirements.
+
+## Integration security
+
+### Warehouse connections
+
+When connecting to your data warehouse (Snowflake, BigQuery, Redshift), Cargo:
+
+- Uses read-only credentials where possible
+- Connects via secure, encrypted channels
+- Never stores raw credentials — they're encrypted and isolated in secure vaults
+
+### CRM and third-party integrations
+
+All OAuth connections follow best practices:
+
+- Minimal permission scopes requested
+- Tokens securely stored and automatically refreshed
+- Connections can be revoked at any time from your workspace
+
+## Monitoring and incident response
+
+<CardGroup cols={2}>
+  <Card title="24/7 monitoring" icon="eye">
+    Automated systems continuously monitor for security threats and anomalies.
+  </Card>
+  <Card title="Incident response" icon="bell">
+    Documented incident response procedures with defined SLAs for communication
+    and resolution.
+  </Card>
+</CardGroup>
+
+## Reporting vulnerabilities
+
+If you discover a security vulnerability, please report it responsibly by emailing **security@getcargo.ai**. We appreciate your help in keeping Cargo secure and will acknowledge your report within 24 hours.
+
+## Questions?
+
+For security-related inquiries or to request our SOC 2 report, contact us at [security@getcargo.ai](mailto:security@getcargo.ai).

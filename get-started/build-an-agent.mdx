@@ -1,6 +1,6 @@
 ---
 title: "Build an agent"
-description: "Learn what agents are, and how to build your first one.""
+description: "Learn what agents are, and how to build your first one."
 ---
 
 <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/vRDIzsM8GuI" title="Build an agent in Cargo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
@@ -9,7 +9,13 @@ description: "Learn what agents are, and how to build your first one.""
 
 Agents are intelligent actors in Cargo that reason and answer open-ended questions relevant to your GTM processes. They use foundational AI models to leverage semantic reasoning to trigger the right set of tools, resources or MCP servers to achieve the task given to them.
 
-Modern GTM teams leverage agents in their systems to automate research, qualify leads, enrich your CRM and improve the productivity of their sales teams. 
+Unlike Plays—which follow a pre-defined sequence of steps—Agents use a **reasoning engine** to dynamically determine the best path to a goal based on input context and available tools.
+
+<Note>
+  **Agents vs Plays**: Use a Play when your workflow is predictable and
+  repeatable. Use an Agent when tasks require reasoning, adaptability, or
+  handling variable inputs.
+</Note>
 
 Once set up, Cargo agents can be prompted from a variety of places, including a **Slack channel**, a **Chrome extension**, an **API endpoint** or a **Cargo play**.
 
@@ -20,3 +26,139 @@ Agents can be used for a variety of GTM tasks, including:
 - **Automated research:** The agent can use its reasoning to sift through information on companies and people and retain the most relevant intelligence for the task at hand.
 - **Lead and account qualification:** Qualify leads and accounts based on custom rules and real-time data.
 - **Sales enablement:** Agents can use a wide-range of context about a deal or an incident, to provide guidance on the next best step to assist a sales team member's job.
+- **CRM management:** Update fields, upsert records, and maintain data integrity across your systems.
+- **Signal extraction:** Summarize conversations and identify product interest or objections.
+- **Risk detection:** Proactively spot churn signals, usage drops, or job changes.
+
+---
+
+## Step-by-step: Build your first agent
+
+Follow these steps to create an agent that qualifies leads based on your Ideal Customer Profile.
+
+### Step 1: Create a new agent
+
+1. Navigate to **Agents** in your Cargo workspace sidebar
+2. Click **+ New Agent** in the top right corner
+3. Give your agent a descriptive name (e.g., "Lead Qualification Agent")
+
+<img
+  src="/images/building-an-agent-1.png"
+  alt="Creating a new agent"
+  style={{ width: "100%" }}
+/>
+
+### Step 2: Define the instructions
+
+The instructions tell your Agent who it is, what it should do, and what it should avoid. Click on the **Instructions** tab and define:
+
+1. **Role / Purpose** — Who the Agent is and what it's trying to achieve
+2. **Behavior** — The steps it takes, tools it uses, and the format of its output
+3. **Avoidances** — What the Agent must NOT do
+
+<img
+  src="/images/building-an-agent-2.png"
+  alt="Defining agent instructions"
+  style={{ width: "100%" }}
+/>
+
+<Tip>
+Be specific in your instructions. Say "assign a score of 1-10" instead of "rate the lead". Vague instructions lead to inconsistent results.
+</Tip>
+
+### Step 3: Add tools
+
+Tools give your Agent the ability to take action—updating CRMs, sending messages, and enriching data.
+
+1. Click on the **Tools** tab
+2. Select the tools your Agent needs (e.g., "Company Enrichment", "CRM Update")
+3. Write clear descriptions for each tool so the Agent knows when to use them
+
+<img
+  src="/images/building-an-agent-3.png"
+  alt="Adding tools to your agent"
+  style={{ width: "100%" }}
+/>
+
+### Step 4: Load resources
+
+Resources are knowledge bases and data sources that ground the Agent's reasoning.
+
+1. Click on the **Resources** tab
+2. Add relevant documents, spreadsheets, or data sources (e.g., your ICP criteria)
+3. The Agent will reference these during execution
+
+### Step 5: Configure capabilities
+
+Enable built-in LLM features that enhance your Agent:
+
+- **Memory** — Remember context across conversations
+- **Web Search** — Look up real-time information online
+- **Canvas** — Generate and edit structured content
+
+### Step 6: Test your agent
+
+Before deploying, test your Agent:
+
+1. Click the **Test** button
+2. Enter a sample prompt (e.g., "Qualify this lead: acme.com")
+3. Review the Agent's reasoning and actions
+4. Refine the instructions based on the output
+
+<img
+  src="/images/building-an-agent-4.png"
+  alt="Testing your agent"
+  style={{ width: "100%" }}
+/>
+
+### Step 7: Deploy
+
+Once everything works:
+
+1. Click **Deploy** in the top right corner
+2. Choose your deployment channels (Slack, Chrome extension, Play, CRM button)
+3. Your Agent is now ready to use!
+
+<img
+  src="/images/building-an-agent-5.gif"
+  alt="Agent in action"
+  style={{ width: "100%" }}
+/>
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Start with a focused goal" icon="bullseye">
+    Build Agents for specific tasks rather than general-purpose assistants. A lead qualification Agent will outperform a "do everything" Agent.
+  </Card>
+  <Card title="Write clear tool descriptions" icon="wrench">
+    The Agent reads tool descriptions to decide when to use them. Be specific about what each tool does and when to use it.
+  </Card>
+  <Card title="Handle edge cases" icon="shield-check">
+    Tell the Agent what to do when data is missing or a tool fails. Don't let errors silently fail.
+  </Card>
+  <Card title="Test iteratively" icon="flask">
+    Run test queries and refine the instructions based on actual outputs. Small tweaks can significantly improve results.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Craft better instructions" icon="pencil" href="/reference/agents/defining-the-prompt">
+    Master the art of writing Agent prompts that deliver consistent, high-quality results.
+  </Card>
+  <Card title="Integrate tools" icon="plug" href="/reference/agents/tools-and-actions">
+    Connect your Agent to CRMs, enrichment services, and communication platforms.
+  </Card>
+  <Card title="Load resources" icon="database" href="/reference/agents/resources-and-context">
+    Ground your Agent with knowledge bases and data sources.
+  </Card>
+  <Card title="Advanced settings" icon="sliders" href="/reference/agents/advanced-settings">
+    Fine-tune LLM provider, temperature, reasoning, and execution limits.
+  </Card>
+</CardGroup>

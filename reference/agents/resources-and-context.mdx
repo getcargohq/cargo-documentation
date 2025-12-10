@@ -5,85 +5,97 @@ description: "Connect your Agent to internal knowledge bases, CRM data, and cust
 
 Resources give your Agent access to your organization's data—CRM records, knowledge bases, product databases, and more. This is called **RAG** (Retrieval-Augmented Generation): the Agent retrieves relevant information before generating responses.
 
-![Resources configuration](/images/image\(1\).webp)
+![Resources configuration](</images/image(1).webp>)
 
 <Note>
-Without resources, an Agent only knows what's in its instructions and what it can find via web search. Resources ground the Agent in **your** data.
+  Without resources, an Agent only knows what's in its instructions and what it
+  can find via web search. Resources ground the Agent in **your** data.
 </Note>
 
 ---
 
-## Supported data sources
+## Types of resources
 
-| Data type | Examples | Best for |
-| :-------- | :------- | :------- |
-| **CRM Objects** | HubSpot Deals, Salesforce Accounts, Attio Records | GTM operations, deal context, account history |
-| **Knowledge Bases** | Notion, Google Docs, uploaded files | Playbooks, FAQs, ICP definitions, objection handling |
-| **Product Data** | Usage databases, analytics platforms | Churn detection, usage-based qualification, health scores |
-| **Custom Databases** | SQL databases, BigQuery, Snowflake, Redshift | Any internal data with a query interface |
+There are two types of resources you can connect to your Agent:
+
+| Type                                               | Data format       | Examples                                         |
+| :------------------------------------------------- | :---------------- | :----------------------------------------------- |
+| [**Models**](/reference/resources/models/overview) | Structured data   | CRM objects, product databases, SQL tables       |
+| [**Files**](/reference/resources/files/overview)   | Unstructured data | PDFs, documents, transcripts, knowledge articles |
+
+### Models
+
+Models connect your Agent to **structured data**—tables with rows and columns. The Agent queries this data using SQL, making it ideal for filtering, sorting, and aggregating records.
+
+**Best for:**
+
+- CRM Objects (HubSpot Deals, Salesforce Accounts, Attio Records)
+- Product Data (usage databases, analytics platforms)
+- Custom Databases (BigQuery, Snowflake, Redshift)
+
+### Files
+
+Files connect your Agent to **unstructured data**—documents, PDFs, and text content. You select which files or folders to include, and the Agent searches this content using vector similarity to find relevant information.
+
+**Best for:**
+
+- Knowledge Bases (Notion, Google Docs, uploaded files)
+- Playbooks, FAQs, and process documentation
+- Meeting transcripts and call notes
 
 ---
 
-## Query modes
+## Configuring a Model
 
-When an Agent needs to retrieve data, it uses one of two query modes:
+When you add a Model resource, you configure how the Agent queries your structured data.
 
-### SQL Mode
-The Agent generates and executes SQL queries against structured data.
+### Query mode
 
-**Best for:**
-- Filtering records by specific criteria
-- Sorting and aggregating data
-- Retrieving specific fields from tables
+Choose how the Agent retrieves data from this model:
 
-**Example:**
+| Mode       | Description                                                        | Best for                                          |
+| :--------- | :----------------------------------------------------------------- | :------------------------------------------------ |
+| **SQL**    | Agent generates and executes SQL queries against the data          | Filtering, sorting, aggregating records           |
+| **Vector** | Agent uses semantic similarity search to find relevant text chunks | Searching text fields, finding conceptual matches |
+
+**SQL example:**
+
 > "Find all deals in the Discovery stage with value over $50k"
 
-### Vector Mode
-The Agent uses semantic similarity search to find relevant text chunks.
+**Vector example:**
 
-**Best for:**
-- Searching unstructured documents (PDFs, transcripts, notes)
-- Finding conceptually related content
-- Answering questions from knowledge bases
+> "Find companies with product descriptions similar to AI automation"
 
-**Example:**
-> "What does our playbook say about handling pricing objections?"
+### Model settings
+
+| Setting              | Description                                                      |
+| :------------------- | :--------------------------------------------------------------- |
+| **Model**            | Which data object to query (e.g., HubSpot Deals, a SQL table)    |
+| **Prompt**           | Custom instructions for how the Agent should query this resource |
+| **Filters**          | Restrict which records the Agent can access                      |
+| **Selected Columns** | Choose which fields to return (SQL mode only)                    |
+| **Limit**            | Maximum number of records returned per query                     |
 
 ---
 
-## Configuring a resource
+## Configuring Files
 
-Click on any connected resource to access its settings:
+When you add a File resource, you select the content the Agent can search.
 
-### Model
-Specifies which data object to query (e.g., the `Deals` object in HubSpot, or a specific Notion database).
+### Selecting content
 
-### Prompt / Guidelines
-Custom instructions for how the Agent should query or interpret this resource.
+Choose which files or folders to include. The Agent will search all selected content using vector similarity to find relevant information.
+
+### Prompt
+
+Add custom instructions to guide how the Agent interprets or prioritizes this content.
 
 **Example:**
+
 ```
-When querying deals, prioritize high-value opportunities 
-(>$100k) and exclude any marked as "Closed Lost".
+This folder contains our sales playbooks. Prioritize the
+objection handling guide when the user asks about pricing concerns.
 ```
-
-### Filters
-Restrict which data the Agent can access. Use filters to:
-- Limit to specific record types or stages
-- Exclude sensitive or irrelevant data
-- Focus on a particular team's records
-
-### Selected Columns (SQL Mode only)
-Choose which fields to return. This improves performance by:
-- Reducing the amount of data in the context window
-- Speeding up query execution
-- Focusing the Agent on relevant information
-
-### Limit
-Set the maximum number of records returned per query. Balance between:
-- **Higher limits:** More comprehensive results, but slower and more expensive
-- **Lower limits:** Faster responses, but may miss relevant data
 
 ---
 
@@ -91,15 +103,34 @@ Set the maximum number of records returned per query. Balance between:
 
 <CardGroup cols={2}>
   <Card title="Start with filters">
-    Narrow down data access to what the Agent actually needs. Less noise = better reasoning.
+    Narrow down data access to what the Agent actually needs. Less noise =
+    better reasoning.
   </Card>
-  <Card title="Write clear guidelines">
+  <Card title="Write clear prompts">
     Help the Agent understand how to query your data and what matters most.
   </Card>
-  <Card title="Choose the right mode">
-    Use SQL for structured queries, Vector for document search. Don't mix them up.
+  <Card title="Choose the right query mode">
+    For Models, use SQL for filtering and aggregating, Vector for semantic
+    search.
   </Card>
-  <Card title="Test your queries">
-    Run test prompts to verify the Agent retrieves the right data before deploying.
+  <Card title="Test before deploying">
+    Run test prompts to verify the Agent retrieves the right data.
+  </Card>
+</CardGroup>
+
+---
+
+## Learn more
+
+<CardGroup cols={2}>
+  <Card
+    title="Data models"
+    icon="table"
+    href="/reference/resources/models/overview"
+  >
+    Learn how to build and manage structured data models.
+  </Card>
+  <Card title="Files" icon="file" href="/reference/resources/files/overview">
+    Work with documents, PDFs, and unstructured content.
   </Card>
 </CardGroup>
