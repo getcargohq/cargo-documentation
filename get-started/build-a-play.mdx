@@ -3,17 +3,26 @@ title: "Build a play"
 description: "Learn what plays are, how they differ from tools, and how to build your first one."
 ---
 
-<iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/Fcx3cdfAagA" title="Build a play in Cargo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/Fcx3cdfAagA"
+  title="Build a play in Cargo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
 
 ## What are plays?
 
-Plays are automated workflows in Cargo that **consume data from a Cargo data model** to **programmatically trigger at the right moment **in order to execute a pre-defined workflow logic.
+Plays are automated workflows in Cargo that **consume data from a Cargo data model** to **programmatically trigger at the right moment** in order to execute a pre-defined workflow logic.
 
-Plays let you build workflow logic using **actions** and **tools** and run automatically whenever a relevant change is oberved in the connected data model:
+Plays let you build workflow logic using **actions** and **tools** and run automatically whenever a relevant change is observed in the connected data model:
 
 - **Actions:** Cargo plays give you the ability to add custom logic that is triggered when the right changes are observed in the connected data model.
 - **Data:** GTM teams rely on data from many sources—CRMs, enrichment tools, product usage, and more. Cargo data models are able to unify this data, so you can trigger plays based on the most relevant changes in that data.
 - **Syncs:** Plays can process records in batches on a schedule you define, letting you control how often the play checks for new data and how many records to process at once.
+
+> Unlike tools which are manually triggered or called by other components, plays are automatically triggered by changes in your data models.
 
 ## Use cases
 
@@ -21,6 +30,126 @@ Here are some of the most popular ways Cargo customers use Plays:
 
 - **Warm outbound:** Automatically reach out to prospects at companies showing intent signals, with personalized messaging at just the right moment.
 - **Champions tracking:** Monitor champions of your product and engage them when they move to new companies or roles.
-- **Stakeholder research:** Turn a list of companies into high-relevance leads by finding new contacts in relevant roles to engage with
+- **Stakeholder research:** Turn a list of companies into high-relevance leads by finding new contacts in relevant roles to engage with.
 - **Automated Lead Routing:** Instantly assign leads to the right reps based on territory, fit, or engagement signals.
 - **CRM operations:** Detect errant data in your CRM systems, whether it be invalid emails or duplicate records, and trigger a custom workflow logic to remedy it.
+
+---
+
+## Step-by-step: Build your first play
+
+Follow these steps to create a play that automatically processes leads when they match specific criteria.
+
+### Step 1: Create a new play
+
+1. Navigate to **Plays** in your Cargo workspace sidebar
+2. Click **+ New Play** in the top right corner
+3. Give your play a descriptive name (e.g., "New Lead Qualification")
+4. You'll be taken to the play editor canvas
+
+### Step 2: Connect a data model
+
+Every play needs a data source to monitor. Configure your trigger:
+
+1. Click on the **Start** node to open the trigger settings
+2. Select a data model from your workspace (e.g., your CRM leads model)
+3. Choose which events should trigger the play (new records, updates, or deletions)
+
+<Tip>
+  Start with a focused data model. You can always expand the trigger conditions
+  later once you've validated the workflow.
+</Tip>
+
+### Step 3: Configure sync settings
+
+Define when and how your play should process data:
+
+1. Open the **Sync** settings panel
+2. Choose your sync schedule (real-time, interval, or cron-based)
+3. Set your batch size to control how many records are processed at once
+4. Configure re-enrollment rules based on your use case
+
+### Step 4: Build your workflow logic
+
+Add nodes to define what happens when the play triggers:
+
+1. Click **+** to add your first action node
+2. For a lead qualification play, you might add:
+   - An **Enrich** node to gather additional company data
+   - A **Branch** node to filter leads based on criteria
+   - A **Write** node to update your CRM with qualification status
+
+### Step 5: Handle edge cases
+
+Add fallback logic for when things go wrong:
+
+1. Right-click on any node and select **Failure**
+2. Connect a fallback path for error handling
+3. Add notification nodes to alert your team of issues
+
+### Step 6: Test with manual enrolment
+
+Before going live, validate your play with real data:
+
+1. Navigate to the **Records** view
+2. Click the import button to manually enroll test records
+3. Monitor the execution flow and verify each node's output
+4. Fix any issues before enabling automatic processing
+
+### Step 7: Publish and enable
+
+Once everything works:
+
+1. Click **Publish** in the top right corner
+2. Toggle the **Enabled** switch to activate automatic triggers
+3. Your play will now process records whenever changes are detected
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Start with manual testing" icon="flask">
+    Always test with manual enrolments before enabling automatic triggers to
+    validate your workflow.
+  </Card>
+  <Card title="Set appropriate re-enrollment rules" icon="rotate">
+    Choose the right trigger conditions—use "No Re-Enrollment" for one-time
+    actions, "Always Enroll" for repeated processing.
+  </Card>
+  <Card title="Monitor play health" icon="heart-pulse">
+    Set up Slack notifications when error thresholds are hit to catch issues
+    early.
+  </Card>
+  <Card title="Use fallback paths" icon="shield-check">
+    Add failure handlers to gracefully manage errors and prevent silent
+    failures.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Configure sync settings"
+    icon="clock"
+    href="/reference/plays/triggering-a-play"
+  >
+    Learn about schedules, batch sizes, and trigger conditions.
+  </Card>
+  <Card
+    title="Work with data"
+    icon="database"
+    href="/reference/resources/models/using-models-in-plays"
+  >
+    Use model search, record, and memory nodes in your plays.
+  </Card>
+  <Card title="Build a tool" icon="wrench" href="/get-started/build-a-tool">
+    Create reusable tools that your plays can leverage.
+  </Card>
+  <Card title="Allocate leads" icon="users" href="/get-started/allocate-leads">
+    Route leads to the right team members automatically.
+  </Card>
+</CardGroup>

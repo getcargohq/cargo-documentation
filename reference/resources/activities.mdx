@@ -1,0 +1,129 @@
+---
+title: "Track workspace activities"
+description: "Track and analyze activities data from Cargo tools and plays using SQL queries"
+---
+
+The activities data table associated with your workspace logs record enrolments, node executions, and success/failure outcomes across all your tools and plays.
+
+These logs provide real-time visibility into how your workflows are performing—helping you identify bottlenecks, debug errors, and discover optimization opportunities.
+
+<Info>
+  You can query activities data from your **data warehouse's query editor**, a
+  Cargo **data model**, or the **Sandbox** query editor in the System of Records
+  section of your workspace settings.
+</Info>
+
+<Note>
+  - Adapt query syntax for your database (BigQuery or Snowflake) - If using your
+  own data warehouse, the dataset name matches the **Dataset name** from your
+  System of Records configuration - If using Cargo's managed Snowflake, contact
+  the Cargo team for connection details
+</Note>
+
+## Understanding the activities table
+
+The activities data is stored in the `compute__activities` table with the following structure:
+
+| Column          | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `_id`           | Unique identifier for each activity                  |
+| `_time`         | Timestamp when the activity occurred                 |
+| `kind`          | Type of activity (see below)                         |
+| `model_uuid`    | Reference to the data model (if applicable)          |
+| `workflow_uuid` | Reference to the workflow                            |
+| `play_uuid`     | Reference to the play (if applicable)                |
+| `tool_uuid`     | Reference to the tool (if applicable)                |
+| `segment_uuid`  | Reference to the segment (for segment activities)    |
+| `context`       | JSON object containing detailed activity information |
+
+### Activity types
+
+| Kind                   | Description                                       |
+| ---------------------- | ------------------------------------------------- |
+| `workflowNodeExecuted` | A specific node in a workflow completed execution |
+| `workflowEntered`      | A record entered a workflow                       |
+| `workflowLeft`         | A record exited a workflow                        |
+| `segmentEntered`       | A record entered a segment                        |
+| `segmentLeft`          | A record left a segment                           |
+
+## Example: Track workflow node executions
+
+Query all node executions for a specific workflow, including their status and any error messages:
+
+<Tabs>
+  <Tab title="BigQuery">
+    ```sql SELECT _time, JSON_VALUE(context, '$.nodeSlug') AS node_name,
+    JSON_VALUE(context, '$.nodeKind') AS node_type, JSON_VALUE(context,
+    '$.nodeStatus') AS status, JSON_VALUE(context, '$.nodeErrorMessage') AS
+    error_message FROM [DATASET].compute__activities WHERE kind =
+    'workflowNodeExecuted' AND JSON_VALUE(context, '$.workflowUuid') =
+    'your-workflow-uuid-here' ORDER BY _time DESC; ```
+  </Tab>
+  <Tab title="Snowflake">
+    ```sql SELECT _time, context:nodeSlug AS node_name, context:nodeKind AS
+    node_type, context:nodeStatus AS status, context:nodeErrorMessage AS
+    error_message FROM [DATABASE]._compute.activities WHERE kind =
+    'workflowNodeExecuted' AND context:workflowUuid = 'your-workflow-uuid-here'
+    ORDER BY _time DESC; ```
+  </Tab>
+</Tabs>
+
+## Example: Track workflow throughput
+
+Monitor how many records enter and exit your workflows over time:
+
+<Tabs>
+  <Tab title="BigQuery">
+    ```sql SELECT DATE(_time) AS date, kind, COUNT(*) AS count FROM
+    [DATASET].compute__activities WHERE kind IN ('workflowEntered',
+    'workflowLeft') AND workflow_uuid = 'your-workflow-uuid-here' GROUP BY date,
+    kind ORDER BY date DESC; ```
+  </Tab>
+  <Tab title="Snowflake">
+    ```sql SELECT DATE(_time) AS date, kind, COUNT(*) AS count FROM
+    [DATABASE]._compute.activities WHERE kind IN ('workflowEntered',
+    'workflowLeft') AND workflow_uuid = 'your-workflow-uuid-here' GROUP BY date,
+    kind ORDER BY date DESC; ```
+  </Tab>
+</Tabs>
+
+## Example: Identify failing nodes
+
+Find nodes with the highest error rates:
+
+<Tabs>
+  <Tab title="BigQuery">
+    ```sql SELECT JSON_VALUE(context, '$.nodeSlug') AS node_name, COUNT(*) AS
+    total_executions, COUNTIF(JSON_VALUE(context, '$.nodeStatus') = 'failed') AS
+    failures, ROUND(COUNTIF(JSON_VALUE(context, '$.nodeStatus') = 'failed') *
+    100.0 / COUNT(*), 2) AS failure_rate FROM [DATASET].compute__activities
+    WHERE kind = 'workflowNodeExecuted' AND _time >=
+    TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY) GROUP BY node_name HAVING
+    failures > 0 ORDER BY failure_rate DESC; ```
+  </Tab>
+  <Tab title="Snowflake">
+    ```sql SELECT context:nodeSlug AS node_name, COUNT(*) AS total_executions,
+    COUNT_IF(context:nodeStatus = 'failed') AS failures,
+    ROUND(COUNT_IF(context:nodeStatus = 'failed') * 100.0 / COUNT(*), 2) AS
+    failure_rate FROM [DATABASE]._compute.activities WHERE kind =
+    'workflowNodeExecuted' AND _time >= DATEADD(DAY, -7, CURRENT_TIMESTAMP())
+    GROUP BY node_name HAVING failures > 0 ORDER BY failure_rate DESC; ```
+  </Tab>
+</Tabs>
+
+## Table naming conventions
+
+Depending on your System of Records scope, use the appropriate table reference:
+
+| Scope                    | Table reference                              |
+| ------------------------ | -------------------------------------------- |
+| BigQuery project-level   | `[PROJECT_ID].[DATASET].compute__activities` |
+| BigQuery dataset-level   | `[DATASET].compute__activities`              |
+| Snowflake database-level | `[DATABASE]._compute.activities`             |
+| Snowflake schema-level   | `[DATABASE].[SCHEMA]._compute__activities`   |
+
+<Tip>
+  Replace bracketed values (e.g., `[PROJECT_ID]`, `[DATASET]`) with your actual
+  configuration values from the System of Records settings.
+</Tip>
+

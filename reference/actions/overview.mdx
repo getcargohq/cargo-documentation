@@ -1,0 +1,333 @@
+---
+title: "Actions"
+description: "The building blocks that power your workflows across tools, plays, agents, and APIs"
+---
+
+Actions are the operations that make things happen in Cargo. They're the individual steps that enrich data, write to CRMs, send messages, apply logic, and connect to external services.
+
+---
+
+## Action categories
+
+Cargo organizes actions into two groups: **workflow actions** for building logic in tools and plays, and **connectors** for integrating with external systems and AI.
+
+### Workflow actions
+
+These actions are available in the **Tool** and **Play** editors for building automation logic:
+
+<CardGroup cols={2}>
+  <Card title="Logic" icon="code-branch" href="#logic">
+    Control workflow behavior with branching, looping, filtering, and custom
+    scripts.
+  </Card>
+  <Card title="AI" icon="sparkles" href="#ai">
+    Use LLMs to generate content, extract information, and search documents
+    semantically.
+  </Card>
+  <Card title="Sales" icon="chart-line" href="#sales">
+    Purpose-built actions for lead allocation, scoring, and revenue operations.
+  </Card>
+  <Card title="Storage" icon="hard-drive" href="#storage">
+    Read, write, and search data in your Cargo models.
+  </Card>
+</CardGroup>
+
+### Integrations
+
+Connect to CRMs, enrichment providers, communication tools, and external platforms. [See all integrations →](#integrations)
+
+### Tools
+
+Call other Cargo tools from within your workflows to compose complex automations. [Learn more →](#tools)
+
+### Agents
+
+Invoke AI agents to handle complex, multi-step reasoning tasks autonomously. [Learn more →](#agents)
+
+---
+
+## Where actions are used
+
+| Context    | Description                                                                    |
+| :--------- | :----------------------------------------------------------------------------- |
+| **Tools**  | Build reusable workflows by connecting actions visually in the tool editor     |
+| **Plays**  | Automate data-driven workflows that trigger when model data changes            |
+| **Agents** | Give AI the ability to select and execute actions autonomously                 |
+| **MCP**    | Expose your Cargo tools to any MCP-compatible AI system (Claude, Cursor, etc.) |
+| **API**    | Call tools and actions programmatically from your own applications             |
+
+<Tip>
+  Learn more about leveraging actions in different contexts in [Using
+  Actions](/reference/actions/using-actions).
+</Tip>
+
+---
+
+## Logic
+
+Logic actions control how your workflow executes—branching based on conditions, looping through arrays, or running custom code.
+
+<Note>Logic actions are available in **Tools** and **Plays** only.</Note>
+
+| Action           | Purpose                                                  | Use when...                                            |
+| ---------------- | -------------------------------------------------------- | ------------------------------------------------------ |
+| **Balance**      | Distribute records across multiple routes proportionally | You need even workload distribution                    |
+| **Branch**       | Route execution based on a Yes/No condition              | You have a single condition to evaluate                |
+| **Delay**        | Pause execution for a specified time                     | You need to wait for external processes or rate limits |
+| **Filter**       | Stop execution if a condition is false                   | You want to gate workflow continuation                 |
+| **Group**        | Execute a sub-workflow for each item in an array         | You're processing multiple records                     |
+| **Human Review** | Pause for human approval via Slack                       | You need manual approval before proceeding             |
+| **Script**       | Run custom JavaScript code                               | You need custom logic or transformations               |
+| **Split**        | Randomly route to one of two branches                    | You're A/B testing or sampling                         |
+| **Switch**       | Route based on multiple conditions                       | You have several possible paths                        |
+| **Variables**    | Create and store values for later use                    | You need to maintain state across nodes                |
+
+<Warning>
+  **Script actions** execute arbitrary JavaScript. Use caution with external
+  inputs and always validate data before processing.
+</Warning>
+
+### Human Review
+
+The **Human Review** node pauses your workflow and sends a message to Slack, allowing a team member to approve, decline, or edit the content before the workflow continues. This is essential for workflows where you need human oversight before taking action—such as sending personalized outreach, updating CRM records, or executing high-stakes operations.
+
+**How it works:**
+
+1. When the workflow reaches the Human Review node, it posts a message to your configured Slack channel
+2. The message displays your content along with three buttons: **Approve**, **Decline**, and **Edit**
+3. The workflow pauses and waits for someone to respond
+4. Based on the response, the workflow continues down one of two branches
+
+**Configuration options:**
+
+| Property      | Description                                                                                                                         |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Connector** | Select your Slack integration. Make sure the integration is already added to the target channel.                                    |
+| **Channel**   | The Slack channel or user DM where the review request will be posted.                                                               |
+| **Title**     | The message title that appears as the username in Slack. Supports expressions like `{{input.company_name}} - Review`.               |
+| **Content**   | The content to be reviewed. This is displayed in a formatted block within the Slack message. Supports expressions for dynamic data. |
+| **Timeout**   | Maximum time to wait for a response before timing out. Defaults to **24 hours** if not specified.                                   |
+
+**Workflow branches:**
+
+The Human Review node has two output branches:
+
+- **Branch 1 (Approved):** The reviewer clicked "Approve" or "Edit" (with modifications). The workflow continues with the approved or edited content.
+- **Branch 2 (Declined):** The reviewer clicked "Decline". Use this branch to handle rejections—skip the action, log the decision, or trigger an alternative flow.
+
+<Note>
+  The **Edit** button allows reviewers to modify the content before approving.
+  The edited content is passed to the Approved branch, so your downstream nodes
+  receive the human-modified version.
+</Note>
+
+<Tip>
+  **Best practice:** Add meaningful context in your title and content fields.
+  Include relevant data like company name, contact info, or the action about to
+  be taken so reviewers can make informed decisions quickly.
+</Tip>
+
+---
+
+## AI
+
+AI actions leverage large language models to process, generate, and understand content.
+
+<Note>AI actions are available in **Tools** and **Plays** only.</Note>
+
+<CardGroup cols={2}>
+  <Card title="File search" icon="file-magnifying-glass">
+    Search through files and documents using semantic understanding. Find
+    relevant content based on meaning, not just keywords.
+  </Card>
+  <Card title="Model ask" icon="message-bot">
+    Query an LLM with a prompt. Generate text, analyze data, extract
+    information, or make decisions.
+  </Card>
+</CardGroup>
+
+<Tip>
+  AI actions consume credits based on token usage. Check the node picker for
+  current pricing per 1K tokens.
+</Tip>
+
+---
+
+## Sales
+
+Sales actions are purpose-built for revenue operations, replicating complex routing and scoring logic.
+
+<Note>Sales actions are available in **Tools** and **Plays** only.</Note>
+
+<CardGroup cols={2}>
+  <Card title="Allocate" icon="users-between-lines">
+    Distribute leads to team members based on rules. Supports round-robin,
+    territory-based, and capacity-weighted distribution.
+  </Card>
+  <Card title="Scoring" icon="chart-column">
+    Create scoring models to evaluate records. Determine lead priority and
+    potential value based on business rules.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Learn more about lead distribution in the [revenue organization
+  guide](/reference/revenue-organization/allocating-leads).
+</Tip>
+
+---
+
+## Storage
+
+Storage actions interact with data models in your Cargo workspace, enabling data persistence and retrieval.
+
+<Note>Storage actions are available in **Tools** and **Plays** only.</Note>
+
+| Action                  | Description                                              |
+| ----------------------- | -------------------------------------------------------- |
+| **Memory**              | Key/value store for temporary data during a workflow run |
+| **Model custom column** | Set custom column values on existing records             |
+| **Model record**        | Add new records to your data models                      |
+| **Model search**        | Query your models with filters and conditions            |
+| **Model vector search** | Perform semantic searches using vector-based queries     |
+
+<Tip>
+  Storage actions work with your Cargo data models. Make sure you've [set up
+  your models](/reference/resources/models/overview) before using these actions.
+</Tip>
+
+---
+
+## Integrations
+
+Integration actions connect Cargo to external platforms. Each integration provides a set of actions specific to that platform.
+
+### Common actions
+
+| Action        | Description                                          |
+| ------------- | ---------------------------------------------------- |
+| **Insert**    | Create new records in the connected system           |
+| **Find**      | Retrieve a specific record by ID                     |
+| **Match**     | Check if a record exists based on criteria           |
+| **Search**    | Find multiple records based on filters               |
+| **Update**    | Modify existing records                              |
+| **Upsert**    | Insert or update based on matching criteria          |
+| **Delete**    | Remove records from the connected system             |
+| **Associate** | Link two records together (e.g., contact to company) |
+
+### Available integrations
+
+<AccordionGroup>
+  <Accordion title="CRM" icon="address-book">
+    **HubSpot** — Full CRUD operations on contacts, companies, deals, tickets,
+    and custom objects. [HubSpot guide →](/integration/hubspot)
+
+    **Salesforce** — Manage leads, contacts, accounts, opportunities, and any
+    custom objects. [Salesforce guide →](/integration/salesforce)
+
+    **Attio** — Read and write to people, companies, and custom objects.
+    [Attio guide →](/integration/attio)
+
+  </Accordion>
+  <Accordion title="Communication" icon="comments">
+    **Slack** — Send messages, post to channels, request human approval.
+
+    **Email** — Send transactional emails and add contacts to sequences.
+
+  </Accordion>
+  <Accordion title="Enrichment" icon="magnifying-glass-plus">
+    **Apollo** — Contact and company data with buying intent signals.
+
+    **Clearbit** — Real-time company and person enrichment.
+
+    **FullEnrich** — Waterfall enrichment across multiple providers.
+    [FullEnrich guide →](/integration/fullenrich)
+
+    **ZoomInfo** — B2B contact and company intelligence.
+
+    **Lusha** — Direct dial and email data.
+
+  </Accordion>
+  <Accordion title="Data & Analytics" icon="database">
+    **Snowflake** — Query and write to your data warehouse.
+    [Snowflake guide →](/integration/snowflake)
+
+    **BigQuery** — Execute SQL and sync results.
+    [BigQuery guide →](/integration/bigquery)
+
+    **Redshift** — Connect to your Amazon data warehouse.
+    [Redshift guide →](/integration/redshift)
+
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Tools
+
+Call other Cargo tools from within your workflows. This lets you compose complex automations from smaller, reusable building blocks.
+
+**Use cases:**
+
+- **Modular design** — Build small, focused tools and combine them into larger workflows
+- **Reuse logic** — Share common operations (like enrichment or CRM writes) across multiple plays
+- **Abstraction** — Hide complexity behind a simple tool interface
+
+<Tip>
+  When a tool is used inside another tool or play, it runs as a sub-workflow
+  with its own inputs and outputs.
+</Tip>
+
+---
+
+## Agents
+
+Invoke AI agents from within your workflows. Agents can handle complex, multi-step tasks that require reasoning and decision-making.
+
+**Use cases:**
+
+- **Research tasks** — Have an agent gather and synthesize information
+- **Dynamic decisions** — Let the agent choose the best action based on context
+- **Complex workflows** — Delegate multi-step processes to an autonomous agent
+
+<Card
+  title="Learn more about agents"
+  icon="robot"
+  href="/reference/agents/overview"
+>
+  Understand how to build and configure AI agents.
+</Card>
+
+---
+
+## Browsing actions
+
+Cargo offers **120+ actions** across all categories. To explore them:
+
+1. Open the **Tool** or **Play** editor
+2. Click the **+** button to open the node picker
+3. Browse by category or search for specific capabilities
+4. Click any action to see its configuration options and documentation
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Using actions"
+    icon="layer-group"
+    href="/reference/actions/using-actions"
+  >
+    Learn how to leverage actions across tools, plays, agents, and APIs.
+  </Card>
+  <Card title="Build a tool" icon="hammer" href="/reference/tools/overview">
+    Create your first workflow using the visual tool editor.
+  </Card>
+  <Card title="Build a play" icon="play" href="/reference/plays/overview">
+    Automate data-driven workflows triggered by model changes.
+  </Card>
+  <Card title="Build an agent" icon="robot" href="/reference/agents/overview">
+    Give AI the power to select and execute actions autonomously.
+  </Card>
+</CardGroup>

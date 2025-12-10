@@ -1,0 +1,316 @@
+---
+title: "Using Actions"
+description: "How to leverage Cargo actions across tools, plays, agents, MCP servers, and the API"
+---
+
+Actions in Cargo are designed to be composable and reusable. Build them once in a tool, then deploy that tool anywhere—trigger it manually, run it in plays, let agents call it, expose it via MCP, or invoke it through the API.
+
+---
+
+## In Tools
+
+Tools are the primary way to compose actions into reusable workflows. The visual editor lets you connect actions together, define inputs/outputs, and test your logic.
+
+**Key capabilities:**
+
+- **Visual composition** — Drag-and-drop actions onto a canvas
+- **Data mapping** — Use expressions to pass data between actions
+- **Branching** — Route logic based on conditions
+- **Error handling** — Define fallback paths when actions fail
+- **Testing** — Run with sample inputs before publishing
+
+<Card title="Build a tool" icon="hammer" href="/reference/tools/overview">
+  Learn how to create workflows in the tool editor.
+</Card>
+
+---
+
+## In Plays
+
+Plays automatically execute when data in your models changes. They use the same actions as tools but are triggered by data events rather than manual invocation.
+
+**When to use plays vs tools:**
+
+| Plays                                      | Tools                                  |
+| :----------------------------------------- | :------------------------------------- |
+| Triggered by data changes                  | Triggered manually or by other systems |
+| Run automatically in the background        | Run on-demand                          |
+| Process records as they're created/updated | Process specific inputs you provide    |
+| Great for ongoing automation               | Great for reusable operations          |
+
+**Example:** A play that enriches new leads as they enter your CRM:
+
+1. **Trigger:** New record added to `Leads` model
+2. **Action:** Enrich company data from Clearbit
+3. **Action:** Score the lead based on firmographics
+4. **Action:** Route to sales rep via Allocate
+5. **Action:** Create task in HubSpot
+
+<Card title="Build a play" icon="play" href="/reference/plays/overview">
+  Learn how to automate data-driven workflows.
+</Card>
+
+---
+
+## In Agents
+
+Agents use AI to decide which actions to execute based on their goals. Instead of you defining the exact sequence, you give the agent access to tools (which are collections of actions), and it selects the right ones.
+
+**How agents use actions:**
+
+1. You define a goal in natural language
+2. You give the agent access to specific tools
+3. The agent analyzes the goal and available tools
+4. It selects and executes tools in the order needed
+5. It uses outputs to continue reasoning or complete the task
+
+<Tip>
+  Write clear tool descriptions so the agent knows when to use each one. The
+  description is how the agent decides which tool fits the current task.
+</Tip>
+
+<Card
+  title="Integrate tools with agents"
+  icon="robot"
+  href="/reference/agents/tools-and-actions"
+>
+  Learn how to give agents access to actions.
+</Card>
+
+---
+
+## Via MCP Server
+
+The **Model Context Protocol (MCP)** is an open standard for connecting AI models to external tools. Cargo can both consume MCP servers and expose your tools as an MCP server.
+
+### Consuming MCP servers
+
+Connect your Cargo agents to external MCP servers to access their tools:
+
+1. Open your Agent settings
+2. Add an MCP server URL
+3. Cargo auto-discovers available tools
+4. The agent can now use those tools alongside Cargo-native actions
+
+**Popular MCP servers:**
+
+- Notion — Search pages, create databases
+- HeyReach — LinkedIn outreach automation
+- GitHub — Repository and issue management
+
+### Exposing Cargo tools via MCP
+
+Turn your Cargo tools into an MCP server that any MCP-compatible AI can call:
+
+1. Publish your tools in Cargo
+2. Enable MCP server in your workspace settings
+3. Get your MCP server URL
+4. Connect from Claude Desktop, Cursor, or any MCP client
+
+<Note>
+  MCP enables your entire Cargo toolkit to be accessible from any AI assistant
+  that supports the protocol.
+</Note>
+
+---
+
+## Via API
+
+Call your Cargo tools programmatically from any application using the REST API.
+
+### Authentication
+
+All API endpoints require authentication with a workspace token. Include the token in the request header or as a query parameter.
+
+**Request header:**
+
+```json
+{
+  "Content-Type": "application/json",
+  "Authorization": "Basic YOUR_TOKEN"
+}
+```
+
+**Or query parameter:**
+
+```
+https://api.getcargo.io/v1/tools/{tool_uuid}/execute?token=YOUR_TOKEN
+```
+
+<Tip>
+  Generate a workspace token in your workspace settings under **Settings →
+  API**.
+</Tip>
+
+### Execute (single run)
+
+Execute a tool in real time. If execution exceeds 5 minutes, it will time out.
+
+```bash
+curl -X POST https://api.getcargo.io/v1/tools/{tool_uuid}/execute \
+  -H "Authorization: Basic YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "company_domain": "acme.com",
+    "contact_email": "jane@acme.com"
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "status": "success",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "finishedAt": "2024-01-15T10:30:05Z",
+  "input": {
+    "company_domain": "acme.com",
+    "contact_email": "jane@acme.com"
+  },
+  "output": {
+    "company_name": "Acme Inc",
+    "employee_count": 250
+  }
+}
+```
+
+### Create a batch
+
+Process multiple records asynchronously. Optionally provide a webhook URL to receive results when the batch completes.
+
+```bash
+curl -X POST https://api.getcargo.io/v1/tools/{tool_uuid}/batches \
+  -H "Authorization: Basic YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "webhookUrl": "https://your-webhook.url",
+    "data": [
+      { "company_domain": "acme.com" },
+      { "company_domain": "example.com" }
+    ]
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "batch": {
+    "uuid": "batch_abc123",
+    "status": "running"
+  }
+}
+```
+
+### Retrieve batch results
+
+```bash
+curl -X GET https://api.getcargo.io/v1/tools/{tool_uuid}/batches/{batch_uuid} \
+  -H "Authorization: Basic YOUR_TOKEN"
+```
+
+**Response:**
+
+```json
+{
+  "batch": {
+    "uuid": "batch_abc123",
+    "status": "success"
+  },
+  "results": [
+    {
+      "status": "success",
+      "createdAt": "2024-01-15T10:30:00Z",
+      "finishedAt": "2024-01-15T10:30:05Z",
+      "input": { "company_domain": "acme.com" },
+      "output": { "company_name": "Acme Inc" }
+    }
+  ]
+}
+```
+
+### Cancel a batch
+
+```bash
+curl -X POST https://api.getcargo.io/v1/tools/{tool_uuid}/batches/{batch_uuid}/cancel \
+  -H "Authorization: Basic YOUR_TOKEN"
+```
+
+### Error codes
+
+| Code    | Description                             |
+| :------ | :-------------------------------------- |
+| **400** | Invalid request body or parameters      |
+| **404** | Tool or batch not found                 |
+| **400** | Batch already finished (cancel request) |
+
+---
+
+## Embedded in CRM
+
+Surface your Cargo tools directly inside your CRM using the Cargo Chrome extension. Sales reps can run tools without leaving HubSpot or Salesforce.
+
+**How it works:**
+
+1. Install the Cargo Chrome extension
+2. Configure which tools to surface
+3. When viewing a contact or company in your CRM, click the Cargo icon
+4. Run tools with pre-filled context from the current record
+5. Results sync back to your CRM automatically
+
+**Example:** A sales rep viewing a company in HubSpot can:
+
+- Click the Cargo button
+- Run "Enrich & Score Lead"
+- See results in a sidebar
+- Data automatically updates the HubSpot record
+
+<Card
+  title="Embed in CRM"
+  icon="puzzle-piece"
+  href="/reference/tools/embed-in-crm"
+>
+  Learn how to surface tools in your CRM.
+</Card>
+
+---
+
+## Choosing the right approach
+
+| If you need to...                         | Use...                |
+| :---------------------------------------- | :-------------------- |
+| Run a workflow manually                   | Tool (manual trigger) |
+| Automate based on data changes            | Play                  |
+| Let AI decide what to do                  | Agent                 |
+| Connect to AI assistants (Claude, Cursor) | MCP Server            |
+| Integrate with custom applications        | API                   |
+| Give sales reps quick access from CRM     | Embedded              |
+
+---
+
+## Combining approaches
+
+These deployment options aren't mutually exclusive. A common pattern:
+
+1. **Build** actions into tools in the tool editor
+2. **Test** by triggering manually
+3. **Automate** by using the tool in a play
+4. **Enhance** by giving agents access to the tool
+5. **Extend** by exposing via MCP or API
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                      Your Cargo Tool                         │
+│                   "Enrich & Route Lead"                      │
+└──────────────────────────────────────────────────────────────┘
+         │              │             │              │
+         ▼              ▼             ▼              ▼
+   ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
+   │   Play   │   │  Agent   │   │   MCP    │   │   API    │
+   │          │   │          │   │          │   │          │
+   │ "On new  │   │ "Research│   │ Claude   │   │ Custom   │
+   │  lead"   │   │  leads"  │   │ Desktop  │   │  app     │
+   └──────────┘   └──────────┘   └──────────┘   └──────────┘
+```
+
+This gives you maximum flexibility—build once, deploy everywhere.

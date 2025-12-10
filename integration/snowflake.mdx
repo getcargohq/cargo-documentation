@@ -1,0 +1,95 @@
+---
+title: "Snowflake"
+description: "This page outlines how to use the Snowflake integration to create and manage your data warehouse in Cargo."
+---
+
+Snowflake is a cloud-native data platform that provides fast, scalable data warehousing and analytics. Cargo's native integration with Snowflake allows you to use it as your system of records—powering data models, plays, and automated workflows.
+
+## How to set up Snowflake
+
+### Connecting your own Snowflake
+
+To connect your existing Snowflake instance, you'll need:
+
+- An active Snowflake account
+- A dedicated database, warehouse, and user for Cargo
+- Proper role permissions configured
+
+### Connection details
+
+To set up the connection, provide the following details when creating the connector:
+
+| Field         | Description                                                |
+| ------------- | ---------------------------------------------------------- |
+| **Account**   | Your Snowflake account identifier                          |
+| **Database**  | The database created for Cargo (e.g., `cargo_db`)          |
+| **Warehouse** | The warehouse for Cargo operations (e.g., `cargo_wh`)      |
+| **Role**      | The role with appropriate permissions (e.g., `cargo_role`) |
+| **User**      | The Cargo service user (e.g., `cargo_user`)                |
+| **Password**  | The user's password                                        |
+
+<Warning>
+  For Snowflake accounts hosted on **GCP** or **Azure**, you'll need to provide
+  an RSA private key for authentication. See the [setup
+  guide](/reference/resources/warehouse/snowflake#step-4-set-up-rsa-key-authentication)
+  for details.
+</Warning>
+
+---
+
+## Snowflake actions
+
+Once connected, you can use Snowflake in your workflows through.
+
+### Run SQL query
+
+Execute custom SQL queries against your Snowflake warehouse.
+
+**Use cases**
+
+- **Data extraction** – Pull specific data from your warehouse for enrichment or processing
+- **Advanced analytics** – Run complex queries to power decision-making in workflows
+- **Data validation** – Check data conditions before triggering actions
+
+### Write to table
+
+Insert or update data in your Snowflake tables.
+
+**Use cases**
+
+- **Data sync** – Keep your warehouse updated with enriched or processed data
+- **Audit logging** – Record workflow executions and outcomes
+- **Data aggregation** – Store computed results for reporting
+
+---
+
+## Snowflake data models
+
+Cargo allows you to create data models on top of your Snowflake data that can be used to trigger Plays and power workflows.
+
+### Creating Snowflake data models
+
+| Field      | Description                                                            |
+| ---------- | ---------------------------------------------------------------------- |
+| **Name**   | Choose a descriptive name for your model (required)                    |
+| **Slug**   | Set a unique identifier that cannot be changed once created (required) |
+| **Source** | Select the Snowflake table or view to model                            |
+
+---
+
+## Network configuration
+
+If you're using Snowflake's Allowed IPs network policy, add these Cargo IP addresses to your whitelist:
+
+- `3.251.34.134`
+- `54.220.135.99`
+- `79.125.105.52`
+
+---
+
+## Security
+
+- All Snowflake connections are encrypted using SSL/TLS
+- Credentials are securely stored and encrypted at rest
+- Cargo supports RSA key-pair authentication for enhanced security
+- Cargo never overwrites existing tables—it always creates its own

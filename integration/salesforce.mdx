@@ -1,0 +1,156 @@
+---
+title: "Salesforce"
+description: "This page outlines how to use the Salesforce integration to pull and manage CRM data in Cargo."
+---
+
+Salesforce is the world's leading enterprise CRM platform, powering sales, service, and marketing operations for businesses of all sizes. Cargo's native integration with Salesforce allows you to both pull data from the CRM as part of data models, and write or delete data from all CRM objects to maintain it.
+
+## How to set up Salesforce
+
+Salesforce uses OAuth to establish the sync with Cargo. During connection, you'll be asked to authorize Cargo.
+
+Once redirected and the connector is created, you can:
+
+<CardGroup cols={2}>
+  <Card title="Set up a Salesforce data model" icon="database">
+    Create data models from your Salesforce objects to trigger Plays and power
+    model search actions.
+  </Card>
+  <Card title="Use Salesforce in workflows" icon="diagram-project">
+    Choose **Salesforce** from the node catalog within a **Play**, **Tool**, or
+    **Agent**.
+  </Card>
+</CardGroup>
+
+---
+
+## Salesforce actions
+
+<Tip>
+  All Salesforce actions support Leads, Contacts, Accounts, Opportunities,
+  Cases, and any custom objects you've created in your Salesforce org.
+</Tip>
+
+### Insert record
+
+Insert a new record into Salesforce.
+
+**Use cases**
+
+- **Lead capture** – Create new leads from various sources and channels
+- **Contact creation** – Add new contacts from forms, events, or imports
+- **Opportunity creation** – Create new opportunities to track deals through your pipeline
+
+### Find record
+
+Retrieve a single record from Salesforce by its unique ID.
+
+**Use cases**
+
+- **Record lookup** – Get specific record details for processing workflows
+- **Data validation** – Verify record existence before performing operations
+
+### Match record
+
+Check if a record exists in Salesforce based on matching criteria.
+
+**Use cases**
+
+- **Duplicate prevention** – Avoid creating duplicate records
+- **Smart routing** – Route records based on existing data
+
+<Info>
+  Use **Match record** before **Insert record** to implement an upsert pattern
+  for single records.
+</Info>
+
+### Search records
+
+Retrieve multiple records from Salesforce using SOQL-based search criteria.
+
+**Use cases**
+
+- **Advanced filtering** – Find records meeting specific criteria
+- **Bulk operations** – Retrieve multiple records for processing inside a group node
+- **Cross-object queries** – Search across related objects using Salesforce relationships
+
+### Update record
+
+Update an existing record in Salesforce.
+
+**Use cases**
+
+- **Data enrichment** – Keep record information current and accurate
+- **Lifecycle management** – Update lead status, opportunity stages, and case statuses
+- **Field updates** – Modify any standard or custom field values
+
+### Upsert records
+
+Upsert multiple records into Salesforce (insert or update based on external ID or matching criteria).
+
+**Use cases**
+
+- **Bulk data operations** – Insert records in bulk while avoiding duplicates
+- **Data synchronization** – Keep external systems synchronized with Salesforce
+- **Migration workflows** – Import data from other systems using external IDs
+
+<Warning>
+  Upsert operations in Salesforce require an external ID field for matching.
+  Ensure your matching criteria is unique to avoid unintended updates.
+</Warning>
+
+### Delete record
+
+Delete a record from Salesforce.
+
+**Use cases**
+
+- **Data cleanup** – Remove outdated or incorrect records programmatically or in batches
+
+---
+
+## Salesforce data models
+
+Cargo allows you to create data models on top of your Salesforce CRM data that can be used to trigger Plays and power model search actions.
+
+### Creating Salesforce data models
+
+| Field           | Description                                                                                                              |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Name**        | Choose a descriptive name for your model (required)                                                                      |
+| **Slug**        | Set a unique identifier that cannot be changed once created (required)                                                   |
+| **Object Type** | Select the Salesforce object type you want to model (Leads, Contacts, Accounts, Opportunities, Cases, or custom objects) |
+
+### Object types available
+
+<AccordionGroup>
+  <Accordion title="Lead models" icon="user-plus">
+    **Use cases** - Handle inbound and outbound lead information - Track lead
+    sources, campaigns, and conversion paths - Manage lead qualification and
+    scoring workflows
+  </Accordion>
+  <Accordion title="Contact models" icon="user">
+    **Use cases** - Manage contact records associated with accounts - Track
+    individual engagement and communication history - Handle multi-contact
+    relationships within accounts
+  </Accordion>
+  <Accordion title="Account models" icon="building">
+    **Use cases** - Manage company and organization records - Track account
+    hierarchies and parent-child relationships - Monitor account health scores
+    and engagement metrics
+  </Accordion>
+  <Accordion title="Opportunity models" icon="handshake">
+    **Use cases** - Track deals through pipeline stages - Monitor forecasting,
+    close dates, and deal amounts - Analyze win rates and sales cycle metrics
+  </Accordion>
+  <Accordion title="Case models" icon="ticket">
+    **Use cases** - Track customer support cases and issues - Monitor case
+    resolution times and escalation paths - Analyze support trends and agent
+    performance
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  You can also model any **custom objects** you've created in Salesforce, giving
+  you full flexibility to work with your unique data structures.
+</Tip>

@@ -15,14 +15,15 @@ Capabilities are native features of the underlying LLM that extend what your Age
 
 Memory allows Agents to retain and recall information across interactions, enabling personalization and continuity.
 
-| Memory type | Scope | Use case |
-| :---------- | :---- | :------- |
-| **User Memory** | Persists per end-user | Stores preferences, past interactions, and personal context for tailored responses |
+| Memory type          | Scope                    | Use case                                                                            |
+| :------------------- | :----------------------- | :---------------------------------------------------------------------------------- |
+| **User Memory**      | Persists per end-user    | Stores preferences, past interactions, and personal context for tailored responses  |
 | **Workspace Memory** | Shared across all Agents | Organizational knowledge like company policies, ICP definitions, or team guidelines |
-| **Agent Memory** | Current execution only | Short-term context including previous steps and tool outputs within a single run |
+| **Agent Memory**     | Current execution only   | Short-term context including previous steps and tool outputs within a single run    |
 
 <Tip>
-Use Workspace Memory for information that all Agents should know—like your ICP criteria or product positioning.
+  Use Workspace Memory for information that all Agents should know—like your ICP
+  criteria or product positioning.
 </Tip>
 
 ---
@@ -32,11 +33,13 @@ Use Workspace Memory for information that all Agents should know—like your ICP
 Gives Agents access to real-time information from the internet.
 
 **When to enable:**
+
 - Account research requiring current market data
 - Validating company information that may have changed
 - Finding recent news, funding announcements, or leadership changes
 
 **Example query:**
+
 > "What is the latest funding round for Acme Corp?"
 
 ---
@@ -46,12 +49,13 @@ Gives Agents access to real-time information from the internet.
 Enables Agents to generate structured, shareable digital assets.
 
 **Supported outputs:**
+
 - Spreadsheets and CSV files
 - Text documents
 - Formatted reports
 
 **Example use case:**
-A user asks: _"Give me a list of CROs in San Francisco."_ 
+A user asks: _"Give me a list of CROs in San Francisco."_
 
 The Agent researches, compiles the data, and delivers a formatted spreadsheet—ready to download or share.
 
@@ -62,17 +66,20 @@ The Agent researches, compiles the data, and delivers a formatted spreadsheet—
 A proactive assistant that recommends the next best step after completing a task.
 
 **How it works:**
+
 1. Agent completes the requested task
 2. Analyzes what logical next steps might help the user
 3. Offers actionable suggestions
 
 **Example:**
 After retrieving a list of contacts, the Agent suggests:
+
 > "Would you like me to add these contacts to Sequence XX?"
 > "Should I enrich these contacts with email addresses?"
 
 <Note>
-Suggested Actions keep workflows moving and help users discover capabilities they might not have thought to request.
+  Suggested Actions keep workflows moving and help users discover capabilities
+  they might not have thought to request.
 </Note>
 
 ---
@@ -81,13 +88,14 @@ Suggested Actions keep workflows moving and help users discover capabilities the
 
 Toggle capabilities on or off based on your Agent's purpose:
 
-| Agent type | Recommended capabilities |
-| :--------- | :----------------------- |
-| **Research Agent** | Memory, Web Search, Canvas |
-| **Qualification Agent** | Memory, Suggested Actions |
-| **CRM Updater** | Memory only |
-| **Conversational Assistant** | All capabilities |
+| Agent type                   | Recommended capabilities   |
+| :--------------------------- | :------------------------- |
+| **Research Agent**           | Memory, Web Search, Canvas |
+| **Qualification Agent**      | Memory, Suggested Actions  |
+| **CRM Updater**              | Memory only                |
+| **Conversational Assistant** | All capabilities           |
 
 <Warning>
-More capabilities = more complexity. Only enable what your Agent actually needs to avoid unpredictable behavior.
+  More capabilities = more complexity. Only enable what your Agent actually
+  needs to avoid unpredictable behavior.
 </Warning>

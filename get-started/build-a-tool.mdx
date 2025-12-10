@@ -21,3 +21,107 @@ Tools can be used for a variety of GTM tasks, including:
 - **Custom data enrichment:** Pull key company metrics (like 2024 revenue) from multiple sources automatically.
 - **Stakeholder discovery:** Find and surface the right contacts at target accounts.
 - **Outreach automation:** Send emails or trigger other communications as part of a larger workflow.
+
+---
+
+## Step-by-step: Build your first tool
+
+Follow these steps to create a simple lead enrichment tool that fetches company data and updates your CRM.
+
+### Step 1: Create a new tool
+
+1. Navigate to **Tools** in your Cargo workspace sidebar
+2. Click **+ New Tool** in the top right corner
+3. Give your tool a descriptive name (e.g., "Company Enrichment Tool")
+4. You'll be taken to the tool editor canvas
+
+### Step 2: Define your inputs
+
+Every tool needs input data to work with. Click on the **Input** node to configure:
+
+1. Add a field for the data you'll receive (e.g., `company_domain` of type `string`)
+2. Optionally mark fields as required
+3. Add a description to help others understand what data to provide
+
+<Tip>
+Use clear, descriptive field names. Future you (and your teammates) will thank you!
+</Tip>
+
+### Step 3: Add your first node
+
+Click the **+** button to add a node. For this example, we'll use an **Enrich** node:
+
+1. Select **Enrich** → **Company** from the node picker
+2. Connect the Input node's output to the Enrich node's input
+3. Map your `company_domain` input to the enrichment node's domain field
+
+### Step 4: Add logic and transformations
+
+Now add downstream actions based on the enriched data:
+
+1. Add a **Branch** node to check if enrichment was successful
+2. On the "Yes" path, add a **Write** node to update your CRM
+3. On the "No" path, add error handling (e.g., log the failure or send a notification)
+
+### Step 5: Configure outputs
+
+Define what your tool returns:
+
+1. Click on the **Output** node
+2. Map the fields you want to return (e.g., company name, employee count, funding stage)
+3. These outputs can be used by plays, agents, or external systems
+
+### Step 6: Test your tool
+
+Before publishing, test your tool:
+
+1. Click the **Test** button in the top toolbar
+2. Enter sample input data
+3. Review the execution flow and check each node's output
+4. Fix any errors that appear
+
+### Step 7: Publish
+
+Once everything works:
+
+1. Click **Publish** in the top right corner
+2. Your tool is now available in plays, agents, and MCP servers
+3. Share the tool with your team
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Start simple" icon="seedling">
+    Begin with a minimal tool and add complexity incrementally. This makes debugging easier.
+  </Card>
+  <Card title="Name nodes clearly" icon="tag">
+    Rename nodes to describe their purpose (e.g., "Check if enterprise" instead of "Branch 1").
+  </Card>
+  <Card title="Handle errors gracefully" icon="shield-check">
+    Use Branch nodes to handle failure cases—don't let errors silently fail.
+  </Card>
+  <Card title="Document your inputs" icon="file-lines">
+    Add descriptions to input fields so users know exactly what data to provide.
+  </Card>
+</CardGroup>
+
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Explore actions" icon="bolt" href="/reference/actions/overview">
+    Learn about all the node types available in the tool editor.
+  </Card>
+  <Card title="Launch your tool" icon="rocket" href="/reference/tools/launching-a-tool">
+    Discover the different ways to trigger your tools.
+  </Card>
+  <Card title="Monitor performance" icon="chart-line" href="/reference/tools/monitoring-a-tool">
+    Track executions, debug failures, and optimize your tools.
+  </Card>
+  <Card title="Embed in CRM" icon="window-restore" href="/reference/tools/embed-in-crm">
+    Trigger tools directly from Salesforce with custom buttons.
+  </Card>
+</CardGroup>

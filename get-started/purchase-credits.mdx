@@ -15,9 +15,11 @@ You decide how many credits you need based on your business requirements. All pl
 
 **Credits are consumed for:**
 
-- **Enrichment tasks** - Researching companies, finding contacts, etc.
-- **Orchestration workflows** - Running Plays, Tools and Agents
-- **Storage actions** - Storing and retrieving data in Cargo data models
+| Action                  | Cost                       | Description                                                    |
+| ----------------------- | -------------------------- | -------------------------------------------------------------- |
+| **Integration tasks**   | Listed per integration     | Researching companies, finding contacts, data enrichment, etc. |
+| **Orchestration steps** | 1 credit per 100 steps     | Running Plays, Tools and Agents                                |
+| **Storage records**     | 1 credit per 1,000 upserts | Storing and retrieving data in Cargo data models               |
 
 ## Credit management
 
@@ -29,14 +31,23 @@ Credits reset at the end of each term (monthly or annually) for plan-based works
 
 1. **Upgrade your plan** - Move to a different plan tier with more included credits. This requires speaking to someone in the Cargo team
 2. **Enable auto-topup** - Automatically purchase additional credits when needed (slightly more expensive than plan credits)
-3. \*\*Manage the payment method \*\*- Add a payment card or via a bank transfer
+3. **Manage the payment method **- Add a payment card or via a bank transfer
 
 ### What happens when credits run out
 
 When your credit balance reaches zero:
 
-- **Enrichment actions are blocked** - Company research, contact finding, and data gathering will be paused
+- **Integration actions are blocked** - Company research, contact finding, and data gathering will be paused
 - **Orchestration and storage actions continue** - Plays and automated workflows keep running to avoid disrupting operations
-- **Overage fees apply** - Continued orchestration and storage actions incur additional charges which will be invoiced automatically once incurred.
+
+### Credits overage
+
+<Note>Credits overage is only available for Enterprise customers.</Note>
+
+Enterprise customers can enable credits overage to ensure uninterrupted operations. When overage is enabled:
+
+- **Continued usage beyond allocation** - Your workflows continue running even after your credit balance reaches zero
+- **Automatic invoicing** - Overage charges are tracked and invoiced automatically every month
+- **Same credit rates** - Overage credits are charged at the same rates as your plan credits
 
 For more details on calculating the right credit requirements for your needs, visit the [Cargo pricing page](https://www.getcargo.ai/pricing).

@@ -1,0 +1,114 @@
+---
+title: "Slack"
+description: "This page outlines how to use the Slack integration to send messages and notifications from Cargo."
+---
+
+Slack is a leading business communication platform that brings teams together with real-time messaging, channels, and integrations. Cargo's native integration with Slack allows you to send messages, notifications, and alerts directly to channels or users as part of your workflows.
+
+## How to set up Slack
+
+Slack uses OAuth to establish the connection with Cargo. During connection, you'll be asked to authorize Cargo to access your Slack workspace.
+
+Once redirected and the connector is created, you can:
+
+<CardGroup cols={2}>
+  <Card title="Send messages from workflows" icon="message">
+    Send notifications, alerts, and updates to Slack channels or users directly
+    from your **Plays**, **Tools**, or **Agents**.
+  </Card>
+  <Card title="Keep teams informed" icon="bell">
+    Automate real-time notifications for important events like new leads, deal
+    updates, or workflow completions.
+  </Card>
+</CardGroup>
+
+---
+
+## Slack actions
+
+### Send message to channel
+
+Post a message to a public or private Slack channel.
+
+**Use cases**
+
+- **Team notifications** – Alert your sales team when a high-value lead enters the pipeline
+- **Deal updates** – Post to a deals channel when opportunities progress through stages
+- **Workflow alerts** – Notify teams when automated workflows complete or require attention
+
+<Tip>
+  Use Slack's [Block Kit](https://api.slack.com/block-kit) formatting to create
+  rich, interactive messages with buttons, sections, and more.
+</Tip>
+
+### Send direct message
+
+Send a private message directly to a Slack user.
+
+**Use cases**
+
+- **Personal notifications** – Notify a specific rep when they're assigned a new lead
+- **Task reminders** – Send individual reminders for follow-ups or pending actions
+- **Escalations** – Alert managers directly when deals need attention
+
+### Post threaded reply
+
+Reply to an existing message in a thread.
+
+**Use cases**
+
+- **Conversation continuity** – Keep related updates organized in threads
+- **Status updates** – Add progress updates to existing notification threads
+- **Collaborative workflows** – Build context over time within a single thread
+
+<Info>
+  To post a threaded reply, you'll need the `thread_ts` (timestamp) of the
+  parent message. This can be captured from a previous **Send message** action.
+</Info>
+
+---
+
+## Message formatting
+
+Slack supports rich text formatting using markdown-like syntax:
+
+| Format            | Syntax          | Example                     |
+| ----------------- | --------------- | --------------------------- |
+| **Bold**          | `*text*`        | _important_                 |
+| _Italic_          | `_text_`        | _emphasis_                  |
+| ~~Strikethrough~~ | `~text~`        | ~removed~                   |
+| `Code`            | `` `text` ``    | `variable`                  |
+| Link              | `<url\|text>`   | `<https://cargo.io\|Cargo>` |
+| User mention      | `<@USER_ID>`    | `<@U123ABC>`                |
+| Channel mention   | `<#CHANNEL_ID>` | `<#C123ABC>`                |
+
+<Warning>
+  Ensure the Cargo app has been invited to private channels before attempting to
+  post messages. The bot cannot access channels it hasn't been added to.
+</Warning>
+
+---
+
+## Common patterns
+
+### Lead assignment notifications
+
+Notify reps instantly when new leads are assigned to them:
+
+1. **Trigger** – Play triggers on lead assignment
+2. **Enrich** – Gather lead details and context
+3. **Send DM** – Notify the assigned rep via direct message with lead summary
+
+### Deal stage alerts
+
+Keep your team informed about pipeline movement:
+
+1. **Trigger** – Play triggers on opportunity stage change
+2. **Condition** – Check if deal moved to a key stage (e.g., "Negotiation")
+3. **Post to channel** – Send a formatted message to your deals channel
+
+<Tip>
+  Combine Slack notifications with other actions to create powerful workflows.
+  For example, enrich a lead, update your CRM, and notify your team—all in a
+  single Play.
+</Tip>

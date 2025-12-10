@@ -1,270 +1,589 @@
 ---
 title: "Expression cheat sheet"
 description: "Essential JavaScript methods for using in your Cargo expressions"
+icon: "code"
 ---
 
 Cargo uses JavaScript expressions to manipulate data within workflows. This cheat sheet covers the most commonly used methods for working with strings, arrays, and data transformations.
 
+<Tip>
+  All expressions must be wrapped in double curly brackets: `{{ expression }}`
+</Tip>
+
+## Quick reference
+
+<CardGroup cols={3}>
+  <Card title="Strings" icon="font" href="#string-methods">
+    `split` · `toLowerCase` · `toUpperCase` · `trim` · `replace`
+  </Card>
+  <Card title="Arrays" icon="list" href="#array-methods">
+    `length` · `includes` · `slice` · `filter` · `join` · `map` · `find` ·
+    `concat`
+  </Card>
+  <Card title="Utilities" icon="wrench" href="#common-patterns">
+    Dates · Math · Conditionals · Null checking
+  </Card>
+</CardGroup>
+
+---
+
 ## String methods
 
-### Split
+<AccordionGroup>
 
+<Accordion title="split" icon="scissors">
 Split a string by a delimiter to extract specific parts.
 
 **Example**: Extract domain from email address
 
-- Input: `nodes.start.email = "john.smith@acme-corp.com"`
-- Output: `"acme-corp.com"`
+| Input  | `nodes.start.email = "john.smith@acme-corp.com"` |
+| ------ | ------------------------------------------------ |
+| Output | `"acme-corp.com"`                                |
 
 ```javascript
-// Extract domain from email
-{{ nodes.start.email.split('@')[1] }}
+{
+  {
+    nodes.start.email.split("@")[1];
+  }
+}
 ```
 
-### toLowerCase
+</Accordion>
 
+<Accordion title="toLowerCase" icon="arrow-down">
 Convert a string to lowercase for consistent formatting.
 
 **Example**: Standardize company name
 
-- Input: `nodes.start.companyName = "ACME Corporation"`
-- Output: `"acme corporation"`
+| Input  | `nodes.start.companyName = "ACME Corporation"` |
+| ------ | ---------------------------------------------- |
+| Output | `"acme corporation"`                           |
 
 ```javascript
-// Standardize company name
-{{ nodes.start.companyName.toLowerCase() }}
+{
+  {
+    nodes.start.companyName.toLowerCase();
+  }
+}
 ```
 
-### toUpperCase
+</Accordion>
 
+<Accordion title="toUpperCase" icon="arrow-up">
 Convert a string to uppercase.
 
 **Example**: Format country code
 
-- Input: `nodes.start.country = "us"`
-- Output: `"US"`
+| Input  | `nodes.start.country = "us"` |
+| ------ | ---------------------------- |
+| Output | `"US"`                       |
 
 ```javascript
-// Format country codes
-{{ nodes.start.country.toUpperCase() }}
+{
+  {
+    nodes.start.country.toUpperCase();
+  }
+}
 ```
+
+</Accordion>
+
+<Accordion title="trim" icon="eraser">
+Remove whitespace from both ends of a string.
+
+**Example**: Clean user input
+
+| Input  | `nodes.start.name = "  John Smith  "` |
+| ------ | ------------------------------------- |
+| Output | `"John Smith"`                        |
+
+```javascript
+{
+  {
+    nodes.start.name.trim();
+  }
+}
+```
+
+</Accordion>
+
+<Accordion title="replace" icon="repeat">
+Replace part of a string with another value.
+
+**Example**: Anonymize email domain
+
+| Input  | `nodes.start.email = "john@competitor.com"` |
+| ------ | ------------------------------------------- |
+| Output | `"john@[redacted].com"`                     |
+
+```javascript
+{
+  {
+    nodes.start.email.replace("competitor", "[redacted]");
+  }
+}
+```
+
+<Info>
+  Use `replaceAll()` to replace all occurrences, not just the first one.
+</Info>
+</Accordion>
+
+</AccordionGroup>
+
+---
 
 ## Array methods
 
-### length
+<AccordionGroup>
 
-Count how many items are present in an array
+<Accordion title="length" icon="ruler-horizontal">
+Count how many items are present in an array.
 
 **Example**: Count the number of stakeholders found
 
-- Input: `nodes.array = ["John Smith", "Sarah Johnson", "Mike Davis", "Lisa Chen"]`
-- Output: `4`
+| Input  | `nodes.array = ["John Smith", "Sarah Johnson", "Mike Davis", "Lisa Chen"]` |
+| ------ | -------------------------------------------------------------------------- |
+| Output | `4`                                                                        |
 
 ```javascript
-// Count the number of items in the array
-{{ nodes.array.length }}
+{
+  {
+    nodes.array.length;
+  }
+}
 ```
 
-### includes
+</Accordion>
 
+<Accordion title="includes" icon="magnifying-glass">
 Check if a value exists in an array.
 
 **Example**: Check if the product is in an allowed list
 
-- Input: `nodes.start.product = "posters"`
-- Allowed products: `["posters", "calendars", "books", "cards"]`
-- Output: `true`
+| Input   | `nodes.start.product = "posters"`            |
+| ------- | -------------------------------------------- |
+| Allowed | `["posters", "calendars", "books", "cards"]` |
+| Output  | `true`                                       |
 
 ```javascript
-// Check if product is in allowed list
-{{ ['posters', 'calendars', 'books', 'cards'].includes(nodes.start.product) }}
+{
+  {
+    ["posters", "calendars", "books", "cards"].includes(nodes.start.product);
+  }
+}
 ```
 
-### slice
+</Accordion>
 
+<Accordion title="slice" icon="scissors">
 Extract a portion of an array.
 
 **Example**: Limit stakeholders to first 5
 
-- Input: `nodes.apollo.stakeholders = "John", "Sarah", "Mike", "Lisa", "David", "Emma", "Tom"]`
-- Output: `["John", "Sarah", "Mike", "Lisa", "David"]`
+| Input  | `nodes.apollo.stakeholders = ["John", "Sarah", "Mike", "Lisa", "David", "Emma", "Tom"]` |
+| ------ | --------------------------------------------------------------------------------------- |
+| Output | `["John", "Sarah", "Mike", "Lisa", "David"]`                                            |
 
 ```javascript
-// Get first 5 stakeholders from search results
-{{ nodes.apollo.stakeholders.slice(0, 5) }}
+{
+  {
+    nodes.apollo.stakeholders.slice(0, 5);
+  }
+}
 ```
 
-### filter
+<Info>
+  `slice(start, end)` extracts elements from index `start` up to (but not including) `end`.
+</Info>
+</Accordion>
 
+<Accordion title="filter" icon="filter">
 Create a new array based on a condition.
 
 **Example**: Filter case study URLs
 
-- Input: `nodes.start.urls = ["https://example.com/case-studies/tech", "https://example.com/blog", "https://example.com/case-studies/finance"]`
-- Output: `["https://example.com/case-studies/tech", "https://example.com/case-studies/finance"]`
+| Input  | `["https://example.com/case-studies/tech", "https://example.com/blog", "https://example.com/case-studies/finance"]` |
+| ------ | ------------------------------------------------------------------------------------------------------------------- |
+| Output | `["https://example.com/case-studies/tech", "https://example.com/case-studies/finance"]`                             |
 
 ```javascript
-// Keep only URLs containing case studies
-{{ nodes.start.urls.filter(url => url.includes('/case-studies/')) }}
+{
+  {
+    nodes.start.urls.filter((url) => url.includes("/case-studies/"));
+  }
+}
 ```
 
-### join
+</Accordion>
 
+<Accordion title="join" icon="link">
 Convert an array to a string with a delimiter.
 
 **Example**: Convert countries to comma-separated string
 
-- Input: `nodes.start.countries = ["US", "CA", "UK", "DE"]`
-- Output: `"US, CA, UK, DE"`
+| Input  | `nodes.start.countries = ["US", "CA", "UK", "DE"]` |
+| ------ | -------------------------------------------------- |
+| Output | `"US, CA, UK, DE"`                                 |
 
 ```javascript
-// Convert countries array to comma-separated string
-{{ nodes.start.countries.join(', ') }}
+{
+  {
+    nodes.start.countries.join(", ");
+  }
+}
 ```
 
-### map
+</Accordion>
 
+<Accordion title="map" icon="arrows-rotate">
 Transform each element in an array.
 
 **Example**: Add company data to stakeholders
 
-- Input: `nodes.apollo.stakeholders = [`\
-  `{"name": "John", "title": "CEO"}, `\
-  `{"name": "Sarah", "title": "CTO"}`\
-  `]`
-- Company data: `nodes.start.domain = "acme.com", nodes.hubspot.companyId = "12345"`
-- Output: `[`\
-  `{"name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345"}, `\
-  `{"name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345"}`\
-  `]`
+<Tabs>
+  <Tab title="Input">
+```json
+// nodes.apollo.stakeholders
+[
+  { "name": "John", "title": "CEO" },
+  { "name": "Sarah", "title": "CTO" }
+]
+
+// nodes.start.domain = "acme.com"
+// nodes.hubspot.companyId = "12345"
+
+````
+  </Tab>
+  <Tab title="Output">
+```json
+[
+  { "name": "John", "title": "CEO", "domain": "acme.com", "hubspotId": "12345" },
+  { "name": "Sarah", "title": "CTO", "domain": "acme.com", "hubspotId": "12345" }
+]
+````
+
+  </Tab>
+</Tabs>
 
 ```javascript
-// Add domain and HubSpot ID to each stakeholder
-{{
-  nodes.apollo.stakeholders.map(stakeholder => ({
-    ...stakeholder,
-    domain: nodes.start.domain,
-    hubspotId: nodes.hubspot.companyId
-  }))
-}}
+{
+  {
+    nodes.apollo.stakeholders.map((stakeholder) => ({
+      ...stakeholder,
+      domain: nodes.start.domain,
+      hubspotId: nodes.hubspot.companyId,
+    }));
+  }
+}
 ```
 
-### concat
+</Accordion>
 
+<Accordion title="find" icon="crosshairs">
+Return the first element that matches a condition.
+
+**Example**: Find the CEO in a stakeholders list
+
+| Input  | `[{ "name": "John", "title": "CEO" }, { "name": "Sarah", "title": "CTO" }]` |
+| ------ | --------------------------------------------------------------------------- |
+| Output | `{ "name": "John", "title": "CEO" }`                                        |
+
+```javascript
+{
+  {
+    nodes.apollo.stakeholders.find((s) => s.title === "CEO");
+  }
+}
+```
+
+<Info>
+  Returns `undefined` if no element matches. Use optional chaining (`?.`) to safely access properties.
+</Info>
+</Accordion>
+
+<Accordion title="concat" icon="object-group">
 Merge two arrays together.
 
 **Example**: Combine prospect lists
 
-- Input: `nodes.start.countries1 = ["US", "CA"], nodes.start.countries2 = ["UK", "DE"]`
-- Output: `["US", "CA", "UK", "DE"]`
+| Input  | `nodes.start.countries1 = ["US", "CA"]` and `nodes.start.countries2 = ["UK", "DE"]` |
+| ------ | ----------------------------------------------------------------------------------- |
+| Output | `["US", "CA", "UK", "DE"]`                                                          |
 
 ```javascript
-// Combine two country lists
-{{ nodes.start.countries1.concat(nodes.start.countries2) }}
+{
+  {
+    nodes.start.countries1.concat(nodes.start.countries2);
+  }
+}
 ```
+
+</Accordion>
+
+</AccordionGroup>
+
+---
 
 ## Date and time
 
-### new Date()
+<AccordionGroup>
 
+<Accordion title="new Date()" icon="calendar">
 Create a timestamp.
 
 **Example**: Get current timestamp
 
-- Output: `"2024-01-15T10:30:45.123Z"`
+| Output | `"2024-01-15T10:30:45.123Z"` |
+| ------ | ---------------------------- |
 
 ```javascript
-// Get current date
-{{ new Date() }}
+{
+  {
+    new Date();
+  }
+}
 ```
 
-### toLocaleDateString()
+</Accordion>
 
+<Accordion title="toLocaleDateString()" icon="calendar-day">
 Format date in localized format.
 
 **Example**: Format current date
 
-- Output: `"1/15/2024"`
+| Output | `"1/15/2024"` |
+| ------ | ------------- |
 
 ```javascript
-// Format date as MM/DD/YYYY
-{{ new Date().toLocaleDateString() }}
+{
+  {
+    new Date().toLocaleDateString();
+  }
+}
 ```
+
+<Info>
+  Pass a locale string for different formats: `toLocaleDateString('en-GB')` returns `"15/01/2024"`
+</Info>
+</Accordion>
+
+</AccordionGroup>
+
+---
 
 ## Mathematical operations
 
-### Basic arithmetic
-
+<Accordion title="Basic arithmetic" icon="calculator">
 Perform calculations on numbers.
 
 **Example**: Calculate win rate
 
-- Input: `nodes.start.wins = 15, nodes.start.total = 50`
-- Output: `30`
+| Input  | `nodes.start.wins = 15`, `nodes.start.total = 50` |
+| ------ | ------------------------------------------------- |
+| Output | `30`                                              |
 
 ```javascript
 // Add to balance
-{{ nodes.start.balance + 100 }}
+{
+  {
+    nodes.start.balance + 100;
+  }
+}
 
 // Calculate percentage
-{{ (nodes.start.wins / nodes.start.total) * 100 }}
+{
+  {
+    (nodes.start.wins / nodes.start.total) * 100;
+  }
+}
 ```
+
+Other common operations:
+
+```javascript
+// Round to 2 decimal places
+{
+  {
+    Math.round(nodes.start.value * 100) / 100;
+  }
+}
+
+// Get the maximum value
+{
+  {
+    Math.max(nodes.start.a, nodes.start.b);
+  }
+}
+
+// Get the minimum value
+{
+  {
+    Math.min(nodes.start.a, nodes.start.b);
+  }
+}
+```
+
+</Accordion>
+
+---
 
 ## Common patterns
 
-### Conditional logic
+<AccordionGroup>
 
+<Accordion title="Conditional logic" icon="code-branch">
 Use ternary operators for simple conditions.
 
 **Example**: Set priority based on score
 
-- Input: `nodes.start.score = 85`
-- Output: `"High Priority"`
+| Input  | `nodes.start.score = 85` |
+| ------ | ------------------------ |
+| Output | `"High Priority"`        |
 
 ```javascript
-// Set status based on score
-{{ nodes.start.score > 80 ? 'High Priority' : 'Standard' }}
+{
+  {
+    nodes.start.score > 80 ? "High Priority" : "Standard";
+  }
+}
 ```
 
-### Object property access
+**Nested conditions**:
 
+```javascript
+{
+  {
+    nodes.start.score > 80 ? "High" : nodes.start.score > 50 ? "Medium" : "Low";
+  }
+}
+```
+
+</Accordion>
+
+<Accordion title="Object property access" icon="sitemap">
 Access nested properties using dot notation.
 
 **Example**: Extract the city from a nested address
 
-- Input: `nodes.start = {`\
-  `"user": {`\
-  `"address": {`\
-  `"city": "San Francisco"}`\
-  `}}`
-- Output: `"San Francisco"`
+<Tabs>
+  <Tab title="Input">
+```json
+// nodes.start
+{
+  "user": {
+    "address": {
+      "city": "San Francisco"
+    }
+  }
+}
+```
+  </Tab>
+  <Tab title="Output">
+```
+"San Francisco"
+```
+  </Tab>
+</Tabs>
 
 ```javascript
-// Get user's city
-{{ nodes.start.user.address.city }}
+{
+  {
+    nodes.start.user.address.city;
+  }
+}
 ```
 
-### Null checking
+</Accordion>
 
-Safely access properties that might not exist.
+<Accordion title="Null checking" icon="shield-halved">
+Safely access properties that might not exist using optional chaining.
 
 **Example**: Get theme with default fallback
 
-- Input: `nodes.start = {`\
-  `"user": {`\
-  `"preferences": null`\
-  `}}`
-- Output: `"default"`
+<Tabs>
+  <Tab title="Input">
+```json
+// nodes.start
+{
+  "user": {
+    "preferences": null
+  }
+}
+```
+  </Tab>
+  <Tab title="Output">
+```
+undefined  // (safe, no error thrown)
+```
+  </Tab>
+</Tabs>
 
 ```javascript
 // Safely access optional property
-{{ nodes.start.user?.preferences?.theme }}
+{
+  {
+    nodes.start.user?.preferences?.theme;
+  }
+}
+
+// With default fallback
+{
+  {
+    nodes.start.user?.preferences?.theme ?? "default";
+  }
+}
 ```
 
-## Tips
+<Warning>
+  Without `?.`, accessing `preferences.theme` when `preferences` is `null` would throw an error.
+</Warning>
+</Accordion>
 
-- Access the autocomplete feature while writing expressions using`/` on your keyboard
-- You cannot use a node's outputs inside an expression when the node isn't connected to the prior nodes in the execution logic
-- Always wrap expressions in double curly brackets: `{{ expression }}`
-- Use dot notation to access nested object properties
-- Arrays are zero-indexed in JavaScript
+<Accordion title="Default values" icon="rotate-left">
+Provide fallback values when data might be missing.
+
+**Example**: Use a default name when none is provided
+
+| Input  | `nodes.start.name = undefined` |
+| ------ | ------------------------------ |
+| Output | `"Anonymous"`                  |
+
+```javascript
+// Using nullish coalescing
+{
+  {
+    nodes.start.name ?? "Anonymous";
+  }
+}
+
+// Using logical OR (also catches empty strings)
+{
+  {
+    nodes.start.name || "Anonymous";
+  }
+}
+```
+
+</Accordion>
+
+</AccordionGroup>
+
+---
+
+## Tips & best practices
+
+<CardGroup cols={2}>
+  <Card title="Use autocomplete" icon="keyboard">
+    Access the autocomplete feature while writing expressions by pressing `/` on your keyboard.
+  </Card>
+  <Card title="Node connections matter" icon="diagram-project">
+    You cannot use a node's outputs in an expression when the node isn't connected to prior nodes in the execution logic.
+  </Card>
+  <Card title="Zero-indexed arrays" icon="0">
+    Arrays in JavaScript are zero-indexed. The first element is at index `0`, not `1`.
+  </Card>
+  <Card title="Chain methods" icon="link">
+    You can chain multiple methods together: `{{ nodes.start.email.split('@')[1].toLowerCase() }}`
+  </Card>
+</CardGroup>

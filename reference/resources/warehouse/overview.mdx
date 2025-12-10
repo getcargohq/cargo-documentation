@@ -1,0 +1,57 @@
+---
+title: "Warehouse setup"
+description: "Configure your data warehouse as the system of record in Cargo"
+---
+
+### How it works in Cargo
+
+In your Cargo workspace, the system of record is powered by a data warehouse powered by SQL that centralizes all your data operations.
+
+Use the SQL connector to run complex queries, create custom data models, and perform advanced analytics on your warehouse data.
+
+The warehouse enables automatic syncs that periodically synchronize data between external systems and your Cargo workspace, ensuring your data stays current.
+
+### Warehouse options
+
+Cargo provides a default Snowflake warehouse to power your system of record, ensuring you have a robust data infrastructure from the start. If you already have an existing warehouse, you can connect Cargo to your current setup instead.
+
+<CardGroup cols={3}>
+  <Card
+    title="Snowflake"
+    icon="snowflake"
+    href="/reference/resources/warehouse/snowflake"
+  >
+    Use Cargo's default Snowflake warehouse or connect your existing instance.
+  </Card>
+  <Card
+    title="BigQuery"
+    icon="google"
+    href="/reference/resources/warehouse/bigquery"
+  >
+    Connect to your existing BigQuery project on Google Cloud.
+  </Card>
+  <Card title="Redshift" icon="aws" href="/integration/redshift">
+    Connect to your existing Amazon Redshift cluster.
+  </Card>
+</CardGroup>
+
+---
+
+### [Snowflake](/reference/resources/warehouse/snowflake)
+
+Use Cargo's default Snowflake warehouse or connect to your existing Snowflake instance for data warehouse integration.
+
+**Best for:** Teams already using Snowflake, or those who want to get started quickly with Cargo's default warehouse.
+
+### [BigQuery](/reference/resources/warehouse/bigquery)
+
+Connect to your existing BigQuery project to leverage your current data warehouse setup.
+
+**Best for:** Teams using Google Cloud Platform and BigQuery for their data infrastructure.
+
+### [Redshift](/integration/redshift)
+
+Connect to your existing Amazon Redshift cluster for seamless integration with AWS infrastructure.
+
+**Best for:** Teams using AWS and Redshift for their data warehousing needs.
+

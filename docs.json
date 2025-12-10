@@ -28,11 +28,12 @@
             "group": "Reference",
             "pages": [
               "reference/overview",
+              "reference/glossary",
+              "reference/security",
               {
                 "group": "Tools",
                 "pages": [
-                  "reference/tools/building-a-tool",
-                  "reference/tools/actions",
+                  "reference/tools/overview",
                   "reference/tools/launching-a-tool",
                   "reference/tools/monitoring-a-tool",
                   "reference/tools/embed-in-crm"
@@ -41,7 +42,7 @@
               {
                 "group": "Agents",
                 "pages": [
-                  "reference/agents/building-an-agent",
+                  "reference/agents/overview",
                   "reference/agents/defining-the-prompt",
                   "reference/agents/native-llm-capabilities",
                   "reference/agents/tools-and-actions",
@@ -52,38 +53,67 @@
               {
                 "group": "Plays",
                 "pages": [
-                  "reference/plays/building-a-play",
-                  "reference/plays/syncing-a-play"
+                  "reference/plays/overview",
+                  "reference/plays/triggering-a-play"
                 ]
               },
               {
-                "group": "Data",
+                "group": "Actions",
                 "pages": [
-                  "reference/data/enrol-data-in-plays",
-                  "reference/data/sql-models",
-                  "reference/data/activites-data",
+                  "reference/actions/overview",
+                  "reference/actions/using-actions"
+                ]
+              },
+              {
+                "group": "Resources",
+                "pages": [
+                  "reference/resources/overview",
                   {
-                    "group": "System of records",
+                    "group": "Models",
                     "pages": [
-                      "reference/data/system-of-records",
-                      "reference/data/setup-cargo-snowflake",
-                      "reference/data/setup-cargo-bigquery",
-                      "reference/data/setup-cargo-redshift"
+                      "reference/resources/models/overview",
+                      "reference/resources/models/sql-models",
+                      "reference/resources/models/using-models-in-plays"
+                    ]
+                  },
+                  {
+                    "group": "Files",
+                    "pages": ["reference/resources/files/overview"]
+                  },
+                  "reference/resources/activities",
+                  {
+                    "group": "Warehouse",
+                    "pages": [
+                      "reference/resources/warehouse/overview",
+                      "reference/resources/warehouse/snowflake",
+                      "reference/resources/warehouse/bigquery"
                     ]
                   }
                 ]
               },
               {
-                "group": "Allocation",
-                "pages": ["reference/allocation/allocating-leads"]
+                "group": "Chrome Extension",
+                "pages": ["reference/chrome-extension/overview"]
+              },
+              {
+                "group": "Revenue Organization",
+                "pages": [
+                  "reference/revenue-organization/overview",
+                  "reference/revenue-organization/allocating-leads"
+                ]
               }
             ]
           },
           {
             "group": "Integration",
             "pages": [
+              "integration/snowflake",
+              "integration/bigquery",
               "integration/redshift",
               "integration/attio",
+              "integration/hubspot",
+              "integration/salesforce",
+              "integration/slack",
               "integration/fullenrich"
             ]
           }

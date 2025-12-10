@@ -1,0 +1,182 @@
+---
+title: "Set up Cargo on BigQuery"
+description: "Configure BigQuery as your system of record in Cargo"
+---
+
+This guide walks you through setting up BigQuery as your system of records in Cargo. By the end, Cargo will have the necessary permissions to read and write data efficiently.
+
+## Permissions
+
+**What Cargo can do**
+
+- Read data from datasets and tables, even if they are spread across multiple projects
+- Write data into new datasets and tables
+
+**What Cargo will never do**
+
+- Overwrite existing datasets and tables (Cargo always creates its own datasets and tables when needed)
+
+## Before you begin
+
+You need an existing Google Cloud Project with a payment method and billing enabled. [Follow the official Google guide](https://developers.google.com/workspace/guides/create-project) to create one.
+
+This guide covers enabling and creating the following elements in your GCP project:
+
+- BigQuery API & Cloud Resource Manager API
+- BigQuery dataset (dedicated to Cargo)
+- Object Storage Bucket (dedicated to Cargo)
+- Service Account
+
+<Note>
+  If you have an existing BigQuery project and technical knowledge, you may skip
+  any steps you've already completed.
+</Note>
+
+### Enable the necessary APIs
+
+Cargo uses two Google APIs that must be enabled:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Select **APIs & Services**
+3. Select **Enabled APIs & Services**
+4. Search for and enable the following APIs:
+   - `BigQuery API`
+   - `Cloud Resource Manager API`
+
+### Create a storage bucket
+
+To enable Cargo to load and unload data from BigQuery, you need a dedicated storage bucket.
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Search for **Cloud Storage** in the search bar
+3. Click **Create bucket** and follow the setup wizard
+4. Note down the bucket name and location for later
+
+## Step 1: Create a dedicated dataset
+
+Create a dedicated dataset for Cargo where all data managed by Cargo will be stored.
+
+<Tabs>
+  <Tab title="Console">
+    1. Go to the [Google Cloud Console](https://console.cloud.google.com/) 2.
+    Search for **BigQuery** in the search bar 3. In BigQuery Studio, click the
+    three dots next to your project name 4. Click **Create dataset** 5. Name it
+    `cargo_dataset`
+  </Tab>
+  <Tab title="CLI">
+    ```bash bq mk --dataset your-project-id:cargo_dataset ```
+  </Tab>
+</Tabs>
+
+## Step 2: Create a service account
+
+Create a service account with the necessary permissions for Cargo to interact with BigQuery.
+
+<Tabs>
+  <Tab title="Console">
+    1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+    2. Navigate to **IAM & Admin** → **Service Accounts**
+    3. Click **Create service account**
+    4. Give the service account a name (e.g., `cargo-service-account`)
+    5. Grant the following roles:
+       - `BigQuery Data Editor`
+       - `BigQuery Job User`
+       - `Storage Object User`
+    6. Click **Done**
+    7. Click on the newly created service account
+    8. Go to the **Keys** tab
+    9. Click **Add Key** → **Create new key** → **JSON**
+    10. Save the downloaded JSON file securely
+  </Tab>
+  <Tab title="CLI">
+    **Create the service account:**
+
+    ```bash
+    gcloud iam service-accounts create cargo-service-account \
+        --display-name="Cargo Service Account"
+    ```
+
+    **Grant BigQuery and Storage permissions:**
+
+    ```bash
+    gcloud projects add-iam-policy-binding your-project-id \
+        --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+        --role="roles/bigquery.dataEditor"
+
+    gcloud projects add-iam-policy-binding your-project-id \
+        --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+        --role="roles/bigquery.jobUser"
+
+    gcloud projects add-iam-policy-binding your-project-id \
+        --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+        --role="roles/storage.objectUser"
+    ```
+
+    **Create and download a key file:**
+
+    ```bash
+    gcloud iam service-accounts keys create cargo-key.json \
+        --iam-account=cargo-service-account@your-project-id.iam.gserviceaccount.com
+    ```
+
+  </Tab>
+</Tabs>
+
+## Step 3: Grant additional permissions (optional)
+
+If you need Cargo to access data outside the dedicated dataset, grant read access to other datasets:
+
+```bash
+bq add-iam-policy-binding \
+    --member="serviceAccount:cargo-service-account@your-project-id.iam.gserviceaccount.com" \
+    --role="roles/bigquery.dataViewer" \
+    your-project-id:other_dataset
+```
+
+## Step 4: Verify permissions
+
+Ensure the Cargo service account has the following permissions:
+
+| Permission                   | Purpose             |
+| ---------------------------- | ------------------- |
+| `bigquery.datasets.create`   | Create new datasets |
+| `bigquery.tables.create`     | Create new tables   |
+| `bigquery.tables.getData`    | Read table data     |
+| `bigquery.tables.updateData` | Update table data   |
+| `bigquery.jobs.create`       | Run BigQuery jobs   |
+
+**Check service account permissions:**
+
+```bash
+gcloud projects get-iam-policy your-project-id \
+    --flatten="bindings[].members" \
+    --format='table(bindings.role)' \
+    --filter="bindings.members:cargo-service-account@your-project-id.iam.gserviceaccount.com"
+```
+
+## Step 5: Connect to Cargo
+
+Now that everything is set up, connect BigQuery to Cargo:
+
+1. Navigate to **Workspace settings** → **System of records**
+2. Fill in the settings form:
+   - **Service Account**: Paste the contents of your JSON key file
+   - **Location**: Select the location you chose when creating the storage bucket
+   - **Bucket**: Enter the name of your storage bucket
+   - **Scope**: Select `Dataset`
+   - **Dataset**: Enter `cargo_dataset` (or your dataset name from Step 1)
+3. Click **Setup**
+
+<Check>Your BigQuery integration is now complete!</Check>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Create data models" href="/reference/resources/models/sql-models">
+    Build your first data model using BigQuery tables
+  </Card>
+  <Card title="Using models in plays" href="/reference/resources/models/using-models-in-plays">
+    Configure how data flows into your plays
+  </Card>
+</CardGroup>
+

@@ -1,0 +1,150 @@
+---
+title: "HubSpot"
+description: "This page outlines how to use the HubSpot integration to pull and manage CRM data in Cargo."
+---
+
+HubSpot is an all-in-one CRM platform that helps businesses manage marketing, sales, and customer service. Cargo's native integration with HubSpot allows you to both pull data from the CRM as part of data models, and write or delete data from all CRM objects to maintain it.
+
+## How to set up HubSpot
+
+HubSpot uses OAuth to establish the sync with Cargo. During connection, you'll be asked to authorize Cargo.
+
+Once redirected and the connector is created, you can:
+
+<CardGroup cols={2}>
+  <Card title="Set up a HubSpot data model" icon="database">
+    Create data models from your HubSpot objects to trigger Plays and power
+    model search actions.
+  </Card>
+  <Card title="Use HubSpot in workflows" icon="diagram-project">
+    Choose **HubSpot** from the node catalog within a **Play**, **Tool**, or
+    **Agent**.
+  </Card>
+</CardGroup>
+
+---
+
+## HubSpot actions
+
+<Tip>
+  All HubSpot actions support Contacts, Companies, Deals, Tickets, and any
+  custom objects you've created in your HubSpot account.
+</Tip>
+
+### Insert record
+
+Insert a new record into HubSpot.
+
+**Use cases**
+
+- **Lead capture** – Create new contacts from various sources and channels
+- **Company creation** – Add new companies from forms, events, or imports
+- **Deal creation** – Create new deals to track opportunities through your pipeline
+
+### Find record
+
+Retrieve a single record from HubSpot by its unique ID.
+
+**Use cases**
+
+- **Record lookup** – Get specific record details for processing workflows
+- **Data validation** – Verify record existence before performing operations
+
+### Match record
+
+Check if a record exists in HubSpot based on matching criteria.
+
+**Use cases**
+
+- **Duplicate prevention** – Avoid creating duplicate records
+- **Smart routing** – Route records based on existing data
+
+<Info>
+  Use **Match record** before **Insert record** to implement an upsert pattern
+  for single records.
+</Info>
+
+### Search records
+
+Retrieve multiple records from HubSpot based on search criteria.
+
+**Use cases**
+
+- **Advanced filtering** – Find records meeting specific criteria
+- **Bulk operations** – Retrieve multiple records for processing inside a group node
+
+### Update record
+
+Update an existing record in HubSpot.
+
+**Use cases**
+
+- **Data enrichment** – Keep record information current and accurate
+- **Lifecycle management** – Update record stages, deal stages, and statuses
+- **Lead scoring** – Update contact scores based on engagement signals
+
+### Upsert records
+
+Upsert multiple records into HubSpot (insert or update based on matching criteria).
+
+**Use cases**
+
+- **Bulk data operations** – Insert records in bulk while avoiding duplicates
+- **Data synchronization** – Keep external systems synchronized with HubSpot
+
+<Warning>
+  Upsert operations will match on the fields you specify. Ensure your matching
+  criteria is unique to avoid unintended updates.
+</Warning>
+
+### Delete record
+
+Delete a record from HubSpot.
+
+**Use cases**
+
+- **Data cleanup** – Remove outdated or incorrect records programmatically or in batches
+
+---
+
+## HubSpot data models
+
+Cargo allows you to create data models on top of your HubSpot CRM data that can be used to trigger Plays and power model search actions.
+
+### Creating HubSpot data models
+
+| Field           | Description                                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------------- |
+| **Name**        | Choose a descriptive name for your model (required)                                                       |
+| **Slug**        | Set a unique identifier that cannot be changed once created (required)                                    |
+| **Object Type** | Select the HubSpot object type you want to model (Contacts, Companies, Deals, Tickets, or custom objects) |
+
+### Object types available
+
+<AccordionGroup>
+  <Accordion title="Contact models" icon="user">
+    **Use cases** - Handle lead and contact information - Track individual
+    engagement and communication history - Manage contact lifecycle stages and
+    lead scoring
+  </Accordion>
+  <Accordion title="Company models" icon="building">
+    **Use cases** - Manage company records with domains, industry, and size
+    information - Track company relationships and hierarchies - Monitor account
+    engagement and lifecycle stages
+  </Accordion>
+  <Accordion title="Deal models" icon="handshake">
+    **Use cases** - Track opportunities, pipeline stages, and deal progression -
+    Monitor deal velocity, conversion rates, and forecasting - Analyze win/loss
+    patterns and sales performance
+  </Accordion>
+  <Accordion title="Ticket models" icon="ticket">
+    **Use cases** - Track customer support requests and issues - Monitor ticket
+    resolution times and SLA compliance - Analyze support patterns and team
+    performance
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  You can also model any **custom objects** you've created in HubSpot, giving
+  you full flexibility to work with your unique data structures.
+</Tip>
