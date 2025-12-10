@@ -1,6 +1,7 @@
 ---
 title: "Build a play"
 description: "Learn what plays are, how they differ from tools, and how to build your first one."
+icon: "circle-play"
 ---
 
 <iframe
@@ -108,24 +109,10 @@ Once everything works:
 
 ## Best practices
 
-<CardGroup cols={2}>
-  <Card title="Start with manual testing" icon="flask">
-    Always test with manual enrolments before enabling automatic triggers to
-    validate your workflow.
-  </Card>
-  <Card title="Set appropriate re-enrollment rules" icon="rotate">
-    Choose the right trigger conditions—use "No Re-Enrollment" for one-time
-    actions, "Always Enroll" for repeated processing.
-  </Card>
-  <Card title="Monitor play health" icon="heart-pulse">
-    Set up Slack notifications when error thresholds are hit to catch issues
-    early.
-  </Card>
-  <Card title="Use fallback paths" icon="shield-check">
-    Add failure handlers to gracefully manage errors and prevent silent
-    failures.
-  </Card>
-</CardGroup>
+- **Start with manual testing** — Always test with manual enrolments before enabling automatic triggers to validate your workflow.
+- **Set appropriate re-enrollment rules** — Choose the right trigger conditions—use "No Re-Enrollment" for one-time actions, "Always Enroll" for repeated processing.
+- **Monitor play health** — Set up Slack notifications when error thresholds are hit to catch issues early.
+- **Use fallback paths** — Add failure handlers to gracefully manage errors and prevent silent failures.
 
 ---
 

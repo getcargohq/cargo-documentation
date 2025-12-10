@@ -72,7 +72,7 @@
                     "group": "Models",
                     "pages": [
                       "reference/resources/models/overview",
-                      "reference/resources/models/sql-models",
+                      "reference/resources/models/querying-data",
                       "reference/resources/models/using-models-in-plays"
                     ]
                   },

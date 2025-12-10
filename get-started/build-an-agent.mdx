@@ -1,6 +1,7 @@
 ---
 title: "Build an agent"
 description: "Learn what agents are, and how to build your first one."
+icon: "robot"
 ---
 
 <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/vRDIzsM8GuI" title="Build an agent in Cargo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
@@ -129,20 +130,10 @@ Once everything works:
 
 ## Best practices
 
-<CardGroup cols={2}>
-  <Card title="Start with a focused goal" icon="bullseye">
-    Build Agents for specific tasks rather than general-purpose assistants. A lead qualification Agent will outperform a "do everything" Agent.
-  </Card>
-  <Card title="Write clear tool descriptions" icon="wrench">
-    The Agent reads tool descriptions to decide when to use them. Be specific about what each tool does and when to use it.
-  </Card>
-  <Card title="Handle edge cases" icon="shield-check">
-    Tell the Agent what to do when data is missing or a tool fails. Don't let errors silently fail.
-  </Card>
-  <Card title="Test iteratively" icon="flask">
-    Run test queries and refine the instructions based on actual outputs. Small tweaks can significantly improve results.
-  </Card>
-</CardGroup>
+- **Start with a focused goal** — Build Agents for specific tasks rather than general-purpose assistants. A lead qualification Agent will outperform a "do everything" Agent.
+- **Write clear tool descriptions** — The Agent reads tool descriptions to decide when to use them. Be specific about what each tool does and when to use it.
+- **Handle edge cases** — Tell the Agent what to do when data is missing or a tool fails. Don't let errors silently fail.
+- **Test iteratively** — Run test queries and refine the instructions based on actual outputs. Small tweaks can significantly improve results.
 
 ---
 

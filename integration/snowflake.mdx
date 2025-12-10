@@ -28,13 +28,6 @@ To set up the connection, provide the following details when creating the connec
 | **User**      | The Cargo service user (e.g., `cargo_user`)                |
 | **Password**  | The user's password                                        |
 
-<Warning>
-  For Snowflake accounts hosted on **GCP** or **Azure**, you'll need to provide
-  an RSA private key for authentication. See the [setup
-  guide](/reference/resources/warehouse/snowflake#step-4-set-up-rsa-key-authentication)
-  for details.
-</Warning>
-
 ---
 
 ## Snowflake actions
@@ -69,11 +62,11 @@ Cargo allows you to create data models on top of your Snowflake data that can be
 
 ### Creating Snowflake data models
 
-| Field      | Description                                                            |
-| ---------- | ---------------------------------------------------------------------- |
-| **Name**   | Choose a descriptive name for your model (required)                    |
-| **Slug**   | Set a unique identifier that cannot be changed once created (required) |
-| **Source** | Select the Snowflake table or view to model                            |
+| Field      | Description                                                 |
+| ---------- | ----------------------------------------------------------- |
+| **Name**   | Choose a descriptive name for your data model               |
+| **Slug**   | Set a unique identifier that cannot be changed once created |
+| **Source** | Select the Snowflake table or view to model                 |
 
 ---
 

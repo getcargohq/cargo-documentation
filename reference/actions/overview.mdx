@@ -1,5 +1,5 @@
 ---
-title: "Actions"
+title: "Actions overview"
 description: "The building blocks that power your workflows across tools, plays, agents, and APIs"
 ---
 
@@ -28,21 +28,27 @@ These actions are available in the **Tool** and **Play** editors for building au
     Purpose-built actions for lead allocation, scoring, and revenue operations.
   </Card>
   <Card title="Storage" icon="hard-drive" href="#storage">
-    Read, write, and search data in your Cargo models.
+    Read, write, and search data in your Cargo data models.
   </Card>
 </CardGroup>
 
-### Integrations
+### Universal actions
 
-Connect to CRMs, enrichment providers, communication tools, and external platforms. [See all integrations →](#integrations)
+These actions are available **everywhere in Cargo**—in tools, plays, agents, and via API:
 
-### Tools
-
-Call other Cargo tools from within your workflows to compose complex automations. [Learn more →](#tools)
-
-### Agents
-
-Invoke AI agents to handle complex, multi-step reasoning tasks autonomously. [Learn more →](#agents)
+<CardGroup cols={2}>
+  <Card title="Integrations" icon="plug" href="#integrations">
+    Connect to CRMs, enrichment providers, communication tools, and external
+    platforms.
+  </Card>
+  <Card title="Tools" icon="hammer" href="#tools">
+    Call other Cargo tools from within your workflows to compose complex
+    automations.
+  </Card>
+  <Card title="Agents" icon="robot" href="#agents">
+    Invoke AI agents to handle complex, multi-step reasoning tasks autonomously.
+  </Card>
+</CardGroup>
 
 ---
 
@@ -51,7 +57,7 @@ Invoke AI agents to handle complex, multi-step reasoning tasks autonomously. [Le
 | Context    | Description                                                                    |
 | :--------- | :----------------------------------------------------------------------------- |
 | **Tools**  | Build reusable workflows by connecting actions visually in the tool editor     |
-| **Plays**  | Automate data-driven workflows that trigger when model data changes            |
+| **Plays**  | Automate data-driven workflows that trigger when data model records change     |
 | **Agents** | Give AI the ability to select and execute actions autonomously                 |
 | **MCP**    | Expose your Cargo tools to any MCP-compatible AI system (Claude, Cursor, etc.) |
 | **API**    | Call tools and actions programmatically from your own applications             |
@@ -135,16 +141,10 @@ AI actions leverage large language models to process, generate, and understand c
 
 <Note>AI actions are available in **Tools** and **Plays** only.</Note>
 
-<CardGroup cols={2}>
-  <Card title="File search" icon="file-magnifying-glass">
-    Search through files and documents using semantic understanding. Find
-    relevant content based on meaning, not just keywords.
-  </Card>
-  <Card title="Model ask" icon="message-bot">
-    Query an LLM with a prompt. Generate text, analyze data, extract
-    information, or make decisions.
-  </Card>
-</CardGroup>
+| Action          | Description                                                                                                                 |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **File search** | Search through files and documents using semantic understanding. Find relevant content based on meaning, not just keywords. |
+| **Model ask**   | Query an LLM with a prompt. Generate text, analyze data, extract information, or make decisions.                            |
 
 <Tip>
   AI actions consume credits based on token usage. Check the node picker for
@@ -159,16 +159,10 @@ Sales actions are purpose-built for revenue operations, replicating complex rout
 
 <Note>Sales actions are available in **Tools** and **Plays** only.</Note>
 
-<CardGroup cols={2}>
-  <Card title="Allocate" icon="users-between-lines">
-    Distribute leads to team members based on rules. Supports round-robin,
-    territory-based, and capacity-weighted distribution.
-  </Card>
-  <Card title="Scoring" icon="chart-column">
-    Create scoring models to evaluate records. Determine lead priority and
-    potential value based on business rules.
-  </Card>
-</CardGroup>
+| Action       | Description                                                                                                                 |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| **Allocate** | Distribute leads to team members based on rules. Supports round-robin, territory-based, and capacity-weighted distribution. |
+| **Scoring**  | Create scoring models to evaluate records. Determine lead priority and potential value based on business rules.             |
 
 <Tip>
   Learn more about lead distribution in the [revenue organization
@@ -188,7 +182,7 @@ Storage actions interact with data models in your Cargo workspace, enabling data
 | **Memory**              | Key/value store for temporary data during a workflow run |
 | **Model custom column** | Set custom column values on existing records             |
 | **Model record**        | Add new records to your data models                      |
-| **Model search**        | Query your models with filters and conditions            |
+| **Model search**        | Query your data models with filters and conditions       |
 | **Model vector search** | Perform semantic searches using vector-based queries     |
 
 <Tip>
@@ -214,52 +208,6 @@ Integration actions connect Cargo to external platforms. Each integration provid
 | **Upsert**    | Insert or update based on matching criteria          |
 | **Delete**    | Remove records from the connected system             |
 | **Associate** | Link two records together (e.g., contact to company) |
-
-### Available integrations
-
-<AccordionGroup>
-  <Accordion title="CRM" icon="address-book">
-    **HubSpot** — Full CRUD operations on contacts, companies, deals, tickets,
-    and custom objects. [HubSpot guide →](/integration/hubspot)
-
-    **Salesforce** — Manage leads, contacts, accounts, opportunities, and any
-    custom objects. [Salesforce guide →](/integration/salesforce)
-
-    **Attio** — Read and write to people, companies, and custom objects.
-    [Attio guide →](/integration/attio)
-
-  </Accordion>
-  <Accordion title="Communication" icon="comments">
-    **Slack** — Send messages, post to channels, request human approval.
-
-    **Email** — Send transactional emails and add contacts to sequences.
-
-  </Accordion>
-  <Accordion title="Enrichment" icon="magnifying-glass-plus">
-    **Apollo** — Contact and company data with buying intent signals.
-
-    **Clearbit** — Real-time company and person enrichment.
-
-    **FullEnrich** — Waterfall enrichment across multiple providers.
-    [FullEnrich guide →](/integration/fullenrich)
-
-    **ZoomInfo** — B2B contact and company intelligence.
-
-    **Lusha** — Direct dial and email data.
-
-  </Accordion>
-  <Accordion title="Data & Analytics" icon="database">
-    **Snowflake** — Query and write to your data warehouse.
-    [Snowflake guide →](/integration/snowflake)
-
-    **BigQuery** — Execute SQL and sync results.
-    [BigQuery guide →](/integration/bigquery)
-
-    **Redshift** — Connect to your Amazon data warehouse.
-    [Redshift guide →](/integration/redshift)
-
-  </Accordion>
-</AccordionGroup>
 
 ---
 
@@ -325,7 +273,7 @@ Cargo offers **120+ actions** across all categories. To explore them:
     Create your first workflow using the visual tool editor.
   </Card>
   <Card title="Build a play" icon="play" href="/reference/plays/overview">
-    Automate data-driven workflows triggered by model changes.
+    Automate data-driven workflows triggered by data model changes.
   </Card>
   <Card title="Build an agent" icon="robot" href="/reference/agents/overview">
     Give AI the power to select and execute actions autonomously.

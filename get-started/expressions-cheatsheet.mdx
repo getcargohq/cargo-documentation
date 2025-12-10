@@ -13,16 +13,9 @@ Cargo uses JavaScript expressions to manipulate data within workflows. This chea
 ## Quick reference
 
 <CardGroup cols={3}>
-  <Card title="Strings" icon="font" href="#string-methods">
-    `split` · `toLowerCase` · `toUpperCase` · `trim` · `replace`
-  </Card>
-  <Card title="Arrays" icon="list" href="#array-methods">
-    `length` · `includes` · `slice` · `filter` · `join` · `map` · `find` ·
-    `concat`
-  </Card>
-  <Card title="Utilities" icon="wrench" href="#common-patterns">
-    Dates · Math · Conditionals · Null checking
-  </Card>
+  <Card title="Strings" icon="font" href="#string-methods"></Card>
+  <Card title="Arrays" icon="list" href="#array-methods"></Card>
+  <Card title="Utilities" icon="wrench" href="#common-patterns"></Card>
 </CardGroup>
 
 ---
@@ -573,17 +566,7 @@ Provide fallback values when data might be missing.
 
 ## Tips & best practices
 
-<CardGroup cols={2}>
-  <Card title="Use autocomplete" icon="keyboard">
-    Access the autocomplete feature while writing expressions by pressing `/` on your keyboard.
-  </Card>
-  <Card title="Node connections matter" icon="diagram-project">
-    You cannot use a node's outputs in an expression when the node isn't connected to prior nodes in the execution logic.
-  </Card>
-  <Card title="Zero-indexed arrays" icon="0">
-    Arrays in JavaScript are zero-indexed. The first element is at index `0`, not `1`.
-  </Card>
-  <Card title="Chain methods" icon="link">
-    You can chain multiple methods together: `{{ nodes.start.email.split('@')[1].toLowerCase() }}`
-  </Card>
-</CardGroup>
+- **Use autocomplete** — Access the autocomplete feature while writing expressions by pressing `/` on your keyboard.
+- **Node connections matter** — You cannot use a node's outputs in an expression when the node isn't connected to prior nodes in the execution logic.
+- **Zero-indexed arrays** — Arrays in JavaScript are zero-indexed. The first element is at index `0`, not `1`.
+- **Chain methods** — You can chain multiple methods together: `{{ nodes.start.email.split('@')[1].toLowerCase() }}`

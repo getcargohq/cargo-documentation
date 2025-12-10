@@ -1,111 +1,189 @@
 ---
 title: "Build a tool"
 description: "Learn what tools are, and how to build your first one."
+icon: "wrench"
 ---
 
-<iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/IX56uQhrTfE" title="Build a tool in Cargo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+<iframe
+  className="w-full aspect-video rounded-xl"
+  src="https://www.youtube.com/embed/IX56uQhrTfE"
+  title="Build a tool in Cargo"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+/>
 
 ## What are tools?
 
-Tools are the building blocks of your GTM (Go-To-Market) automation strategy. They encapsulate repeatable actions—like finding stakeholders, extracting revenue data, or sending emails—so you can scale your workflows and focus on what matters most.
+Tools are modular, reusable automation workflows that you can build once and deploy anywhere. They encapsulate repeatable actions—like finding stakeholders, extracting revenue data, or qualifying leads—so you can scale your GTM workflows without rebuilding logic from scratch.
 
-Tools in Cargo are designed to be modular and reusable. You can trigger them in plays, have an agent leverage them or deploy them to an MCP server. 
+Once published, tools can be:
 
-> The more you invest in your Cargo tool, the more efficient and robust your GTM systems are likely to become.
+- **Triggered in plays** to run as part of automated workflows
+- **Leveraged by agents** to accomplish complex tasks
+- **Deployed to MCP servers** for external integrations
+- **Called via API** from your own applications
+
+> The more you invest in your Cargo tools, the more efficient and robust your GTM systems become.
+
+---
 
 ## Use cases
 
-Tools can be used for a variety of GTM tasks, including:
+Here are some of the most popular ways Cargo customers use tools:
 
 - **Lead qualification:** Automate the process of qualifying leads based on custom criteria and real-time data.
 - **Custom data enrichment:** Pull key company metrics (like 2024 revenue) from multiple sources automatically.
 - **Stakeholder discovery:** Find and surface the right contacts at target accounts.
 - **Outreach automation:** Send emails or trigger other communications as part of a larger workflow.
+- **CRM hygiene:** Detect and fix data quality issues like invalid emails or duplicate records.
 
 ---
 
 ## Step-by-step: Build your first tool
 
-Follow these steps to create a simple lead enrichment tool that fetches company data and updates your CRM.
+Follow these steps to create a tool that finds stakeholders at a company based on a prompt.
 
 ### Step 1: Create a new tool
 
 1. Navigate to **Tools** in your Cargo workspace sidebar
 2. Click **+ New Tool** in the top right corner
-3. Give your tool a descriptive name (e.g., "Company Enrichment Tool")
+3. Give your tool a descriptive name (e.g., "Find stakeholders from a prompt")
 4. You'll be taken to the tool editor canvas
+
+![The tool editor canvas](/images/building-a-tool-1.png)
 
 ### Step 2: Define your inputs
 
-Every tool needs input data to work with. Click on the **Input** node to configure:
+Every tool needs input data to work with. Click on the **Start** node to configure your inputs:
 
-1. Add a field for the data you'll receive (e.g., `company_domain` of type `string`)
-2. Optionally mark fields as required
-3. Add a description to help others understand what data to provide
+| Property          | Description                                                             |
+| ----------------- | ----------------------------------------------------------------------- |
+| **Field name**    | The identifier for this input (e.g., `company_domain`, `search_prompt`) |
+| **Type**          | Data type: `string`, `number`, `boolean`, `array`, or `object`          |
+| **Required**      | Whether this field must be provided for the tool to execute             |
+| **Description**   | Help text explaining what this field is for                             |
+| **Default value** | Fallback value if none is provided (optional)                           |
 
 <Tip>
-Use clear, descriptive field names. Future you (and your teammates) will thank you!
+  Use `snake_case` for field names (e.g., `company_name` instead of
+  `companyName`) for consistency across your workspace.
 </Tip>
 
-### Step 3: Add your first node
+### Step 3: Add nodes to build your workflow
 
-Click the **+** button to add a node. For this example, we'll use an **Enrich** node:
+Click the **+** button to add nodes to your workflow. For this example, we'll build a stakeholder finder:
 
-1. Select **Enrich** → **Company** from the node picker
-2. Connect the Input node's output to the Enrich node's input
-3. Map your `company_domain` input to the enrichment node's domain field
+1. Add an **Instruct** node to convert natural language to structured criteria
+2. Add an **Enrich company** node to gather company data
+3. Add a **Branch** node to check if the enrichment succeeded
+4. Add a **Search leads** node to find relevant contacts
+5. Add a **Script** node to format the output
 
-### Step 4: Add logic and transformations
+![Connecting nodes in the tool editor](/images/building-a-tool-2.png)
 
-Now add downstream actions based on the enriched data:
+### Step 4: Connect your nodes
 
-1. Add a **Branch** node to check if enrichment was successful
-2. On the "Yes" path, add a **Write** node to update your CRM
-3. On the "No" path, add error handling (e.g., log the failure or send a notification)
+To connect nodes, click on the output handle of one node and drag it to the input handle of the next:
 
-### Step 5: Configure outputs
+- Connections define how data flows through your tool
+- Branch nodes have multiple outputs (YES/NO) for conditional logic
+- A node's output can connect to multiple downstream nodes
 
-Define what your tool returns:
+### Step 5: Map data between nodes
 
-1. Click on the **Output** node
-2. Map the fields you want to return (e.g., company name, employee count, funding stage)
-3. These outputs can be used by plays, agents, or external systems
+Use expressions to pass data from one node to another. In any input field, reference outputs from previous nodes:
 
-### Step 6: Test your tool
+```
+{{start.company_domain}}
+{{enrich_company.employee_count}}
+{{instruct.result}}
+```
 
-Before publishing, test your tool:
+<Note>
+  Check the [expressions cheatsheet](/get-started/expressions-cheatsheet) for
+  all available syntax and functions.
+</Note>
 
-1. Click the **Test** button in the top toolbar
+### Step 6: Configure your output
+
+Define what your tool returns by configuring the **End** node:
+
+1. Click on the **End** node
+2. Map the fields you want to return (e.g., stakeholder names, titles, LinkedIn URLs)
+3. These outputs can be used by plays, agents, or external systems calling your tool
+
+### Step 7: Test your tool
+
+Before publishing, validate your tool works correctly:
+
+1. Click the **Test** button in the bottom toolbar
 2. Enter sample input data
-3. Review the execution flow and check each node's output
-4. Fix any errors that appear
+3. Click **Run** to execute the tool
+4. Inspect each node's output in the execution view
+5. Fix any errors that appear
 
-### Step 7: Publish
+<Warning>
+  Test mode uses real integrations and may consume credits or modify external
+  systems. Use test data when possible.
+</Warning>
 
-Once everything works:
+### Step 8: Publish your tool
+
+Once everything works, publish your tool to make it available:
+
+![Publishing a tool with version control](/images/building-a-tool-6.png)
 
 1. Click **Publish** in the top right corner
-2. Your tool is now available in plays, agents, and MCP servers
-3. Share the tool with your team
+2. Choose a version type (Major, Minor, or Patch)
+3. Add a description of your changes
+4. Click **Publish** to deploy
+
+<Note>
+  Publishing creates a new version. Active plays and agents continue using the
+  version they were configured with until you explicitly update them.
+</Note>
+
+---
+
+## Managing versions
+
+Tools support full version control so you can iterate safely:
+
+![Version history and draft management](/images/building-a-tool-3.png)
+
+- **Drafts:** Changes are auto-saved as drafts until you publish
+- **Version history:** Access previous versions from the dropdown menu
+- **Rollback:** Revert to any previous version if needed
 
 ---
 
 ## Best practices
 
-<CardGroup cols={2}>
-  <Card title="Start simple" icon="seedling">
-    Begin with a minimal tool and add complexity incrementally. This makes debugging easier.
-  </Card>
-  <Card title="Name nodes clearly" icon="tag">
-    Rename nodes to describe their purpose (e.g., "Check if enterprise" instead of "Branch 1").
-  </Card>
-  <Card title="Handle errors gracefully" icon="shield-check">
-    Use Branch nodes to handle failure cases—don't let errors silently fail.
-  </Card>
-  <Card title="Document your inputs" icon="file-lines">
-    Add descriptions to input fields so users know exactly what data to provide.
-  </Card>
-</CardGroup>
+<AccordionGroup>
+  <Accordion title="Name everything descriptively">
+    Rename nodes from defaults like "Branch 1" to something meaningful like
+    "Check if enterprise tier". Your future self will thank you.
+  </Accordion>
+  <Accordion title="Handle errors explicitly">
+    Don't assume every node will succeed. Use Branch nodes to check for errors
+    and handle them gracefully—log failures, send notifications, or trigger
+    fallback logic.
+  </Accordion>
+  <Accordion title="Keep tools focused">
+    Build tools that do one thing well rather than trying to handle every edge
+    case. You can always chain tools together in plays or let agents orchestrate
+    multiple tools.
+  </Accordion>
+  <Accordion title="Document your inputs">
+    Add descriptions to every input field. When someone else (or future you)
+    uses this tool, they'll know exactly what data to provide.
+  </Accordion>
+  <Accordion title="Test with edge cases">
+    Don't just test the happy path. What happens with missing data? Invalid
+    formats? API rate limits? Test these scenarios before publishing.
+  </Accordion>
+</AccordionGroup>
 
 ---
 
@@ -113,15 +191,27 @@ Once everything works:
 
 <CardGroup cols={2}>
   <Card title="Explore actions" icon="bolt" href="/reference/actions/overview">
-    Learn about all the node types available in the tool editor.
+    Learn about all 120+ node types available in the tool editor.
   </Card>
-  <Card title="Launch your tool" icon="rocket" href="/reference/tools/launching-a-tool">
+  <Card
+    title="Launch your tool"
+    icon="rocket"
+    href="/reference/tools/launching-a-tool"
+  >
     Discover the different ways to trigger your tools.
   </Card>
-  <Card title="Monitor performance" icon="chart-line" href="/reference/tools/monitoring-a-tool">
+  <Card
+    title="Monitor performance"
+    icon="chart-line"
+    href="/reference/tools/monitoring-a-tool"
+  >
     Track executions, debug failures, and optimize your tools.
   </Card>
-  <Card title="Embed in CRM" icon="window-restore" href="/reference/tools/embed-in-crm">
+  <Card
+    title="Embed in CRM"
+    icon="window-restore"
+    href="/reference/tools/embed-in-crm"
+  >
     Trigger tools directly from Salesforce with custom buttons.
   </Card>
 </CardGroup>
