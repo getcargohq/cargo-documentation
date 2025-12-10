@@ -1,0 +1,111 @@
+---
+title: "Model Configuration"
+description: "Choose the right LLM and tune its behavior to match your Agent's task requirements."
+---
+
+The model is the brain of your Agent. Choosing the right one—and configuring it properly—determines how well your Agent reasons, how fast it responds, and how much it costs to run.
+
+![Model configuration](/images/image\(16\).png)
+
+---
+
+## Selecting a model
+
+Cargo supports leading LLM providers:
+
+| Provider | Models | Strengths |
+| :------- | :----- | :-------- |
+| **OpenAI** | GPT-4o, GPT-4o-mini | Excellent reasoning, broad capabilities, reliable |
+| **Anthropic** | Claude 3.5 Sonnet, Claude 3 Opus | Strong reasoning, nuanced responses, good at following instructions |
+| **Google** | Gemini Pro, Gemini Flash | Fast, cost-effective, good for simpler tasks |
+
+### How to choose
+
+| Task complexity | Recommended approach |
+| :-------------- | :------------------- |
+| **Complex analysis** (qualification, research synthesis) | Use a powerful model (GPT-4o, Claude Opus) |
+| **Simple classification** (routing, tagging) | Use a faster model (GPT-4o-mini, Gemini Flash) |
+| **High volume, low stakes** | Prioritize speed and cost |
+| **Low volume, high stakes** | Prioritize reasoning quality |
+
+<Tip>
+Start with a powerful model during development to understand what's possible, then optimize for cost/speed once the Agent is working well.
+</Tip>
+
+---
+
+## Behavioral parameters
+
+### Reasoning Steps
+
+The maximum number of logical sub-tasks the Agent can perform to reach a conclusion.
+
+| Setting | Effect | Use when |
+| :------ | :----- | :------- |
+| **Low (1-3)** | Fast, direct responses | Simple lookups, single-tool tasks |
+| **Medium (4-6)** | Balanced reasoning | Most standard workflows |
+| **High (7+)** | Deep, multi-step problem solving | Complex research, multi-source synthesis |
+
+<Warning>
+Higher reasoning steps increase latency and cost. Only increase if the Agent is failing to complete tasks.
+</Warning>
+
+### Temperature
+
+Controls the creativity and variability of outputs.
+
+| Temperature | Behavior | Best for |
+| :---------- | :------- | :------- |
+| **0.0 - 0.2** | Deterministic, precise, consistent | Data extraction, classification, CRM updates |
+| **0.3 - 0.6** | Balanced creativity | General tasks, qualification, research |
+| **0.7 - 1.0** | Creative, varied | Copywriting, brainstorming, conversational engagement |
+
+**Rule of thumb:**
+- Lower temperature → reproducible results
+- Higher temperature → more varied, human-like responses
+
+---
+
+## Configuration examples
+
+<CardGroup cols={2}>
+  <Card title="Lead Qualification Agent">
+    **Model:** GPT-4o  
+    **Reasoning Steps:** 4  
+    **Temperature:** 0.2  
+    
+    Needs good reasoning but consistent, reliable outputs.
+  </Card>
+  <Card title="Account Research Agent">
+    **Model:** Claude 3.5 Sonnet  
+    **Reasoning Steps:** 6  
+    **Temperature:** 0.4  
+    
+    Requires deeper research and synthesis across sources.
+  </Card>
+  <Card title="Email Drafting Agent">
+    **Model:** GPT-4o  
+    **Reasoning Steps:** 3  
+    **Temperature:** 0.7  
+    
+    Needs creativity for engaging, personalized copy.
+  </Card>
+  <Card title="Simple Router Agent">
+    **Model:** GPT-4o-mini  
+    **Reasoning Steps:** 2  
+    **Temperature:** 0.1  
+    
+    Fast classification with minimal reasoning needed.
+  </Card>
+</CardGroup>
+
+---
+
+## Optimizing for cost and speed
+
+Once your Agent works correctly, consider:
+
+1. **Reduce reasoning steps** if tasks complete in fewer steps
+2. **Try a faster model** (like GPT-4o-mini) and verify quality remains acceptable
+3. **Lower temperature** for more predictable outputs
+4. **Limit resources** to reduce context size and processing time
