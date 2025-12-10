@@ -72,8 +72,7 @@
                     "group": "Models",
                     "pages": [
                       "reference/resources/models/overview",
-                      "reference/resources/models/querying-data",
-                      "reference/resources/models/using-models-in-plays"
+                      "reference/resources/models/querying-data"
                     ]
                   },
                   {
