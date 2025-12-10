@@ -11,7 +11,7 @@ Plays can interact with your data models in powerful ways—searching records, c
 
 ![Use a model search node](/images/enrol-data-in-plays-1.png)
 
-Search and retrieve records from any model or dataset in your workspace. This node queries your data and returns matching records that you can use in subsequent steps of your play.
+Search and retrieve records from any data model or dataset in your workspace. This node queries your data and returns matching records that you can use in subsequent steps of your play.
 
 **Common use cases:**
 
@@ -90,12 +90,12 @@ The Record ID field requires the primary identifier from the target data model:
 
 | Scenario | How to get the ID |
 | -------- | ----------------- |
-| Same model as play trigger | Use `{{nodes.start._id}}` |
-| Different model | Use a Model Search node to find the record, then reference its ID |
+| Same data model as play trigger | Use `{{nodes.start._id}}` |
+| Different data model | Use a Model Search node to find the record, then reference its ID |
 | Known external ID | Use the external system's ID (e.g., HubSpot contact ID) |
 
 <Note>
-  If you're updating records in the same model that triggered your play, `{{nodes.start._id}}` is the simplest approach. For cross-model updates, always use a Model Search node first to locate the target record.
+  If you're updating records in the same data model that triggered your play, `{{nodes.start._id}}` is the simplest approach. For cross-data-model updates, always use a Model Search node first to locate the target record.
 </Note>
 
 ---
@@ -167,9 +167,9 @@ Store and access structured data using a key/value store. Memory nodes are usefu
     Control when and how your plays execute.
   </Card>
   <Card
-    title="SQL models"
+    title="Querying data"
     icon="database"
-    href="/reference/resources/models/sql-models"
+    href="/reference/resources/models/querying-data"
   >
     Create custom data models using SQL queries.
   </Card>

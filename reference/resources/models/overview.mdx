@@ -1,5 +1,5 @@
 ---
-title: "Data models"
+title: "Data models overview"
 description: "Structured tables that power your Cargo plays and workflows"
 ---
 
@@ -8,8 +8,8 @@ Data models are structured tables that power your Cargo plays. They contain orga
 Cargo enables you to build data models from multiple sources—API endpoints, webhook events, and SQL queries—and merge them into a unified, cohesive structure.
 
 <Note>
-  Cargo uses a data warehouse infrastructure to host your models. By default,
-  you'll get a managed Snowflake instance, or you can connect your own
+  Cargo uses a data warehouse infrastructure to host your data models. By
+  default, you'll get a managed Snowflake instance, or you can connect your own
   warehouse.
 </Note>
 
@@ -17,25 +17,17 @@ Cargo enables you to build data models from multiple sources—API endpoints, we
 
 ## Data connectors
 
-Cargo offers three types of data loaders to bring external data into your models:
+Cargo offers three types of data loaders to bring external data into your data models:
 
-<CardGroup cols={3}>
-  <Card title="Native integrations" icon="plug">
-    Connect to supported external APIs (CRMs, enrichment tools, etc.) and fetch
-    data directly into a model.
-  </Card>
-  <Card title="Webhook loader" icon="webhook">
-    Listen for real-time events from external sources and import that data
-    automatically.
-  </Card>
-  <Card title="SQL loader" icon="database">
-    Run SQL queries on your data warehouse tables and import the results.
-  </Card>
-</CardGroup>
+| Connector               | Description                                                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Native integrations** | Connect to supported external APIs (CRMs, enrichment tools, etc.) and fetch data directly into a data model. |
+| **Webhook loader**      | Listen for real-time events from external sources and import that data automatically.                        |
+| **SQL loader**          | Run SQL queries on your data warehouse tables and import the results.                                        |
 
 ---
 
-## Model capabilities
+## Data model capabilities
 
 Data models support powerful capabilities to help you orchestrate your GTM workflows:
 
@@ -52,15 +44,16 @@ Data models support powerful capabilities to help you orchestrate your GTM workf
     Track processed records to prevent plays from handling the same data
     multiple times.
   </Accordion>
-  <Accordion title="Model relationships" icon="diagram-project">
-    Connect different models using common identifiers to create unified views of
-    your customer data.
+  <Accordion title="Data model relationships" icon="diagram-project">
+    Connect different data models using common identifiers to create unified
+    views of your customer data.
   </Accordion>
   <Accordion title="Additional columns" icon="table-columns">
-    Extend your models with calculated fields and custom data:
-    - **Custom columns:** Free-form columns you can upsert from within a play
-    - **Computed columns:** Calculated values based on other columns in the model
-    - **Metrics columns:** Aggregated data (sums, averages, counts) from related models
+    Extend your data models with calculated fields and custom data: - **Custom
+    columns:** Free-form columns you can upsert from within a play - **Computed
+    columns:** Calculated values based on other columns in the data model -
+    **Metrics columns:** Aggregated data (sums, averages, counts) from related
+    data models
   </Accordion>
 </AccordionGroup>
 
@@ -70,34 +63,30 @@ Data models support powerful capabilities to help you orchestrate your GTM workf
 
 Data models power a wide range of GTM scenarios:
 
-<CardGroup cols={2}>
-  <Card title="CRM sync" icon="users">
-    Import customer information, deal pipelines, and sales activities from
-    Salesforce or HubSpot to create unified customer profiles.
-  </Card>
-  <Card title="Intent signals" icon="chart-line">
-    Capture website behavior, form submissions, and engagement metrics to
-    identify prospects showing buying intent.
-  </Card>
-  <Card title="List building" icon="list-check">
-    Aggregate contact lists from marketing campaigns, events, and lead
-    generation activities for targeted outreach.
-  </Card>
-  <Card title="Product analytics" icon="box">
-    Query product catalogs, usage analytics, and inventory levels to inform
-    customer interactions.
-  </Card>
-</CardGroup>
+| Use case              | Description                                                                                                                       |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **CRM sync**          | Import customer information, deal pipelines, and sales activities from Salesforce or HubSpot to create unified customer profiles. |
+| **Intent signals**    | Capture website behavior, form submissions, and engagement metrics to identify prospects showing buying intent.                   |
+| **List building**     | Aggregate contact lists from marketing campaigns, events, and lead generation activities for targeted outreach.                   |
+| **Product analytics** | Query product catalogs, usage analytics, and inventory levels to inform customer interactions.                                    |
 
 ---
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="SQL models" icon="code" href="/reference/resources/models/sql-models">
+  <Card
+    title="Querying data"
+    icon="code"
+    href="/reference/resources/models/querying-data"
+  >
     Write custom SQL queries to transform and combine your data.
   </Card>
-  <Card title="Using models in plays" icon="play" href="/reference/resources/models/using-models-in-plays">
+  <Card
+    title="Using models in plays"
+    icon="play"
+    href="/reference/resources/models/using-models-in-plays"
+  >
     Learn how to leverage data models in your plays.
   </Card>
   <Card
@@ -105,14 +94,9 @@ Data models power a wide range of GTM scenarios:
     icon="database"
     href="/reference/resources/warehouse/overview"
   >
-    Connect your own data warehouse as the backbone of your models.
+    Connect your own data warehouse as the backbone of your data models.
   </Card>
-  <Card
-    title="Files"
-    icon="file"
-    href="/reference/resources/files/overview"
-  >
+  <Card title="Files" icon="file" href="/reference/resources/files/overview">
     Work with unstructured data like documents and PDFs.
   </Card>
 </CardGroup>
-
