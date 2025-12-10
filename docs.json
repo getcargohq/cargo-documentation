@@ -39,15 +39,15 @@
                 ]
               },
               {
-                  "group": "Agents",
-                  "pages": [
-                    "reference/agents/building-an-agent",
-                    "reference/agents/defining-the-prompt",
-                    "reference/agents/native-llm-capabilities",
-                    "reference/agents/tools-and-actions",
-                    "reference/agents/resources-and-context",
-                    "reference/agents/model-configuration"
-                  ]
+                "group": "Agents",
+                "pages": [
+                  "reference/agents/building-an-agent",
+                  "reference/agents/defining-the-prompt",
+                  "reference/agents/native-llm-capabilities",
+                  "reference/agents/tools-and-actions",
+                  "reference/agents/resources-and-context",
+                  "reference/agents/advanced-settings"
+                ]
               },
               {
                 "group": "Plays",
@@ -75,9 +75,7 @@
               },
               {
                 "group": "Allocation",
-                "pages": [
-                  "reference/allocation/allocating-leads"
-                ]
+                "pages": ["reference/allocation/allocating-leads"]
               }
             ]
           },

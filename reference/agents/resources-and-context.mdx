@@ -1,33 +1,105 @@
 ---
-title: "Loading Resources "
-description: "Resources provide the Agent with non-public, up-to-date data, grounding its reasoning in facts via RAG."
+title: "Loading Resources (RAG)"
+description: "Connect your Agent to internal knowledge bases, CRM data, and custom databases to ground its reasoning in facts."
 ---
 
-![Image(1) Web](/images/image\(1\).webp)
+Resources give your Agent access to your organization's data—CRM records, knowledge bases, product databases, and more. This is called **RAG** (Retrieval-Augmented Generation): the Agent retrieves relevant information before generating responses.
 
-Cargo Agents support connecting to a variety of data sources, allowing for comprehensive grounding across the organization:
+![Resources configuration](/images/image\(1\).webp)
 
-| **Data Type**        | **Examples (Source Categories)**                                       | **Purpose**                                                                                          |
-| :------------------- | :--------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- |
-| **CRM Objects**      | Hubspot Deals, Salesforce Accounts                                     | Structured data necessary for Go-To-Market (GTM) operations and automation.                          |
-| **Knowledge Bases**  | Notion, Google Docs, Internal Files                                    | Unstructured documentation (playbooks, FAQs) used for internal expertise _(ie: ICP, selling points)_ |
-| **Product Data**     | Usage databases, Analytics platforms                                   | Structured/semi-structured data for use cases like churn detection or qualification based on usage.  |
-| **Custom Databases** | SQL databases, Cloud Data Warehouses _(Bigquery, Snowflake, Redshift)_ | Internal data sources accessible via dedicated integration models.                                   |
+<Note>
+Without resources, an Agent only knows what's in its instructions and what it can find via web search. Resources ground the Agent in **your** data.
+</Note>
 
-**Resource Configuration and Query Modes**
+---
 
-| **Query Mode** | **Mechanism**                                                                                                            | **Data Type Focus**                              | **When to Use**                                                                                  |
-| :------------- | :----------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------- | :----------------------------------------------------------------------------------------------- |
-| **SQL**        | Uses the LLM to generate and execute structured **SQL queries** against the resource (e.g., _Hubspot Deals_).            | Structured Data (Databases, CRM Tables)          | When the query requires filtering, sorting, or aggregation of specific fields.                   |
-| **Vector**     | Uses **vector similarity search** to find text chunks that are semantically (conceptually) related to the Agent's query. | Unstructured Data (Documents, PDFs, Transcripts) | When the query is conceptual and requires finding relevant passages within large bodies of text. |
+## Supported data sources
 
-**Configuration Details**
+| Data type | Examples | Best for |
+| :-------- | :------- | :------- |
+| **CRM Objects** | HubSpot Deals, Salesforce Accounts, Attio Records | GTM operations, deal context, account history |
+| **Knowledge Bases** | Notion, Google Docs, uploaded files | Playbooks, FAQs, ICP definitions, objection handling |
+| **Product Data** | Usage databases, analytics platforms | Churn detection, usage-based qualification, health scores |
+| **Custom Databases** | SQL databases, BigQuery, Snowflake, Redshift | Any internal data with a query interface |
 
-Once a resource is selected, by clicking on it, you can access the configuration details:
+---
 
-- **Model:** Specifies the specific data object or service to be queried (e.g., _Deals_ object within Hubspot).
-- **Prompt/Guidelines:** Custom instructions provided to the LLM on how to phrase queries or interpret the resource data (e.g., _Always prioritize high-value deals_).
-- **Filter & Selected Columns:** Allows administrators to restrict the data the Agent can access.
-  - **Filter:** Defines specific conditions (e.g., only retrieve deals in 'Discovery' stage).
-  - **Selected Columns:** (SQL Mode only) Limits the fields returned, improving performance by reducing context window overhead.
-- **Limit:** Sets the maximum number of records or results returned by the query, balancing result quality against retrieval cost and speed.
+## Query modes
+
+When an Agent needs to retrieve data, it uses one of two query modes:
+
+### SQL Mode
+The Agent generates and executes SQL queries against structured data.
+
+**Best for:**
+- Filtering records by specific criteria
+- Sorting and aggregating data
+- Retrieving specific fields from tables
+
+**Example:**
+> "Find all deals in the Discovery stage with value over $50k"
+
+### Vector Mode
+The Agent uses semantic similarity search to find relevant text chunks.
+
+**Best for:**
+- Searching unstructured documents (PDFs, transcripts, notes)
+- Finding conceptually related content
+- Answering questions from knowledge bases
+
+**Example:**
+> "What does our playbook say about handling pricing objections?"
+
+---
+
+## Configuring a resource
+
+Click on any connected resource to access its settings:
+
+### Model
+Specifies which data object to query (e.g., the `Deals` object in HubSpot, or a specific Notion database).
+
+### Prompt / Guidelines
+Custom instructions for how the Agent should query or interpret this resource.
+
+**Example:**
+```
+When querying deals, prioritize high-value opportunities 
+(>$100k) and exclude any marked as "Closed Lost".
+```
+
+### Filters
+Restrict which data the Agent can access. Use filters to:
+- Limit to specific record types or stages
+- Exclude sensitive or irrelevant data
+- Focus on a particular team's records
+
+### Selected Columns (SQL Mode only)
+Choose which fields to return. This improves performance by:
+- Reducing the amount of data in the context window
+- Speeding up query execution
+- Focusing the Agent on relevant information
+
+### Limit
+Set the maximum number of records returned per query. Balance between:
+- **Higher limits:** More comprehensive results, but slower and more expensive
+- **Lower limits:** Faster responses, but may miss relevant data
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Start with filters">
+    Narrow down data access to what the Agent actually needs. Less noise = better reasoning.
+  </Card>
+  <Card title="Write clear guidelines">
+    Help the Agent understand how to query your data and what matters most.
+  </Card>
+  <Card title="Choose the right mode">
+    Use SQL for structured queries, Vector for document search. Don't mix them up.
+  </Card>
+  <Card title="Test your queries">
+    Run test prompts to verify the Agent retrieves the right data before deploying.
+  </Card>
+</CardGroup>

@@ -1,18 +1,104 @@
 ---
 title: "Integrating Tools and Actions"
-description: "Tools are the external API endpoints that allow the Agent to act on the world. of your new file."
+description: "Tools are external APIs that give your Agent the ability to take action—updating CRMs, sending messages, and enriching data."
 ---
+
+Tools transform your Agent from a reasoning engine into an action-taker. Each tool is an external API endpoint that the Agent can call to interact with the world.
+
 <img
   src="/images/image(14).png"
-  alt="Image(14) Pn"
-  title="Image(14) Pn"
-  style={{ width:"100%" }}
+  alt="Tools configuration interface"
+  style={{ width: "100%" }}
 />
 
-Tools are the external API endpoints that allow the Agent to act on the world.
+## How tools work
 
-- **Description (The AI Contract):** The plain-language description is critical, as the LLM uses it to determine _when_ and _how_ to call the tool.
-- **Input Configuration:**
-  - **"Let agent decide":** The Agent autonomously determines inputs from the context.
-  - **"Let me decide":** The user explicitly defines the required input structure.
-- **Bulk Execution:** Permits the Agent to perform the tool's action across multiple records in a single run.
+When an Agent receives a task, it:
+
+1. **Analyzes** the goal and available tools
+2. **Selects** the appropriate tool(s) based on their descriptions
+3. **Executes** the tool with the right inputs
+4. **Uses the output** to continue reasoning or complete the task
+
+<Note>
+  The tool's **description** is critical. The Agent reads this description to
+  decide when and how to use the tool. Write descriptions that clearly explain
+  what the tool does and when to use it.
+</Note>
+
+---
+
+## Configuring a tool
+
+### Description (The AI Contract)
+
+This plain-language description tells the Agent:
+
+- **What** the tool does
+- **When** to use it
+- **What inputs** it expects
+
+**Good example:**
+
+```
+"Enriches a company using its domain. Returns firmographic data including
+employee count, industry, funding, and tech stack. Use this when you need
+company information for qualification or research."
+```
+
+**Poor example:**
+
+```
+"Gets company data"
+```
+
+### Input configuration
+
+Control how the Agent provides inputs to the tool:
+
+| Mode                 | Behavior                                              | Use when                                                      |
+| :------------------- | :---------------------------------------------------- | :------------------------------------------------------------ |
+| **Let agent decide** | The Agent autonomously determines inputs from context | Inputs are straightforward and available in the conversation  |
+| **Let me decide**    | You explicitly define the input structure             | Inputs require specific formatting or come from fixed sources |
+
+### Bulk execution
+
+Enable this when the Agent should apply the tool across multiple records in a single run. Useful for batch operations like:
+
+- Enriching a list of companies
+- Updating multiple CRM records
+- Sending notifications to several recipients
+
+---
+
+## Common tool types
+
+| Category          | Examples                     | Typical use                            |
+| :---------------- | :--------------------------- | :------------------------------------- |
+| **Enrichment**    | Clearbit, Apollo, FullEnrich | Gather company or contact data         |
+| **CRM**           | Salesforce, HubSpot, Attio   | Create/update records, log activities  |
+| **Communication** | Slack, Email, Outreach       | Send messages, add to sequences        |
+| **Data lookup**   | Internal APIs, SQL queries   | Retrieve custom data from your systems |
+
+---
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Write clear descriptions">
+    The Agent relies on descriptions to choose tools. Be specific about what the
+    tool does and what it returns.
+  </Card>
+  <Card title="Name tools descriptively">
+    Use names like `Enrich-Company` or `Slack-Notify-Rep` instead of generic
+    names like `Tool1`.
+  </Card>
+  <Card title="Handle failures gracefully">
+    In your Agent's instructions, specify what to do if a tool call fails
+    (retry, skip, report error).
+  </Card>
+  <Card title="Limit scope">
+    Only give Agents access to the tools they need. Fewer tools = faster, more
+    accurate tool selection.
+  </Card>
+</CardGroup>
