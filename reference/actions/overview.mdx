@@ -190,6 +190,169 @@ Storage actions interact with data models in your Cargo workspace, enabling data
   your models](/reference/resources/models/overview) before using these actions.
 </Tip>
 
+### Memory
+
+The **Memory** action provides a key/value store for persisting data across nodes. Use it to save values early in your workflow and retrieve them later—without passing data through every intermediate node.
+
+**Scope options:**
+
+| Scope         | Behavior                                          |
+| ------------- | ------------------------------------------------- |
+| **Workspace** | Data is shared across all plays in your workspace |
+| **Play**      | Data is isolated to the current play              |
+
+**Available actions:**
+
+| Action         | Description                                            |
+| -------------- | ------------------------------------------------------ |
+| **Get**        | Retrieve a value by its key                            |
+| **Set**        | Store a value at a key (overwrites existing)           |
+| **Get or Set** | Return existing value, or set a default if none exists |
+| **Increment**  | Add to a numeric value (useful for counters)           |
+| **Decrement**  | Subtract from a numeric value                          |
+| **Remove**     | Delete a key and its value                             |
+
+**Configuration options:**
+
+| Property  | Description                                                                                                                                |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Scope** | Choose between `Workspace` (shared) or `Play` (isolated).                                                                                  |
+| **Key**   | A unique identifier for the stored value. Use descriptive names like `original_company_name` or `enrichment_result`. Supports expressions. |
+| **Value** | (Set/Get or Set only) The value to store. Can be any data type—strings, numbers, objects, or arrays. Supports expressions.                 |
+
+**Common use cases:**
+
+- **Preserve original data** — Save input values before transformations so you can reference them later
+- **Build counters** — Use Increment to track how many times a play has run or count leads processed
+- **Cache enrichment results** — Store API responses to avoid duplicate calls within the same workflow
+- **Share state across plays** — Use Workspace scope to share data between different plays
+- **Implement rate limiting** — Track request counts with Increment/Decrement
+
+<Tip>
+  Use the **Increment** action to build simple counters—track how many times a
+  play has run, count leads processed today, or implement rate limiting logic.
+</Tip>
+
+<Tip>
+  **Best practice:** Use clear, descriptive key names that indicate what's being
+  stored and why. This makes your workflows easier to understand and debug.
+</Tip>
+
+### Model Search
+
+![Use a model search node](/images/enrol-data-in-plays-1.png)
+
+Search and retrieve records from any data model or dataset in your workspace. This action queries your data and returns matching records that you can use in subsequent steps.
+
+**Common use cases:**
+
+| Use case                 | Example                                                  |
+| ------------------------ | -------------------------------------------------------- |
+| **Find related records** | Look up all contacts at a company when a deal is created |
+| **Check for duplicates** | Search for existing leads before creating new ones       |
+| **Aggregate data**       | Retrieve all recent activities for a given account       |
+| **Cross-reference**      | Match records between different data sources             |
+
+**Configuration:**
+
+| Property    | Description                                                 |
+| ----------- | ----------------------------------------------------------- |
+| **Model**   | The data model to search (e.g., Contacts, Companies, Deals) |
+| **Filters** | Conditions that records must match                          |
+| **Limit**   | Maximum number of records to return                         |
+| **Sort**    | Order results by a specific field                           |
+
+<Tip>
+  Use expressions in your filter values to create dynamic searches. For example, filter by `{{nodes.start.company_domain}}` to find records related to the triggering record.
+</Tip>
+
+### Model Record
+
+![Use a model record node](/images/enrol-data-in-plays-2.png)
+
+Create new records in compatible data models directly from your workflows. This action allows you to write structured data back to models that support record creation.
+
+**Supported data models:**
+
+| Model type      | Support                              |
+| --------------- | ------------------------------------ |
+| **HTTP models** | ✅ Full support for creating records |
+| All others      | ❌ Not supported                     |
+
+<Warning>
+  Data models synchronized from external services like CRMs don't support
+  creating records with this action. Use the dedicated write actions for each
+  service (e.g., HubSpot Create Contact, Salesforce Create Lead) to ensure
+  proper data sync.
+</Warning>
+
+**Data type behavior:**
+
+When you create a new record, the first value written to each field determines its data type. This type cannot be changed afterward, so plan your schema carefully before writing production data.
+
+### Model Custom Column
+
+![Use a custom column node](/images/enrol-data-in-plays-3.png)
+
+Extend synchronized data models with additional columns without modifying the source system. Custom columns let you store Cargo-specific metadata, flags, or computed values alongside your CRM or warehouse data.
+
+**Examples of custom columns:**
+
+- Lead scoring values calculated by your workflows
+- Enrichment timestamps for tracking data freshness
+- Processing flags like `needs_review` or `outreach_sent`
+- Aggregated metrics from other data sources
+
+**Configuration:**
+
+| Property        | Description                                                 |
+| --------------- | ----------------------------------------------------------- |
+| **Model**       | The data model to extend with a custom column               |
+| **Record ID**   | The primary identifier of the record to update              |
+| **Column name** | Name for the custom column (creates it if it doesn't exist) |
+| **Value**       | The data to write to this column                            |
+
+**Finding the correct Record ID:**
+
+| Scenario                        | How to get the ID                                                   |
+| ------------------------------- | ------------------------------------------------------------------- |
+| Same data model as play trigger | Use `{{nodes.start._id}}`                                           |
+| Different data model            | Use a Model Search action to find the record, then reference its ID |
+| Known external ID               | Use the external system's ID (e.g., HubSpot contact ID)             |
+
+<Note>
+  If you're updating records in the same data model that triggered your play, `{{nodes.start._id}}` is the simplest approach. For cross-data-model updates, always use a Model Search action first to locate the target record.
+</Note>
+
+### Model Vector Search
+
+Perform semantic searches using vector-based queries. This action finds records based on meaning and similarity rather than exact matches—ideal for finding related content, similar companies, or matching leads to ideal customer profiles.
+
+### Storage best practices
+
+<AccordionGroup>
+  <Accordion title="Use Model Search to validate before writing">
+    Before creating or updating records, search for existing entries to prevent
+    duplicates. This is especially important when processing data from multiple
+    sources.
+  </Accordion>
+  <Accordion title="Store enrichment metadata in custom columns">
+    Track when records were last enriched, which providers were used, and
+    whether the enrichment succeeded. This helps you avoid re-processing records
+    unnecessarily.
+  </Accordion>
+  <Accordion title="Scope memory appropriately">
+    Use play-scoped memory for play-specific state (like deduplication within a
+    run) and workspace-scoped memory for cross-play coordination (like global
+    rate limiting).
+  </Accordion>
+  <Accordion title="Handle empty search results">
+    Model Search actions can return zero results. Add a Branch action to check
+    for empty results and handle them gracefully—either skip processing or
+    create a new record.
+  </Accordion>
+</AccordionGroup>
+
 ---
 
 ## Integrations
