@@ -34,11 +34,7 @@ Split a string by a delimiter to extract specific parts.
 | Output | `"acme-corp.com"`                                |
 
 ```javascript
-{
-  {
-    nodes.start.email.split("@")[1];
-  }
-}
+{{ nodes.start.email.split("@")[1] }}
 ```
 
 </Accordion>
@@ -53,11 +49,7 @@ Convert a string to lowercase for consistent formatting.
 | Output | `"acme corporation"`                           |
 
 ```javascript
-{
-  {
-    nodes.start.companyName.toLowerCase();
-  }
-}
+{{ nodes.start.companyName.toLowerCase() }}
 ```
 
 </Accordion>
@@ -72,11 +64,7 @@ Convert a string to uppercase.
 | Output | `"US"`                       |
 
 ```javascript
-{
-  {
-    nodes.start.country.toUpperCase();
-  }
-}
+{{ nodes.start.country.toUpperCase() }}
 ```
 
 </Accordion>
@@ -91,11 +79,7 @@ Remove whitespace from both ends of a string.
 | Output | `"John Smith"`                        |
 
 ```javascript
-{
-  {
-    nodes.start.name.trim();
-  }
-}
+{{ nodes.start.name.trim() }}
 ```
 
 </Accordion>
@@ -110,11 +94,7 @@ Replace part of a string with another value.
 | Output | `"john@[redacted].com"`                     |
 
 ```javascript
-{
-  {
-    nodes.start.email.replace("competitor", "[redacted]");
-  }
-}
+{{ nodes.start.email.replace("competitor", "[redacted]") }}
 ```
 
 <Info>
@@ -140,11 +120,7 @@ Count how many items are present in an array.
 | Output | `4`                                                                        |
 
 ```javascript
-{
-  {
-    nodes.array.length;
-  }
-}
+{{ nodes.array.length }}
 ```
 
 </Accordion>
@@ -160,11 +136,7 @@ Check if a value exists in an array.
 | Output  | `true`                                       |
 
 ```javascript
-{
-  {
-    ["posters", "calendars", "books", "cards"].includes(nodes.start.product);
-  }
-}
+{{ ["posters", "calendars", "books", "cards"].includes(nodes.start.product) }}
 ```
 
 </Accordion>
@@ -179,11 +151,7 @@ Extract a portion of an array.
 | Output | `["John", "Sarah", "Mike", "Lisa", "David"]`                                            |
 
 ```javascript
-{
-  {
-    nodes.apollo.stakeholders.slice(0, 5);
-  }
-}
+{{ nodes.apollo.stakeholders.slice(0, 5) }}
 ```
 
 <Info>
@@ -201,11 +169,7 @@ Create a new array based on a condition.
 | Output | `["https://example.com/case-studies/tech", "https://example.com/case-studies/finance"]`                             |
 
 ```javascript
-{
-  {
-    nodes.start.urls.filter((url) => url.includes("/case-studies/"));
-  }
-}
+{{ nodes.start.urls.filter((url) => url.includes("/case-studies/")) }}
 ```
 
 </Accordion>
@@ -220,11 +184,7 @@ Convert an array to a string with a delimiter.
 | Output | `"US, CA, UK, DE"`                                 |
 
 ```javascript
-{
-  {
-    nodes.start.countries.join(", ");
-  }
-}
+{{ nodes.start.countries.join(", ") }}
 ```
 
 </Accordion>
@@ -260,15 +220,13 @@ Transform each element in an array.
 </Tabs>
 
 ```javascript
-{
-  {
-    nodes.apollo.stakeholders.map((stakeholder) => ({
-      ...stakeholder,
-      domain: nodes.start.domain,
-      hubspotId: nodes.hubspot.companyId,
-    }));
-  }
-}
+{{
+  nodes.apollo.stakeholders.map((stakeholder) => ({
+    ...stakeholder,
+    domain: nodes.start.domain,
+    hubspotId: nodes.hubspot.companyId,
+  }))
+}}
 ```
 
 </Accordion>
@@ -283,11 +241,7 @@ Return the first element that matches a condition.
 | Output | `{ "name": "John", "title": "CEO" }`                                        |
 
 ```javascript
-{
-  {
-    nodes.apollo.stakeholders.find((s) => s.title === "CEO");
-  }
-}
+{{ nodes.apollo.stakeholders.find((s) => s.title === "CEO") }}
 ```
 
 <Info>
@@ -305,11 +259,7 @@ Merge two arrays together.
 | Output | `["US", "CA", "UK", "DE"]`                                                          |
 
 ```javascript
-{
-  {
-    nodes.start.countries1.concat(nodes.start.countries2);
-  }
-}
+{{ nodes.start.countries1.concat(nodes.start.countries2) }}
 ```
 
 </Accordion>
@@ -331,11 +281,7 @@ Create a timestamp.
 | ------ | ---------------------------- |
 
 ```javascript
-{
-  {
-    new Date();
-  }
-}
+{{ new Date() }}
 ```
 
 </Accordion>
@@ -349,11 +295,7 @@ Format date in localized format.
 | ------ | ------------- |
 
 ```javascript
-{
-  {
-    new Date().toLocaleDateString();
-  }
-}
+{{ new Date().toLocaleDateString() }}
 ```
 
 <Info>
@@ -378,43 +320,23 @@ Perform calculations on numbers.
 
 ```javascript
 // Add to balance
-{
-  {
-    nodes.start.balance + 100;
-  }
-}
+{{ nodes.start.balance + 100 }}
 
 // Calculate percentage
-{
-  {
-    (nodes.start.wins / nodes.start.total) * 100;
-  }
-}
+{{ (nodes.start.wins / nodes.start.total) * 100 }}
 ```
 
 Other common operations:
 
 ```javascript
 // Round to 2 decimal places
-{
-  {
-    Math.round(nodes.start.value * 100) / 100;
-  }
-}
+{{ Math.round(nodes.start.value * 100) / 100 }}
 
 // Get the maximum value
-{
-  {
-    Math.max(nodes.start.a, nodes.start.b);
-  }
-}
+{{ Math.max(nodes.start.a, nodes.start.b) }}
 
 // Get the minimum value
-{
-  {
-    Math.min(nodes.start.a, nodes.start.b);
-  }
-}
+{{ Math.min(nodes.start.a, nodes.start.b) }}
 ```
 
 </Accordion>
@@ -435,21 +357,13 @@ Use ternary operators for simple conditions.
 | Output | `"High Priority"`        |
 
 ```javascript
-{
-  {
-    nodes.start.score > 80 ? "High Priority" : "Standard";
-  }
-}
+{{ nodes.start.score > 80 ? "High Priority" : "Standard" }}
 ```
 
 **Nested conditions**:
 
 ```javascript
-{
-  {
-    nodes.start.score > 80 ? "High" : nodes.start.score > 50 ? "Medium" : "Low";
-  }
-}
+{{ nodes.start.score > 80 ? "High" : nodes.start.score > 50 ? "Medium" : "Low" }}
 ```
 
 </Accordion>
@@ -480,11 +394,7 @@ Access nested properties using dot notation.
 </Tabs>
 
 ```javascript
-{
-  {
-    nodes.start.user.address.city;
-  }
-}
+{{ nodes.start.user.address.city }}
 ```
 
 </Accordion>
@@ -514,18 +424,10 @@ undefined  // (safe, no error thrown)
 
 ```javascript
 // Safely access optional property
-{
-  {
-    nodes.start.user?.preferences?.theme;
-  }
-}
+{{ nodes.start.user?.preferences?.theme }}
 
 // With default fallback
-{
-  {
-    nodes.start.user?.preferences?.theme ?? "default";
-  }
-}
+{{ nodes.start.user?.preferences?.theme ?? "default" }}
 ```
 
 <Warning>
@@ -544,18 +446,10 @@ Provide fallback values when data might be missing.
 
 ```javascript
 // Using nullish coalescing
-{
-  {
-    nodes.start.name ?? "Anonymous";
-  }
-}
+{{ nodes.start.name ?? "Anonymous" }}
 
 // Using logical OR (also catches empty strings)
-{
-  {
-    nodes.start.name || "Anonymous";
-  }
-}
+{{ nodes.start.name || "Anonymous" }}
 ```
 
 </Accordion>
