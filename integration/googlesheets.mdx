@@ -1,0 +1,192 @@
+---
+title: "Google Sheets"
+description: "This page outlines how to use the Google Sheets integration to read and write spreadsheet data in Cargo."
+---
+
+Google Sheets is a cloud-based spreadsheet application that enables collaborative data management and analysis. Cargo's native integration with Google Sheets allows you to read data from spreadsheets as part of data models, and write or update data in your sheets as part of automated workflows.
+
+## How to set up Google Sheets
+
+Cargo supports two authentication modes for connecting to Google Sheets, each suited for different use cases:
+
+<AccordionGroup>
+  <Accordion title="OAuth (Standard)" icon="key">
+    **Best for:** Personal use, small to medium data volumes, quick setup - Uses
+    your Google account credentials - Simple one-click authorization - Standard
+    API rate limits (100 requests per 100 seconds per user) - Access to sheets
+    you own or have been shared with
+  </Accordion>
+  <Accordion title="Service Account (Recommended for Production)" icon="server">
+    **Best for:** Production workflows, large data volumes, automated processes
+    - Higher rate limits (150 requests per minute) - No user interaction
+    required - Ideal for server-to-server communication - Requires Google Cloud
+    setup
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Authentication Mode 1: OAuth
+
+OAuth is the simplest way to connect Google Sheets and is perfect for personal use or smaller workflows.
+
+### Step 1: Connect via OAuth
+
+1. In Cargo, navigate to the **Google Sheets connector** settings.
+2. Under **Authentication**, select **OAuth**.
+3. Click **Connect** and authorize Cargo to access your Google Sheets.
+4. Grant the required permissions when prompted.
+
+Once connected, you can:
+
+- **Set up a Google Sheets data model** — Create data models from your spreadsheets to trigger Plays and power model search actions.
+- **Use Google Sheets in workflows** — Choose **Google Sheets** from the node catalog within a **Play**, **Tool**, or **Agent**.
+
+<Info>
+  OAuth connections have access to all sheets that your Google account has
+  permission to view or edit. Make sure you're using the correct Google account
+  when connecting.
+</Info>
+
+---
+
+## Authentication Mode 2: Service Account
+
+Using a Service Account is the recommended way to connect Google Sheets if you need to process larger amounts of data without hitting standard API limits.
+
+### Prerequisite: Google Cloud Account
+
+You must have a Google Cloud account to proceed.
+
+- **If you don't have one:** [Create a Google Cloud account here](https://cloud.google.com/).
+
+- **If you have one:** Log in and select your project (e.g., `tonal-run-480206-g5`).
+
+### Step 1: Generate Your Service Account Key
+
+1. Navigate to the **Service Accounts > Keys** section in your Google Cloud Console.
+
+2. Click the **Add key** button and select **Create new key**.
+
+3. In the popup window, select **JSON** as the "Key type".
+
+4. Click **Create**.
+
+   - _Result:_ A file ending in `.json` will automatically download to your computer. This file contains the credentials Cargo needs.
+
+### Step 2: Connect to Cargo
+
+1. Open the `.json` file you just downloaded using a text editor (like Notepad on Windows or TextEdit on Mac) and **copy the entire text**.
+
+2. Go back to Cargo and open the **Google Sheets connector** settings.
+
+3. Under **Authentication**, select **Service account** (this enables the higher rate limit of 150 requests/min).
+
+4. Paste the text you copied into the **Service account** field.
+
+5. Click **Save**.
+
+### Step 3: Activate the Google Sheets API
+
+For the connection to work, you must tell Google to allow this project to use Sheets.
+
+- **Click this link:** [Enable Google Sheets API](https://console.cloud.google.com/apis/api/sheets.googleapis.com/metrics?project=tonal-run-480206-g5)
+
+- Ensure the button says **Enabled** or click **Enable** if it is not already active.
+
+- You're good to go.
+
+<Warning>
+  When using a Service Account, you must share your Google Sheets with the
+  service account email address (found in the JSON key file) for it to access
+  your spreadsheets. The service account email typically looks like:
+  `your-service-account@your-project.iam.gserviceaccount.com`
+</Warning>
+
+---
+
+## Google Sheets actions
+
+<Tip>
+  All Google Sheets actions support reading from and writing to any spreadsheet
+  that your authentication method has access to.
+</Tip>
+
+### Insert record
+
+Insert a new row into a Google Sheet.
+
+**Use cases**
+
+- **Lead capture** – Create new leads from various sources and channels
+- **Data logging** – Add new entries to tracking sheets
+- **Contact creation** – Add new contacts from forms, events, or imports
+
+### Update record
+
+Update an existing row in a Google Sheet.
+
+**Use cases**
+
+- **Data enrichment** – Keep spreadsheet information current and accurate
+- **Status updates** – Update record statuses and stages
+- **Field updates** – Modify specific cell values in existing rows
+
+### Upsert records
+
+Upsert multiple rows into a Google Sheet (insert or update based on matching criteria).
+
+**Use cases**
+
+- **Bulk data operations** – Insert rows in bulk while avoiding duplicates
+- **Data synchronization** – Keep external systems synchronized with Google Sheets
+- **Migration workflows** – Import data from other systems while handling existing records
+
+<Warning>
+  Upsert operations will match on the fields you specify. Ensure your matching
+  criteria is unique to avoid unintended updates.
+</Warning>
+
+---
+
+## Google Sheets data models
+
+Cargo allows you to create data models on top of your Google Sheets data that can be used to trigger Plays and power model search actions.
+
+### Creating Google Sheets data models
+
+| Field           | Description                                                            |
+| --------------- | ---------------------------------------------------------------------- |
+| **Name**        | Choose a descriptive name for your data model (required)               |
+| **Slug**        | Set a unique identifier that cannot be changed once created (required) |
+| **Spreadsheet** | Select the Google Sheet you want to model                              |
+| **Worksheet**   | Select the specific worksheet within the spreadsheet                   |
+
+<Info>
+  The first row of your selected range will be used as column headers. Make sure
+  your sheet has a header row for best results. The **fetchWorksheet** extractor
+  is used to retrieve data from your specified worksheet and range.
+</Info>
+
+---
+
+## Rate limits
+
+| Authentication Method | Rate Limit                            |
+| --------------------- | ------------------------------------- |
+| **OAuth**             | 100 requests per 100 seconds per user |
+| **Service Account**   | 150 requests per minute               |
+
+<Warning>
+  Exceeding rate limits will result in errors. For high-volume workflows, use
+  Service Account authentication to benefit from higher limits.
+</Warning>
+
+---
+
+## Security
+
+- All Google Sheets connections use Google's secure authentication protocols
+- Service account keys are encrypted at rest in Cargo
+- OAuth tokens are securely stored and can be revoked at any time from your Google account settings
+- Cargo only requests the minimum permissions needed to read and write to your sheets
