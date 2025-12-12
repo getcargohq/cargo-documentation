@@ -113,7 +113,8 @@
               "integration/hubspot",
               "integration/salesforce",
               "integration/slack",
-              "integration/fullenrich"
+              "integration/fullenrich",
+              "integration/googlesheets"
             ]
           }
         ]
